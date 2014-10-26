@@ -1,0 +1,74 @@
+# https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
+
+# Notes:
+# This script does not support having an equal sign in COMP_WORDBREAKS.
+# We only help complete the first value on comma separated lists (e.g. --fs-options).
+# Arguments with equal signs need their value without a space. We don't automatically add spaces to these arguments.
+
+# Bugs in TrueCrypt's documentation:
+# All the options that take VOLUME_PATH or FILE_PATH actually takes it as the next argument, NOT after an equal sign!
+# --auto-mount can take a comma separated list, i.e. mount both devices and favorites at the same time.
+
+_truecrypt_complete() {
+  COMPREPLY=( $( compgen -W "$1" -- "$cur" ))
+}
+
+_truecrypt_opt() {
+  COMPREPLY=( $( compgen -W "$1" -P "$opt=" -- "$val" ))
+}
+
+_truecrypt() {
+  COMPREPLY=()
+  local cur prev opt val
+  _get_comp_words_by_ref cur prev
+
+  if [[ $cur == --?*=* ]]; then
+    opt="${cur%%?(\\)=*}"
+    val="${cur#*=}"
+  fi
+
+  if [[ $prev == --create-filedir ]]; then
+    # --create-keyfile argument does not need to be a .tc file
+    _filedir
+  elif [[ $opt =~ ^--(new-|protection-)?keyfiles|--random-source$ ]]; then
+    # We have to do some hacks here for _filedir to work after an equal sign.
+    cur="${cur/#--*=/}"
+    compopt -o nospace
+    _filedir
+    COMPREPLY=("${COMPREPLY[@]/#/$opt=}")
+  elif [[ $opt == --auto-mount ]]; then
+    _truecrypt_opt "devices favorites"
+  elif [[ $opt == --encryption ]]; then
+    _truecrypt_opt "aes serpent twofish aes-twofish aes-twofish-serpent serpent-aes serpent-twofish-aes twofish-serpent"
+  elif [[ $opt == --filesystem ]]; then
+    _truecrypt_opt "none fat ext2 ext3 ext4"
+  elif [[ $opt == --fs-options ]]; then
+    # These are just some common mount options, not an exhaustive list.
+    _truecrypt_opt "async auto defaults exec loop noauto noexec nouser remount ro rw user"
+  elif [[ $opt == --hash ]]; then
+    _truecrypt_opt "ripemd-160 sha-512 whirlpool"
+  elif [[ $opt == --mount-options ]]; then
+    _truecrypt_opt "headerbak nokernelcrypto readonly system timestamp"
+  elif [[ $opt == --protect-hidden ]]; then
+    _truecrypt_opt "yes no"
+  elif [[ $opt == --slot ]]; then
+    _truecrypt_opt "1 64"
+  elif [[ $opt == --volume-type ]]; then
+    _truecrypt_opt "normal hidden"
+  elif [[ $opt == --token-lib ]]; then
+    _truecrypt_opt "/usr/lib/i386-linux-gnu/opensc-pkcs11.so /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so"
+  elif [[ $cur =~ ^- ]]; then
+    _truecrypt_complete "-c --create -C -d --delete-token-keyfiles --export-token-keyfile --import-token-keyfiles -l --list-token-keyfiles --save-preferences --test --version --display-password --force -k --load-preferences -m -p --quick -t --text -v --verbose --backup-headers --create-keyfile --change --dismount --list --mount --restore-headers --volume-properties --auto-mount= --encryption= --filesystem= --fs-options= --hash= --keyfiles= --mount-options= --new-keyfiles= --new-password= --password= --protect-hidden= --protection-keyfiles= --protection-password= --random-source= --slot= --size= --token-lib= --volume-type="
+  else
+    _filedir tc
+  fi
+
+  # Don't put a space after an argument that needs value after equal sign.
+  if [[ ${#COMPREPLY[@]} == 1 && "${COMPREPLY[@]}" == *= ]]; then
+    compopt -o nospace
+  fi
+
+  return 0
+}
+
+complete -F _truecrypt truecrypt

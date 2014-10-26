@@ -3,7 +3,7 @@ Encoding=UTF-8
 Name=TrueCrypt
 GenericName=TrueCrypt
 Comment=TrueCrypt
-Exec=/usr/bin/truecrypt
+Exec=/usr/bin/truecrypt %f
 Icon=truecrypt
 Terminal=false
 Type=Application
@@ -14,6 +14,11 @@ MimeType=application/x-truecrypt
 [MountFavorites Shortcut Group]
 Name=Mount All Favorite Volumes
 Exec=/usr/bin/truecrypt --auto-mount=favorites
+TargetEnvironment=Unity
+
+[MountDevices Shortcut Group]
+Name=Mount Devices
+Exec=/usr/bin/truecrypt --auto-mount=devices
 TargetEnvironment=Unity
 
 [DismountAll Shortcut Group]

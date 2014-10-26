@@ -51,6 +51,7 @@ binary-arch: build install
 	dh_install debian/truecrypt.desktop usr/share/applications
 	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
 	dh_installman debian/truecrypt.1
+	dh_bash-completion
 	dh_compress
 	dh_fixperms
 	dh_installdeb

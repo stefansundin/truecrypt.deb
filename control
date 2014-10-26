@@ -9,6 +9,7 @@ Homepage: http://www.truecrypt.org/
 Package: truecrypt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: bash-completion, opensc
 Description: Free open-source disk encryption software
  TrueCrypt is a software system for establishing and maintaining an
  on-the-fly-encrypted volume (data storage device). On-the-fly encryption

@@ -1,3 +1,10 @@
+truecrypt (7.1a-5) utopic; urgency=low
+
+  * Add bash-completion.
+  * Fix documentation errors in --help output.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 25 Oct 2014 14:47:59 -0700
+
 truecrypt (7.1a-4) trusty; urgency=low
 
   * Add .tc file association.
