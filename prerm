@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+#DEBHELPER#
+[ ! -z "$(mount | grep truecrypt_aux_mnt 2>/dev/null)" ] && echo Error: All volumes must be dismounted first. && exit 1
+#DEBHELPER#
+exit 0

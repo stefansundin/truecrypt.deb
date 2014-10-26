@@ -1,0 +1,21 @@
+Source: truecrypt
+Section: utils
+Priority: extra
+Maintainer: Stefan Sundin <stefan@stefansundin.com>
+Build-Depends: debhelper (>= 8.0.0), pkg-config, libgtk2.0-dev, libwxgtk2.8-dev, libfuse-dev, libwxbase2.8-dev, nasm, libappindicator-dev
+Standards-Version: 3.9.4
+Homepage: http://www.truecrypt.org/
+
+Package: truecrypt
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Free open-source disk encryption software
+ TrueCrypt is a software system for establishing and maintaining an
+ on-the-fly-encrypted volume (data storage device). On-the-fly encryption
+ means that data are automatically encrypted or decrypted right before they
+ are loaded or saved, without any user intervention. No data stored on an
+ encrypted volume can be read (decrypted) without using the correct
+ password/keyfile(s) or correct encryption keys. Entire file systems can be
+ encrypted.
+ .
+ This package replaces the standard tray icon with a unity indicator.

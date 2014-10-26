@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=TrueCrypt
+GenericName=TrueCrypt
+Comment=TrueCrypt
+Exec=/usr/bin/truecrypt
+Icon=truecrypt
+Terminal=false
+Type=Application
+Categories=Encryption;Encryption Tools;Utility;
+X-Ayatana-Desktop-Shortcuts=MountFavorites;DismountAll
+
+[MountFavorites Shortcut Group]
+Name=Mount All Favorite Volumes
+Exec=/usr/bin/truecrypt --auto-mount=favorites
+TargetEnvironment=Unity
+
+[DismountAll Shortcut Group]
+Name=Mount All Favorite Volumes
+Exec=/usr/bin/truecrypt --dismount
+TargetEnvironment=Unity

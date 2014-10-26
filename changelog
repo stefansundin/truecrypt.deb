@@ -1,0 +1,12 @@
+truecrypt (7.1a-2) raring; urgency=low
+
+  * Add missing package to build scripts.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Mon, 24 Jun 2013 17:37:19 +0200
+
+truecrypt (7.1a-1) raring; urgency=low
+
+  * Initial release.
+  * Replaced tray icon with indicator.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Mon, 24 Jun 2013 17:37:19 +0200

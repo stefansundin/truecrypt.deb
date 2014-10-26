@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export PKCS11_INC=$(shell pwd)/debian/pkcs11
+
+%:
+	dh $@ 
+
+build: build-arch build-indep
+
+build-arch: build-stamp
+
+build-indep: build-stamp
+
+build-stamp:
+	dh_testdir
+	$(MAKE)
+	touch $@
+
+clean: do-clean
+
+do-clean: 
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	$(MAKE) clean
+	rm -f Common/Language.xml.h Common/Textual_logo_96dpi.bmp.h Format/TrueCrypt_Wizard.bmp.h License.txt.h Main/SystemPrecompiled.d Mount/Drive_icon_96dpi.bmp.h Mount/Drive_icon_mask_96dpi.bmp.h Mount/Logo_96dpi.bmp.h
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+	mkdir -p debian/truecrypt/usr/bin/
+	install -m 755 Main/truecrypt debian/truecrypt/usr/bin/
+
+binary-indep: build install
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installchangelogs
+	install -m 644 -D "Resources/Icons/TrueCrypt-48x48.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt.xpm
+	install -m 644 -D "Resources/Icons/TrueCrypt-16x16.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt-indicator.xpm
+	dh_install debian/truecrypt.desktop usr/share/applications
+	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
+	dh_installman debian/truecrypt.1
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_installdebconf
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install patch unpatch do-clean
