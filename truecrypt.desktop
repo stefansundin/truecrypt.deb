@@ -16,6 +16,6 @@ Exec=/usr/bin/truecrypt --auto-mount=favorites
 TargetEnvironment=Unity
 
 [DismountAll Shortcut Group]
-Name=Mount All Favorite Volumes
+Name=Dismount All Mounted Volumes
 Exec=/usr/bin/truecrypt --dismount
 TargetEnvironment=Unity

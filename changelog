@@ -1,3 +1,11 @@
+truecrypt (7.1a-3) raring; urgency=low
+
+  * Disable indicator menu entries like the ordinary tray menu.
+  * Remove titlebar close button from preferences dialog since it didn't work.
+  * Correct string in truecrypt.desktop.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Mon, 24 Jun 2013 17:37:19 +0200
+
 truecrypt (7.1a-2) raring; urgency=low
 
   * Add missing package to build scripts.

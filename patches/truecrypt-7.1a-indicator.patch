@@ -1,4 +1,4 @@
-diff -urN -xPKCS11 truecrypt-7.1a-source/Build/Include/Makefile.inc truecrypt-7.1a-indicator/Build/Include/Makefile.inc
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Build/Include/Makefile.inc truecrypt-7.1a-indicator/Build/Include/Makefile.inc
 --- truecrypt-7.1a-source/Build/Include/Makefile.inc	2012-02-07 11:36:48.000000000 +0100
 +++ truecrypt-7.1a-indicator/Build/Include/Makefile.inc	2013-06-17 01:34:00.429636758 +0200
 @@ -10,7 +10,7 @@
@@ -10,9 +10,9 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Build/Include/Makefile.inc truecrypt-7.
  
  %.o: %.c
  	@echo Compiling $(<F)
-diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
 --- truecrypt-7.1a-source/Main/Forms/MainFrame.cpp	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2013-06-16 18:06:49.897309166 +0200
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2013-06-25 01:16:30.606414472 +0200
 @@ -37,6 +37,7 @@
  namespace TrueCrypt
  {
@@ -21,30 +21,38 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a
  		ListItemRightClickEventPending (false),
  		SelectedItemIndex (-1),
  		SelectedSlotNumber (0),
-@@ -1411,6 +1412,22 @@
+@@ -1411,6 +1412,30 @@
  		}
  	}
  
++	void MainFrame::SetBusy (bool busy)
++	{
++		gtk_widget_set_sensitive(indicator_item_mountfavorites, !busy);
++		gtk_widget_set_sensitive(indicator_item_dismountall, !busy);
++		gtk_widget_set_sensitive(indicator_item_prefs, !busy);
++		gtk_widget_set_sensitive(indicator_item_exit, !busy /*&& CanExit()*/);
++	}
++
 +	static void IndicatorOnShowHideMenuItemSelected (GtkWidget *widget, MainFrame *self) { Gui->SetBackgroundMode (!Gui->IsInBackgroundMode()); }
-+	static void IndicatorOnMountAllFavoritesMenuItemSelected (GtkWidget *widget, MainFrame *self) { /*Busy = true;*/ self->MountAllFavorites (); /*Busy = false;*/ }
-+	static void IndicatorOnDismountAllMenuItemSelected (GtkWidget *widget, MainFrame *self) { /*Busy = true;*/ Gui->DismountAllVolumes(); /*Busy = false;*/ }
++	static void IndicatorOnMountAllFavoritesMenuItemSelected (GtkWidget *widget, MainFrame *self) { self->SetBusy(true); self->MountAllFavorites (); self->SetBusy(false); }
++	static void IndicatorOnDismountAllMenuItemSelected (GtkWidget *widget, MainFrame *self) { self->SetBusy(true); Gui->DismountAllVolumes(); self->SetBusy(false); }
 +	static void IndicatorOnPreferencesMenuItemSelected (GtkWidget *widget, MainFrame *self) {
-+		/*Busy = true;*/
++		self->SetBusy(true);
 +		PreferencesDialog dialog (self);
 +		dialog.ShowModal();
-+		/*Busy = false;*/
++		self->SetBusy(false);
 +	}
 +	static void IndicatorOnExitMenuItemSelected (GtkWidget *widget, MainFrame *self) {
-+		/*Busy = true;*/
++		self->SetBusy(true);
 +		if (Core->GetMountedVolumes().empty() || Gui->AskYesNo (LangString ["CONFIRM_EXIT"], false, true))
 +			self->Close (true);
-+		/*Busy = false;*/
++		self->SetBusy(false);
 +	}
 +
  	void MainFrame::ShowTaskBarIcon (bool show)
  	{
  		if (!show && mTaskBarIcon->IsIconInstalled())
-@@ -1420,8 +1437,44 @@
+@@ -1420,8 +1445,43 @@
  		else if (show && !mTaskBarIcon->IsIconInstalled())
  		{
  #ifndef TC_MACOSX
@@ -56,7 +64,6 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a
 +				app_indicator_set_status (indicator, APP_INDICATOR_STATUS_ACTIVE);
 +
 +				GtkWidget *menu = gtk_menu_new();
-+				GtkWidget *item;
 +
 +				indicator_item_showhide = gtk_menu_item_new_with_label (LangString[Gui->IsInBackgroundMode() ? "SHOW_TC" : "HIDE_TC"].mb_str());
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_showhide);
@@ -64,25 +71,25 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a
 +
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
 +
-+				item = gtk_menu_item_new_with_label ("Mount All Favorite Volumes");
-+				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-+				g_signal_connect (item, "activate", G_CALLBACK (IndicatorOnMountAllFavoritesMenuItemSelected), this);
++				indicator_item_mountfavorites = gtk_menu_item_new_with_label ("Mount All Favorite Volumes");
++				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_mountfavorites);
++				g_signal_connect (indicator_item_mountfavorites, "activate", G_CALLBACK (IndicatorOnMountAllFavoritesMenuItemSelected), this);
 +
-+				item = gtk_menu_item_new_with_label ("Dismount All Mounted Volumes");
-+				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-+				g_signal_connect (item, "activate", G_CALLBACK (IndicatorOnDismountAllMenuItemSelected), this);
-+
-+				gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
-+
-+				item = gtk_menu_item_new_with_label ("Preferences...");
-+				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-+				g_signal_connect (item, "activate", G_CALLBACK (IndicatorOnPreferencesMenuItemSelected), this);
++				indicator_item_dismountall = gtk_menu_item_new_with_label ("Dismount All Mounted Volumes");
++				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_dismountall);
++				g_signal_connect (indicator_item_dismountall, "activate", G_CALLBACK (IndicatorOnDismountAllMenuItemSelected), this);
 +
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
 +
-+				item = gtk_menu_item_new_with_label ("Exit");
-+				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-+				g_signal_connect (item, "activate", G_CALLBACK (IndicatorOnExitMenuItemSelected), this);
++				indicator_item_prefs = gtk_menu_item_new_with_label ("Preferences...");
++				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_prefs);
++				g_signal_connect (indicator_item_prefs, "activate", G_CALLBACK (IndicatorOnPreferencesMenuItemSelected), this);
++
++				gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
++
++				indicator_item_exit = gtk_menu_item_new_with_label ("Exit");
++				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_exit);
++				g_signal_connect (indicator_item_exit, "activate", G_CALLBACK (IndicatorOnExitMenuItemSelected), this);
 +
 +				gtk_widget_show_all (menu);
 +				app_indicator_set_menu (indicator, GTK_MENU (menu));
@@ -90,9 +97,9 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a
  		}
  	}
  
-diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
 --- truecrypt-7.1a-source/Main/Forms/MainFrame.h	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2013-06-17 03:04:13.665512293 +0200
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2013-06-25 01:13:41.882411066 +0200
 @@ -9,6 +9,10 @@
  #ifndef TC_HEADER_Main_Forms_MainFrame
  #define TC_HEADER_Main_Forms_MainFrame
@@ -104,7 +111,7 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-i
  #include "Forms.h"
  #include "ChangePasswordDialog.h"
  
-@@ -27,6 +31,11 @@
+@@ -27,6 +31,16 @@
  		static FilePath GetShowRequestFifoPath () { return Application::GetConfigFilePath (L".show-request-queue", true); }
  #endif
  
@@ -112,11 +119,16 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-i
 +
 +		AppIndicator *indicator;
 +		GtkWidget *indicator_item_showhide;
++		GtkWidget *indicator_item_mountfavorites;
++		GtkWidget *indicator_item_dismountall;
++		GtkWidget *indicator_item_prefs;
++		GtkWidget *indicator_item_exit;
++		void SetBusy (bool busy);
 +
  	protected:
  		enum
  		{
-@@ -60,7 +69,6 @@
+@@ -60,7 +74,6 @@
  		void LoadFavoriteVolumes ();
  		void LoadPreferences ();
  		void MountAllDevices ();
@@ -124,7 +136,7 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-i
  		void MountVolume ();
  		void OnAboutMenuItemSelected (wxCommandEvent& event);
  		void OnActivate (wxActivateEvent& event);
-diff -urN -xPKCS11 truecrypt-7.1a-source/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
 --- truecrypt-7.1a-source/Main/GraphicUserInterface.cpp	2012-02-07 11:36:48.000000000 +0100
 +++ truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp	2013-06-16 17:13:33.961382649 +0200
 @@ -1250,19 +1250,19 @@
@@ -159,7 +171,7 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/GraphicUserInterface.cpp truecrypt
  	}
  
  	void GraphicUserInterface::SetListCtrlColumnWidths (wxListCtrl *listCtrl, list <int> columnWidthPermilles, bool hasVerticalScrollbar) const
-diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
 --- truecrypt-7.1a-source/Main/Main.make	2012-02-07 11:36:48.000000000 +0100
 +++ truecrypt-7.1a-indicator/Main/Main.make	2013-06-16 16:08:56.677471799 +0200
 @@ -105,7 +105,7 @@
@@ -171,7 +183,7 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/Main.make truecrypt-7.1a-indicator
  
  ifeq "$(TC_BUILD_CONFIG)" "Release"
  ifndef NOSTRIP
-diff -urN -xPKCS11 truecrypt-7.1a-source/Main/TextUserInterface.cpp truecrypt-7.1a-indicator/Main/TextUserInterface.cpp
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/TextUserInterface.cpp truecrypt-7.1a-indicator/Main/TextUserInterface.cpp
 --- truecrypt-7.1a-source/Main/TextUserInterface.cpp	2012-02-07 11:36:48.000000000 +0100
 +++ truecrypt-7.1a-indicator/Main/TextUserInterface.cpp	2013-06-16 16:14:14.085464501 +0200
 @@ -1371,19 +1371,19 @@
@@ -197,9 +209,9 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Main/TextUserInterface.cpp truecrypt-7.
  				legacyBackup = true;
  				break;
  
-diff -urN -xPKCS11 truecrypt-7.1a-source/Makefile truecrypt-7.1a-indicator/Makefile
+diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Makefile truecrypt-7.1a-indicator/Makefile
 --- truecrypt-7.1a-source/Makefile	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Makefile	2013-06-24 21:15:09.738122127 +0200
++++ truecrypt-7.1a-indicator/Makefile	2013-06-26 02:15:36.613069880 +0200
 @@ -35,8 +35,8 @@
  export AS := nasm
  export RANLIB ?= ranlib
@@ -215,7 +227,7 @@ diff -urN -xPKCS11 truecrypt-7.1a-source/Makefile truecrypt-7.1a-indicator/Makef
  export WXCONFIG_CXXFLAGS :=
  WX_ROOT ?= ..
  
-+#export PKCS11_INC := $(BASE_DIR)/PKCS11
++#export PKCS11_INC := $(BASE_DIR)/pkcs11
 +
 +C_CXX_FLAGS += $(shell pkg-config --cflags appindicator-0.1)
  
