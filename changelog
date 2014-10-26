@@ -1,3 +1,9 @@
+truecrypt (7.1a-6) utopic; urgency=low
+
+  * Add missing dependency for build.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 25 Oct 2014 16:46:17 -0700
+
 truecrypt (7.1a-5) utopic; urgency=low
 
   * Add bash-completion.
