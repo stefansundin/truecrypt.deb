@@ -3,7 +3,7 @@ Section: utils
 Priority: extra
 Maintainer: Stefan Sundin <stefan@stefansundin.com>
 Build-Depends: debhelper (>= 8.0.0), pkg-config, libgtk2.0-dev, libwxgtk2.8-dev, libfuse-dev, libwxbase2.8-dev, nasm, libappindicator-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Homepage: http://www.truecrypt.org/
 
 Package: truecrypt

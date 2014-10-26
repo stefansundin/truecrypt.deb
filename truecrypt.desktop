@@ -7,8 +7,9 @@ Exec=/usr/bin/truecrypt
 Icon=truecrypt
 Terminal=false
 Type=Application
-Categories=Encryption;Encryption Tools;Utility;
+Categories=Utility;
 X-Ayatana-Desktop-Shortcuts=MountFavorites;DismountAll
+MimeType=application/x-truecrypt
 
 [MountFavorites Shortcut Group]
 Name=Mount All Favorite Volumes

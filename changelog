@@ -1,3 +1,9 @@
+truecrypt (7.1a-4) trusty; urgency=low
+
+  * Add .tc file association.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 20 Sep 2014 20:16:26 -0700
+
 truecrypt (7.1a-3) raring; urgency=low
 
   * Disable indicator menu entries like the ordinary tray menu.

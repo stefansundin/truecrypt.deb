@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	<mime-type type="application/x-truecrypt">
+		<comment>TrueCrypt Encrypted File container</comment>
+		<icon name="truecrypt"/>
+		<glob-deleteall/>
+		<glob pattern="*.tc"/>
+	</mime-type>
+</mime-info>
