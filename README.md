@@ -37,3 +37,10 @@ curl -o /usr/local/etc/bash_completion.d/truecrypt https://raw.githubusercontent
 ## Stats
 
 - [ppastats](https://stefansundin.github.io/truecrypt-deb/)
+
+
+# Changelog
+
+[![RSS](https://stefansundin.github.io/img/feed.png) Release feed](https://github.com/stefansundin/truecrypt-deb/releases.atom)
+
+Changelog: [changelog](changelog)
