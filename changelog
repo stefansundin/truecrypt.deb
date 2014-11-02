@@ -1,3 +1,10 @@
+truecrypt (7.1a-7) utopic; urgency=low
+
+  * Add missing options to bash-completion script:
+   --explore --background-task -f -h --help --non-interactive
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 01 Nov 2014 20:35:46 -0700
+
 truecrypt (7.1a-6) utopic; urgency=low
 
   * Add missing dependency for build.
