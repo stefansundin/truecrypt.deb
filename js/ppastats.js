@@ -95,16 +95,19 @@ function ppastats_pkg(json_url) {
         $("#pkg_name").html(data["name"]);
 
         $("#versions").append("<ul>");
-        $.each(data["versions"], function(i, v) {
-        var v_url = data["name"]+"_"+v+".html";
+        $.each(data["versions"].sort(), function(i, v) {
+            var v_url = data["name"]+"_"+v+".html";
 
-        $("#versions ul").append("<li><a href='"+v_url+"'>"+v+"</a></li>");
+            $("#versions ul").append("<li><a href='"+v_url+"'>"+v+"</a></li>");
         });
 
+        var total = 0;
         $("#distros").append("<ul>");
         $.each(data["distros"], function(i, d) {
-        $("#distros ul").append("<li>"+d["name"]+": "+d["count"]+"</li>");
+            $("#distros ul").append("<li>"+d["name"]+": "+d["count"]+"</li>");
+            total += d["count"];
         });
+        $("#distros ul").append("<li>total: "+total+"</li>");
 
 
         ppastats_chart(data["ddts"]);
