@@ -58,7 +58,7 @@ _truecrypt() {
   elif [[ $opt == --token-lib ]]; then
     _truecrypt_opt "/usr/lib/i386-linux-gnu/opensc-pkcs11.so /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so"
   elif [[ $cur =~ ^- ]]; then
-    _truecrypt_complete "-c --create -C -d --delete-token-keyfiles --export-token-keyfile --import-token-keyfiles -l --list-token-keyfiles --save-preferences --test --version --display-password --force -k --load-preferences -m -p --quick -t --text -v --verbose --backup-headers --create-keyfile --change --dismount --list --mount --restore-headers --volume-properties --auto-mount= --encryption= --filesystem= --fs-options= --hash= --keyfiles= --mount-options= --new-keyfiles= --new-password= --password= --protect-hidden= --protection-keyfiles= --protection-password= --random-source= --slot= --size= --token-lib= --volume-type="
+    _truecrypt_complete "--background-task -c --create -C -d --delete-token-keyfiles --explore --export-token-keyfile -f --force -h --help --import-token-keyfiles -l --list --list-token-keyfiles --load-preferences --mount --save-preferences --test --version --display-password -k -m --non-interactive -p --quick -t --text -v --verbose --backup-headers --create-keyfile --change --dismount --restore-headers --volume-properties --auto-mount= --encryption= --filesystem= --fs-options= --hash= --keyfiles= --mount-options= --new-keyfiles= --new-password= --password= --protect-hidden= --protection-keyfiles= --protection-password= --random-source= --slot= --size= --token-lib= --volume-type="
   else
     _filedir tc
   fi
