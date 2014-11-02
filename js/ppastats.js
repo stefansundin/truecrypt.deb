@@ -118,7 +118,7 @@ function ppastats_pkg(json_url) {
 
 function ppastats_ver() {
     $(document).ready(function() {
-    var pkg_url = data["pkg_name"]+".html";
+    var pkg_url = "index.html";
 
     $("#ppa_owner").html(data["ppa_owner"]);
     $("#ppa_name").html(data["ppa_name"]);
