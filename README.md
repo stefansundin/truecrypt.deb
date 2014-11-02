@@ -16,6 +16,11 @@ git clone https://github.com/stefansundin/truecrypt-deb.git debian
 debuild
 ```
 
+### PKCS header files
+
+`pkcs11.h`, `pkcs11f.h` and `pkcs11t.h` were downloaded from ftp://ftp.rsasecurity.com/pub/pkcs/pkcs-11/v2-20/
+
+
 ## Bash completion for Mac OS X
 
 The bash completion script is not perfectly compatible with Mac OS X, notably the switches with an equal sign do not behave correctly and there are errors printed.
