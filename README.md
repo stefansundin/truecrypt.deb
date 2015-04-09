@@ -41,9 +41,10 @@ curl -o /usr/local/etc/bash_completion.d/truecrypt https://raw.githubusercontent
 ```
 
 
-## Stats
+## Misc
 
 - [ppastats](https://stefansundin.github.io/truecrypt-deb/)
+- [apt:truecrypt](http://www.appnr.com/install/truecrypt)
 
 
 # Changelog
