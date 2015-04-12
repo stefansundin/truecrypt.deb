@@ -7,7 +7,7 @@
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
 
 %:
-	dh $@ 
+	dh $@
 
 build: build-arch build-indep
 
@@ -22,7 +22,7 @@ build-stamp:
 
 clean: do-clean
 
-do-clean: 
+do-clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -49,6 +49,7 @@ binary-arch: build install
 	install -m 644 -D "Resources/Icons/TrueCrypt-16x16.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt-indicator.xpm
 	install -m 644 -D debian/truecrypt.sharedmimeinfo debian/truecrypt/usr/share/mime/packages/truecrypt.xml
 	dh_install debian/truecrypt.desktop usr/share/applications
+	dh_install debian/truecrypt-autostart.desktop etc/xdg/autostart/truecrypt.desktop
 	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
 	dh_installman debian/truecrypt.1
 	dh_bash-completion

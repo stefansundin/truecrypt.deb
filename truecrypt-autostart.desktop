@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=TrueCrypt
+Type=Application
+Exec=/usr/bin/truecrypt
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Comment=Add --auto-mount=favorites to automatically mount favorite volumes.

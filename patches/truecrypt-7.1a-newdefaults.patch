@@ -1,0 +1,11 @@
+--- truecrypt-7.1a-orig/Main/UserPreferences.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-source/Main/UserPreferences.h	2015-04-12 13:15:09.433792471 -0700
+@@ -24,7 +24,7 @@
+ 			BackgroundTaskMenuMountItemsEnabled (true),
+ 			BackgroundTaskMenuOpenItemsEnabled (true),
+ 			BeepAfterHotkeyMountDismount (false),
+-			CloseBackgroundTaskOnNoVolumes (true),
++			CloseBackgroundTaskOnNoVolumes (false),
+ 			CloseExplorerWindowsOnDismount (true),
+ 			CloseSecurityTokenSessionsAfterMount (false),
+ 			DisableKernelEncryptionModeWarning (false),

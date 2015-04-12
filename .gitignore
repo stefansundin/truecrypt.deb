@@ -1,0 +1,4 @@
+/truecrypt
+/files
+*.debhelper.log
+*.substvars
