@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=TrueCrypt
 Type=Application
-Exec=/usr/bin/truecrypt
+Exec=/usr/bin/truecrypt --background-task
 Icon=truecrypt
 Hidden=false
 NoDisplay=false

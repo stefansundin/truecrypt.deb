@@ -1,6 +1,6 @@
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Build/Include/Makefile.inc truecrypt-7.1a-indicator/Build/Include/Makefile.inc
---- truecrypt-7.1a-source/Build/Include/Makefile.inc	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Build/Include/Makefile.inc	2013-06-17 01:34:00.429636758 +0200
+diff -ur truecrypt-7.1a-orig/Build/Include/Makefile.inc truecrypt-7.1a-indicator/Build/Include/Makefile.inc
+--- truecrypt-7.1a-orig/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Build/Include/Makefile.inc	2015-04-12 14:39:36.069920066 -0700
 @@ -10,7 +10,7 @@
  
  clean:
@@ -10,9 +10,87 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Build/Include/Makefile.inc 
  
  %.o: %.c
  	@echo Compiling $(<F)
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
---- truecrypt-7.1a-source/Main/Forms/MainFrame.cpp	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2013-06-25 01:16:30.606414472 +0200
+diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.cpp truecrypt-7.1a-indicator/Main/Forms/Forms.cpp
+--- truecrypt-7.1a-orig/Main/Forms/Forms.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/Forms.cpp	2015-04-12 17:14:35.282457169 -0700
+@@ -1582,7 +1582,7 @@
+ 	KeyfileNameTextCtrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NewSecurityTokenKeyfileDialogBase::OnKeyfileNameChanged ), NULL, this );
+ }
+ 
+-PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
++PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
+ {
+ 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+ 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
+@@ -1738,23 +1738,6 @@
+ 	
+ 	sbSizer18->Add( CloseBackgroundTaskOnNoVolumesCheckBox, 0, wxALL, 5 );
+ 	
+-	wxStaticBoxSizer* sbSizer26;
+-	sbSizer26 = new wxStaticBoxSizer( new wxStaticBox( BackgroundTaskPanel, wxID_ANY, _("Task Icon Menu Items") ), wxVERTICAL );
+-	
+-	BackgroundTaskMenuMountItemsEnabledCheckBox = new wxCheckBox( BackgroundTaskPanel, wxID_ANY, _("Mount Favorite Volumes"), wxDefaultPosition, wxDefaultSize, 0 );
+-	
+-	sbSizer26->Add( BackgroundTaskMenuMountItemsEnabledCheckBox, 0, wxALL, 5 );
+-	
+-	BackgroundTaskMenuOpenItemsEnabledCheckBox = new wxCheckBox( BackgroundTaskPanel, wxID_ANY, _("Open Mounted Volumes"), wxDefaultPosition, wxDefaultSize, 0 );
+-	
+-	sbSizer26->Add( BackgroundTaskMenuOpenItemsEnabledCheckBox, 0, wxALL, 5 );
+-	
+-	BackgroundTaskMenuDismountItemsEnabledCheckBox = new wxCheckBox( BackgroundTaskPanel, wxID_ANY, _("Dismount Mounted Volumes"), wxDefaultPosition, wxDefaultSize, 0 );
+-	
+-	sbSizer26->Add( BackgroundTaskMenuDismountItemsEnabledCheckBox, 0, wxALL, 5 );
+-	
+-	sbSizer18->Add( sbSizer26, 1, wxEXPAND|wxALL, 5 );
+-	
+ 	bSizer62->Add( sbSizer18, 0, wxEXPAND|wxALL, 5 );
+ 	
+ 	bSizer61->Add( bSizer62, 1, wxEXPAND|wxALL, 5 );
+@@ -1772,6 +1755,9 @@
+ 	
+ 	LogOnSizer = new wxStaticBoxSizer( new wxStaticBox( SystemIntegrationPage, wxID_ANY, _("Actions to Perform when User Logs On") ), wxVERTICAL );
+ 	
++	ConfigureAutostartButton = new wxButton( SystemIntegrationPage, wxID_ANY, _("Configure &Autostart..."), wxDefaultPosition, wxDefaultSize, 0 );
++	LogOnSizer->Add( ConfigureAutostartButton, 0, wxALL, 5 );
++	
+ 	StartOnLogonCheckBox = new wxCheckBox( SystemIntegrationPage, wxID_ANY, _("Start TrueCrypt Background Task"), wxDefaultPosition, wxDefaultSize, 0 );
+ 	
+ 	LogOnSizer->Add( StartOnLogonCheckBox, 0, wxALL, 5 );
+@@ -2023,6 +2009,7 @@
+ 	ForceAutoDismountCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnForceAutoDismountCheckBoxClick ), NULL, this );
+ 	PreserveTimestampsCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnPreserveTimestampsCheckBoxClick ), NULL, this );
+ 	BackgroundTaskEnabledCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnBackgroundTaskEnabledCheckBoxClick ), NULL, this );
++	ConfigureAutostartButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnConfigureAutostartButtonClick ), NULL, this );
+ 	NoKernelCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoKernelCryptoCheckBoxClick ), NULL, this );
+ 	NoHardwareCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoHardwareCryptoCheckBoxClick ), NULL, this );
+ 	SelectPkcs11ModuleButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnSelectPkcs11ModuleButtonClick ), NULL, this );
+diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.h truecrypt-7.1a-indicator/Main/Forms/Forms.h
+--- truecrypt-7.1a-orig/Main/Forms/Forms.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/Forms.h	2015-04-12 16:56:13.586429425 -0700
+@@ -551,11 +551,9 @@
+ 			wxPanel* BackgroundTaskPanel;
+ 			wxCheckBox* BackgroundTaskEnabledCheckBox;
+ 			wxCheckBox* CloseBackgroundTaskOnNoVolumesCheckBox;
+-			wxCheckBox* BackgroundTaskMenuMountItemsEnabledCheckBox;
+-			wxCheckBox* BackgroundTaskMenuOpenItemsEnabledCheckBox;
+-			wxCheckBox* BackgroundTaskMenuDismountItemsEnabledCheckBox;
+ 			wxPanel* SystemIntegrationPage;
+ 			wxStaticBoxSizer* LogOnSizer;
++			wxButton* ConfigureAutostartButton;
+ 			wxCheckBox* StartOnLogonCheckBox;
+ 			wxCheckBox* MountFavoritesOnLogonCheckBox;
+ 			wxCheckBox* MountDevicesOnLogonCheckBox;
+@@ -595,6 +593,7 @@
+ 			virtual void OnForceAutoDismountCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
+ 			virtual void OnPreserveTimestampsCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
+ 			virtual void OnBackgroundTaskEnabledCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
++			virtual void OnConfigureAutostartButtonClick( wxCommandEvent& event ){ event.Skip(); }
+ 			virtual void OnNoKernelCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
+ 			virtual void OnNoHardwareCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
+ 			virtual void OnSelectPkcs11ModuleButtonClick( wxCommandEvent& event ){ event.Skip(); }
+diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
+--- truecrypt-7.1a-orig/Main/Forms/MainFrame.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2015-04-12 16:06:56.058354944 -0700
 @@ -37,6 +37,7 @@
  namespace TrueCrypt
  {
@@ -21,7 +99,65 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp tr
  		ListItemRightClickEventPending (false),
  		SelectedItemIndex (-1),
  		SelectedSlotNumber (0),
-@@ -1411,6 +1412,30 @@
+@@ -491,57 +492,6 @@
+ 				Gui->AppendToMenu (*popup, _("Mount All Favorite Volumes"), this, wxCommandEventHandler (TaskBarIcon::OnMountAllFavoritesMenuItemSelected))->Enable (!Busy);
+ 				Gui->AppendToMenu (*popup, _("Dismount All Mounted Volumes"), this, wxCommandEventHandler (TaskBarIcon::OnDismountAllMenuItemSelected))->Enable (!Busy);
+ 				
+-				// Favorite volumes
+-				if (Gui->GetPreferences().BackgroundTaskMenuMountItemsEnabled && !Frame->FavoriteVolumesMenuMap.empty())
+-				{
+-					popup->AppendSeparator();
+-					typedef pair <int, FavoriteVolume> FavMapPair;
+-					foreach (FavMapPair fp, Frame->FavoriteVolumesMenuMap)
+-					{
+-						Gui->AppendToMenu (*popup, LangString["MOUNT"] + L" " + wstring (fp.second.Path) + (fp.second.MountPoint.IsEmpty() ? L"" : L"  " + wstring (fp.second.MountPoint)),
+-							this, wxCommandEventHandler (TaskBarIcon::OnFavoriteVolumeMenuItemSelected), fp.first)->Enable (!Busy);
+-					}
+-				}
+-
+-				// Mounted volumes
+-				VolumeInfoList mountedVolumes = Core->GetMountedVolumes();
+-				if (!mountedVolumes.empty())
+-				{
+-					if (Gui->GetPreferences().BackgroundTaskMenuOpenItemsEnabled)
+-					{
+-						popup->AppendSeparator();
+-						OpenMap.clear();
+-						foreach (shared_ptr <VolumeInfo> volume, mountedVolumes)
+-						{
+-							if (!volume->MountPoint.IsEmpty())
+-							{
+-								wxString label = LangString["OPEN"] + L" " + wstring (volume->MountPoint) + L" (" + wstring (volume->Path) + L")";
+-								wxMenuItem *item = Gui->AppendToMenu (*popup, label, this, wxCommandEventHandler (TaskBarIcon::OnOpenMenuItemSelected));
+-								OpenMap[item->GetId()] = volume;
+-							}
+-						}
+-					}
+-
+-					if (Gui->GetPreferences().BackgroundTaskMenuDismountItemsEnabled)
+-					{
+-						popup->AppendSeparator();
+-						DismountMap.clear();
+-						foreach (shared_ptr <VolumeInfo> volume, mountedVolumes)
+-						{
+-							wxString label = LangString["DISMOUNT"] + L" ";
+-
+-							if (!volume->MountPoint.IsEmpty())
+-								label += wstring (volume->MountPoint) + L" (" + wstring (volume->Path) + L")";
+-							else
+-								label += wstring (volume->Path);
+-
+-							wxMenuItem *item = Gui->AppendToMenu (*popup, label, this, wxCommandEventHandler (TaskBarIcon::OnDismountMenuItemSelected));
+-							item->Enable (!Busy);
+-							DismountMap[item->GetId()] = volume;
+-						}
+-					}
+-				}
+-
+ 				popup->AppendSeparator();
+ 				Gui->AppendToMenu (*popup, _("Preferences..."), this, wxCommandEventHandler (TaskBarIcon::OnPreferencesMenuItemSelected))->Enable (!Busy);
+ #ifndef TC_MACOSX
+@@ -1411,6 +1361,30 @@
  		}
  	}
  
@@ -52,13 +188,13 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp tr
  	void MainFrame::ShowTaskBarIcon (bool show)
  	{
  		if (!show && mTaskBarIcon->IsIconInstalled())
-@@ -1420,8 +1445,43 @@
+@@ -1419,9 +1393,41 @@
+ 		}
  		else if (show && !mTaskBarIcon->IsIconInstalled())
  		{
- #ifndef TC_MACOSX
+-#ifndef TC_MACOSX
 -			mTaskBarIcon->SetIcon (Resources::GetTrueCryptIcon(), L"TrueCrypt");
-+			//mTaskBarIcon->SetIcon (Resources::GetTrueCryptIcon(), L"TrueCrypt");
- #endif
+-#endif
 +			if (indicator == NULL) {
 +				indicator = app_indicator_new ("truecrypt", "truecrypt-indicator", APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
 +				app_indicator_set_status (indicator, APP_INDICATOR_STATUS_ACTIVE);
@@ -71,11 +207,11 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp tr
 +
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
 +
-+				indicator_item_mountfavorites = gtk_menu_item_new_with_label ("Mount All Favorite Volumes");
++				indicator_item_mountfavorites = gtk_menu_item_new_with_label ("Mount Favorite Volumes");
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_mountfavorites);
 +				g_signal_connect (indicator_item_mountfavorites, "activate", G_CALLBACK (IndicatorOnMountAllFavoritesMenuItemSelected), this);
 +
-+				indicator_item_dismountall = gtk_menu_item_new_with_label ("Dismount All Mounted Volumes");
++				indicator_item_dismountall = gtk_menu_item_new_with_label ("Dismount All");
 +				gtk_menu_shell_append (GTK_MENU_SHELL (menu), indicator_item_dismountall);
 +				g_signal_connect (indicator_item_dismountall, "activate", G_CALLBACK (IndicatorOnDismountAllMenuItemSelected), this);
 +
@@ -97,9 +233,9 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.cpp tr
  		}
  	}
  
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
---- truecrypt-7.1a-source/Main/Forms/MainFrame.h	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2013-06-25 01:13:41.882411066 +0200
+diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
+--- truecrypt-7.1a-orig/Main/Forms/MainFrame.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2015-04-12 15:52:08.837386604 -0700
 @@ -9,6 +9,10 @@
  #ifndef TC_HEADER_Main_Forms_MainFrame
  #define TC_HEADER_Main_Forms_MainFrame
@@ -136,15 +272,77 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Forms/MainFrame.h true
  		void MountVolume ();
  		void OnAboutMenuItemSelected (wxCommandEvent& event);
  		void OnActivate (wxActivateEvent& event);
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
---- truecrypt-7.1a-source/Main/GraphicUserInterface.cpp	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp	2013-06-16 17:13:33.961382649 +0200
-@@ -1250,19 +1250,19 @@
+diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.cpp truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp
+--- truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp	2015-04-12 17:08:46.934448397 -0700
+@@ -11,6 +11,7 @@
+ #ifdef TC_WINDOWS
+ #include <wx/msw/registry.h>
+ #endif
++#include "Platform/Unix/Process.h"
+ #include "Common/SecurityToken.h"
+ #include "Main/Main.h"
+ #include "Main/Application.h"
+@@ -59,9 +60,6 @@
+ 		TC_CHECK_BOX_VALIDATOR (BackgroundTaskEnabled);
+ 		TC_CHECK_BOX_VALIDATOR (CloseBackgroundTaskOnNoVolumes);
+ 		CloseBackgroundTaskOnNoVolumesCheckBox->Show (!Core->IsInPortableMode());
+-		TC_CHECK_BOX_VALIDATOR (BackgroundTaskMenuDismountItemsEnabled);
+-		TC_CHECK_BOX_VALIDATOR (BackgroundTaskMenuMountItemsEnabled);
+-		TC_CHECK_BOX_VALIDATOR (BackgroundTaskMenuOpenItemsEnabled);
+ 
+ 		// Encryption
+ 		AesHwCpuSupportedStaticText->SetLabel (
+@@ -103,7 +101,10 @@
+ #endif
+ 
+ #ifndef TC_WINDOWS
+-		LogOnSizer->Show (false);
++		// LogOnSizer->Show (false);
++		StartOnLogonCheckBox->Show (false);
++		MountFavoritesOnLogonCheckBox->Show (false);
++		MountDevicesOnLogonCheckBox->Show (false);
+ 		MountRemovableCheckBox->Show (false);
+ 		CloseExplorerWindowsOnDismountCheckBox->Show (false);
+ #endif
+@@ -272,6 +273,18 @@
+ 			BackgroundTaskEnabledCheckBox->SetValue (!Gui->AskYesNo (LangString["CONFIRM_BACKGROUND_TASK_DISABLED"], false, true));
+ 	}
+ 
++	void PreferencesDialog::OnConfigureAutostartButtonClick (wxCommandEvent& event)
++	{
++		// Launch "Startup Applications"
++		try
++		{
++			list <string> args;
++			Process::Execute ("gnome-session-properties", args);
++		}
++		// catch (TimeOut&) { }
++		catch (exception &e) { Gui->ShowError (e); }
++	}
++
+ 	void PreferencesDialog::OnNoHardwareCryptoCheckBoxClick (wxCommandEvent& event)
+ 	{
+ 		if (event.IsChecked())
+diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.h truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h
+--- truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h	2015-04-12 17:06:22.770444766 -0700
+@@ -26,6 +26,7 @@
+ 	protected:
+ 		void OnAssignHotkeyButtonClick (wxCommandEvent& event);
+ 		void OnBackgroundTaskEnabledCheckBoxClick (wxCommandEvent& event);
++		void OnConfigureAutostartButtonClick (wxCommandEvent& event);
+ 		void OnCancelButtonClick (wxCommandEvent& event) { Close(); }
+ 		void OnClose (wxCloseEvent& event);
+ 		void OnDismountOnPowerSavingCheckBoxClick (wxCommandEvent& event);
+diff -ur truecrypt-7.1a-orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a-orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp	2015-04-12 16:04:30.310351274 -0700
+@@ -1250,19 +1250,16 @@
  			File backupFile;
  			backupFile.Open (*files.front(), File::OpenRead);
  
 -			uint64 headerSize;
-+			//uint64 headerSize;
  			bool legacyBackup;
  
  			// Determine the format of the backup file
@@ -152,17 +350,15 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/GraphicUserInterface.c
  			{
  			case TC_VOLUME_HEADER_GROUP_SIZE:
 -				headerSize = TC_VOLUME_HEADER_SIZE;
-+				//headerSize = TC_VOLUME_HEADER_SIZE;
  				legacyBackup = false;
  				break;
  
  			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
 -				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
-+				//headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
  				legacyBackup = true;
  				break;
  
-@@ -1472,6 +1472,8 @@
+@@ -1472,6 +1469,8 @@
  		}
  
  		BackgroundMode = state;
@@ -171,9 +367,9 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/GraphicUserInterface.c
  	}
  
  	void GraphicUserInterface::SetListCtrlColumnWidths (wxListCtrl *listCtrl, list <int> columnWidthPermilles, bool hasVerticalScrollbar) const
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
---- truecrypt-7.1a-source/Main/Main.make	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/Main.make	2013-06-16 16:08:56.677471799 +0200
+diff -ur truecrypt-7.1a-orig/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
+--- truecrypt-7.1a-orig/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Main.make	2015-04-12 14:39:36.069920066 -0700
 @@ -105,7 +105,7 @@
  
  $(APPNAME): $(LIBS) $(OBJS)
@@ -183,15 +379,14 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/Main.make truecrypt-7.
  
  ifeq "$(TC_BUILD_CONFIG)" "Release"
  ifndef NOSTRIP
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/TextUserInterface.cpp truecrypt-7.1a-indicator/Main/TextUserInterface.cpp
---- truecrypt-7.1a-source/Main/TextUserInterface.cpp	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Main/TextUserInterface.cpp	2013-06-16 16:14:14.085464501 +0200
-@@ -1371,19 +1371,19 @@
+diff -ur truecrypt-7.1a-orig/Main/TextUserInterface.cpp truecrypt-7.1a-indicator/Main/TextUserInterface.cpp
+--- truecrypt-7.1a-orig/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/TextUserInterface.cpp	2015-04-12 16:05:14.794352394 -0700
+@@ -1371,19 +1371,16 @@
  			File backupFile;
  			backupFile.Open (filePath, File::OpenRead);
  
 -			uint64 headerSize;
-+			//uint64 headerSize;
  			bool legacyBackup;
  
  			// Determine the format of the backup file
@@ -199,19 +394,66 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Main/TextUserInterface.cpp 
  			{
  			case TC_VOLUME_HEADER_GROUP_SIZE:
 -				headerSize = TC_VOLUME_HEADER_SIZE;
-+				//headerSize = TC_VOLUME_HEADER_SIZE;
  				legacyBackup = false;
  				break;
  
  			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
 -				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
-+				//headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
  				legacyBackup = true;
  				break;
  
-diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Makefile truecrypt-7.1a-indicator/Makefile
---- truecrypt-7.1a-source/Makefile	2012-02-07 11:36:48.000000000 +0100
-+++ truecrypt-7.1a-indicator/Makefile	2013-06-26 02:15:36.613069880 +0200
+diff -ur truecrypt-7.1a-orig/Main/UserPreferences.cpp truecrypt-7.1a-indicator/Main/UserPreferences.cpp
+--- truecrypt-7.1a-orig/Main/UserPreferences.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/UserPreferences.cpp	2015-04-12 14:55:58.161944799 -0700
+@@ -67,9 +67,6 @@
+ #define TC_CONFIG_SET(NAME) SetValue (configMap[L###NAME], NAME)
+ 
+ 			TC_CONFIG_SET (BackgroundTaskEnabled);
+-			TC_CONFIG_SET (BackgroundTaskMenuDismountItemsEnabled);
+-			TC_CONFIG_SET (BackgroundTaskMenuMountItemsEnabled);
+-			TC_CONFIG_SET (BackgroundTaskMenuOpenItemsEnabled);
+ 			TC_CONFIG_SET (BeepAfterHotkeyMountDismount);
+ 			SetValue (configMap[L"CachePasswords"], DefaultMountOptions.CachePassword);
+ 			TC_CONFIG_SET (CloseBackgroundTaskOnNoVolumes);
+@@ -167,9 +164,6 @@
+ #define TC_CONFIG_ADD(NAME) formatter.AddEntry (L###NAME, NAME)
+ 
+ 		TC_CONFIG_ADD (BackgroundTaskEnabled);
+-		TC_CONFIG_ADD (BackgroundTaskMenuDismountItemsEnabled);
+-		TC_CONFIG_ADD (BackgroundTaskMenuMountItemsEnabled);
+-		TC_CONFIG_ADD (BackgroundTaskMenuOpenItemsEnabled);
+ 		TC_CONFIG_ADD (BeepAfterHotkeyMountDismount);
+ 		formatter.AddEntry (L"CachePasswords", DefaultMountOptions.CachePassword);
+ 		TC_CONFIG_ADD (CloseBackgroundTaskOnNoVolumes);
+diff -ur truecrypt-7.1a-orig/Main/UserPreferences.h truecrypt-7.1a-indicator/Main/UserPreferences.h
+--- truecrypt-7.1a-orig/Main/UserPreferences.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/UserPreferences.h	2015-04-12 15:47:52.805428159 -0700
+@@ -20,11 +20,8 @@
+ 		UserPreferences ()
+ 			:
+ 			BackgroundTaskEnabled (true),
+-			BackgroundTaskMenuDismountItemsEnabled (true),
+-			BackgroundTaskMenuMountItemsEnabled (true),
+-			BackgroundTaskMenuOpenItemsEnabled (true),
+ 			BeepAfterHotkeyMountDismount (false),
+-			CloseBackgroundTaskOnNoVolumes (true),
++			CloseBackgroundTaskOnNoVolumes (false),
+ 			CloseExplorerWindowsOnDismount (true),
+ 			CloseSecurityTokenSessionsAfterMount (false),
+ 			DisableKernelEncryptionModeWarning (false),
+@@ -60,9 +57,6 @@
+ 		MountOptions DefaultMountOptions;
+ 
+ 		bool BackgroundTaskEnabled;
+-		bool BackgroundTaskMenuDismountItemsEnabled;
+-		bool BackgroundTaskMenuMountItemsEnabled;
+-		bool BackgroundTaskMenuOpenItemsEnabled;
+ 		bool BeepAfterHotkeyMountDismount;
+ 		bool CloseBackgroundTaskOnNoVolumes;
+ 		bool CloseExplorerWindowsOnDismount;
+diff -ur truecrypt-7.1a-orig/Makefile truecrypt-7.1a-indicator/Makefile
+--- truecrypt-7.1a-orig/Makefile	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Makefile	2015-04-12 16:28:52.454388095 -0700
 @@ -35,8 +35,8 @@
  export AS := nasm
  export RANLIB ?= ranlib
@@ -227,7 +469,7 @@ diff -urN -xpkcs11 -xForms.cpp truecrypt-7.1a-source/Makefile truecrypt-7.1a-ind
  export WXCONFIG_CXXFLAGS :=
  WX_ROOT ?= ..
  
-+#export PKCS11_INC := $(BASE_DIR)/pkcs11
++# export PKCS11_INC := $(BASE_DIR)/pkcs11
 +
 +C_CXX_FLAGS += $(shell pkg-config --cflags appindicator-0.1)
  

@@ -16,7 +16,7 @@ For installation instructions, go to: https://launchpad.net/~stefansundin/+archi
 ### Prerequisites
 
 ```bash
-sudo apt-get install devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion
+sudo apt-get install devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
 ```
 
 ### Build

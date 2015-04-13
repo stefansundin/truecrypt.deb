@@ -22,3 +22,4 @@ Description: Free open-source disk encryption software
  encrypted.
  .
  This package replaces the standard tray icon with a unity indicator.
+ This package includes a bash completion script.
