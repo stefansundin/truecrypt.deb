@@ -46,7 +46,7 @@ binary-arch: build install
 	dh_installdocs
 	dh_installchangelogs
 	install -m 644 -D "Resources/Icons/TrueCrypt-48x48.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt.xpm
-	install -m 644 -D "Resources/Icons/TrueCrypt-16x16.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt-indicator.xpm
+	install -m 644 -D debian/truecrypt-indicator.png debian/truecrypt/usr/share/pixmaps/truecrypt-indicator.png
 	install -m 644 -D debian/truecrypt.sharedmimeinfo debian/truecrypt/usr/share/mime/packages/truecrypt.xml
 	install -m 644 -D debian/truecrypt.desktop debian/truecrypt/usr/share/applications/truecrypt.desktop
 	install -m 644 -D debian/truecrypt-autostart.desktop debian/truecrypt/etc/xdg/autostart/truecrypt.desktop
