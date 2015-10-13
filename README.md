@@ -28,7 +28,7 @@ wget https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/truecr
 tar xzf truecrypt_7.1a.orig.tar.gz
 cd truecrypt-7.1a-source
 git clone https://github.com/stefansundin/truecrypt.deb.git debian
-debuild
+debuild -i -us -uc -b
 ```
 
 ### PKCS header files
