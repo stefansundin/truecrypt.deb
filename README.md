@@ -13,15 +13,27 @@ For installation instructions, go to: https://launchpad.net/~stefansundin/+archi
 
 ## Building
 
+### Vagrant
+
+If you are familiar with [Vagrant](https://www.vagrantup.com/), you can simply run this to build the deb file inside a VM:
+
+```shell
+git clone https://github.com/stefansundin/truecrypt.deb.git
+cd truecrypt.deb
+vagrant up
+```
+
+Follow the instructions printed by the Vagrantfile.
+
 ### Prerequisites
 
-```bash
+```shell
 sudo apt-get install devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
 ```
 
 ### Build
 
-```bash
+```shell
 mkdir truecrypt
 cd truecrypt
 wget https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/truecrypt_7.1a.orig.tar.gz
@@ -42,7 +54,7 @@ The bash completion script is not perfectly compatible with Mac OS X, notably th
 
 To install with Homebrew:
 
-```bash
+```shell
 ln -s /Applications/TrueCrypt.app/Contents/MacOS/TrueCrypt /usr/local/bin/truecrypt
 brew install bash-completion
 curl -o /usr/local/etc/bash_completion.d/truecrypt https://raw.githubusercontent.com/stefansundin/truecrypt.deb/master/truecrypt.bash-completion

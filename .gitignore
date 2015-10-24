@@ -1,4 +1,6 @@
 /truecrypt
 /files
+/.vagrant
 *.debhelper.log
 *.substvars
+*.deb

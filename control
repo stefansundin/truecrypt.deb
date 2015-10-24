@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 9.20120909), pkg-config, libgtk2.0-dev,
  libwxgtk2.8-dev, libfuse-dev, libwxbase2.8-dev, nasm, libappindicator-dev,
  bash-completion
 Standards-Version: 3.9.6
-Homepage: http://www.truecrypt.org/
+Homepage: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
 Package: truecrypt
 Architecture: any
@@ -21,5 +21,11 @@ Description: Free open-source disk encryption software
  password/keyfile(s) or correct encryption keys. Entire file systems can be
  encrypted.
  .
- This package replaces the standard tray icon with a unity indicator.
- This package includes a bash completion script.
+ This package includes the following patches:
+ 1) The standard tray icon has been replaced with a unity indicator.
+ 2) A bash completion script is included.
+ 3) TrueCrypt is automatically added to your Startup Applications.
+ .
+ To automatically grant TrueCrypt root privileges to mount volumes, run
+ `sudo visudo` and add this to the end of the file:
+ your_username ALL=(ALL) NOPASSWD:/usr/bin/truecrypt
