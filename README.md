@@ -2,6 +2,8 @@
 
 > Debianization of TrueCrypt.
 
+The goal of this project is to build a .deb of TrueCrypt 7.1a, plus [a few patches](patches) that fixes minor issues. Besides those improvements, there are no attempts to change the crypto or continue development in any significant way.
+
 For installation instructions, go to: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
 #### Other projects
@@ -28,7 +30,7 @@ Follow the instructions printed by the Vagrantfile.
 ### Prerequisites
 
 ```shell
-sudo apt-get install devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
+sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
 ```
 
 ### Build
