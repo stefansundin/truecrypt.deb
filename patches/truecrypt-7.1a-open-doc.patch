@@ -1,0 +1,42 @@
+diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp	2015-12-15 15:58:09.779429387 -0800
++++ truecrypt-7.1a/Main/GraphicUserInterface.cpp	2015-12-15 17:59:30.887748644 -0800
+@@ -991,22 +991,15 @@
+ 		return;
+ 
+ #else
+-		wxMimeTypesManager mimeMgr;
+-		wxFileType *fileType = mimeMgr.GetFileTypeFromExtension (document.GetExt());
+-		if (fileType)
++
++		try
+ 		{
+-			try
+-			{
+-#ifdef TC_MACOSX
+-				if (wxExecute (fileType->GetOpenCommand (document.GetFullPath())) != 0)
+-					return;
+-#else
+-				if (wxExecute (fileType->GetOpenCommand (L"\"" + document.GetFullPath() + L"\"")) != 0)
+-					return;
+-#endif
+-			}
+-			catch (TimeOut&) { }
++			list <string> args;
++			args.push_back (string (document.GetFullPath().mb_str()));
++			Process::Execute ("xdg-open", args, 2000);
+ 		}
++		catch (TimeOut&) { }
++		catch (exception &e) { ShowError (e); }
+ #endif
+ 	}
+ 
+@@ -1085,7 +1078,7 @@
+ #elif defined (TC_MACOSX)
+ 			docPath += L"/../Resources/TrueCrypt User Guide.pdf";
+ #elif defined (TC_UNIX)
+-			docPath = L"/usr/share/truecrypt/doc/TrueCrypt User Guide.pdf";
++			docPath = L"/usr/share/doc/truecrypt/TrueCrypt User Guide.pdf.gz";
+ #else
+ #	error TC_RESOURCE_DIR undefined
+ #endif
