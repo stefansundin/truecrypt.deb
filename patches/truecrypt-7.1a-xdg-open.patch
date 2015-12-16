@@ -1,0 +1,29 @@
+diff -ur truecrypt-7.1a-source/Main/UserInterface.cpp truecrypt-7.1a-xdg/Main/UserInterface.cpp
+--- truecrypt-7.1a-source/Main/UserInterface.cpp	2015-12-15 15:58:13.603429387 -0800
++++ truecrypt-7.1a-xdg/Main/UserInterface.cpp	2015-12-15 16:03:02.187429387 -0800
+@@ -828,7 +828,7 @@
+ 		// MIME handler for directory seems to be unavailable through wxWidgets
+ 		wxString desktop = GetTraits()->GetDesktopEnvironment();
+ 
+-		if (desktop == L"GNOME" || desktop.empty())
++		if (desktop == L"GNOME")
+ 		{
+ 			args.push_back ("--no-default-window");
+ 			args.push_back ("--no-desktop");
+@@ -861,6 +861,16 @@
+ 				catch (exception &e) { ShowError (e); }
+ 			}
+ 		}
++		else
++		{
++			args.push_back (string (path));
++			try
++			{
++				Process::Execute ("xdg-open", args, 2000);
++			}
++			catch (TimeOut&) { }
++			catch (exception &e) { ShowError (e); }
++		}
+ #endif
+ 	}
+ 

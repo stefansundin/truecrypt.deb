@@ -4,3 +4,7 @@
 *.debhelper.log
 *.substvars
 *.deb
+
+Thumbs.db
+.DS_Store
+*.swp
