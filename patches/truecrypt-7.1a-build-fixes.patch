@@ -1,0 +1,83 @@
+diff -ur truecrypt-7.1a.orig/Build/Include/Makefile.inc truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc
+--- truecrypt-7.1a.orig/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc	2015-12-15 20:00:28.741494540 -0800
+@@ -10,7 +10,7 @@
+ 
+ clean:
+ 	@echo Cleaning $(NAME)
+-	rm -f $(APPNAME) $(NAME).a $(OBJS) $(OBJS:.o=.d) *.gch
++	rm -f $(APPNAME) $(NAME).a $(OBJS) $(OBJS:.o=.d) *.gch $(RESOURCES) SystemPrecompiled.d
+ 
+ %.o: %.c
+ 	@echo Compiling $(<F)
+diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp	2015-12-15 20:44:32.088962785 -0800
+@@ -1250,19 +1250,16 @@
+ 			File backupFile;
+ 			backupFile.Open (*files.front(), File::OpenRead);
+ 
+-			uint64 headerSize;
+ 			bool legacyBackup;
+ 
+ 			// Determine the format of the backup file
+ 			switch (backupFile.Length())
+ 			{
+ 			case TC_VOLUME_HEADER_GROUP_SIZE:
+-				headerSize = TC_VOLUME_HEADER_SIZE;
+ 				legacyBackup = false;
+ 				break;
+ 
+ 			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
+-				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
+ 				legacyBackup = true;
+ 				break;
+ 
+diff -ur truecrypt-7.1a.orig/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
+--- truecrypt-7.1a.orig/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/Main.make	2015-12-15 20:48:31.489182912 -0800
+@@ -55,6 +55,8 @@
+ OBJS += Forms/WizardFrame.o
+ endif
+ 
++LIBS += -ldl
++
+ ifndef DISABLE_PRECOMPILED_HEADERS
+ PCH := SystemPrecompiled.h.gch
+ endif
+diff -ur truecrypt-7.1a.orig/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp
+--- truecrypt-7.1a.orig/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp	2015-12-15 20:47:27.721088206 -0800
+@@ -1371,19 +1371,16 @@
+ 			File backupFile;
+ 			backupFile.Open (filePath, File::OpenRead);
+ 
+-			uint64 headerSize;
+ 			bool legacyBackup;
+ 
+ 			// Determine the format of the backup file
+ 			switch (backupFile.Length())
+ 			{
+ 			case TC_VOLUME_HEADER_GROUP_SIZE:
+-				headerSize = TC_VOLUME_HEADER_SIZE;
+ 				legacyBackup = false;
+ 				break;
+ 
+ 			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
+-				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
+ 				legacyBackup = true;
+ 				break;
+ 
+diff -ur truecrypt-7.1a.orig/Makefile truecrypt-7.1a-build-fixes/Makefile
+--- truecrypt-7.1a.orig/Makefile	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Makefile	2015-12-15 20:48:37.214318437 -0800
+@@ -50,6 +50,9 @@
+ export WXCONFIG_CXXFLAGS :=
+ WX_ROOT ?= ..
+ 
++CFLAGS += -Wno-sequence-point
++CXXFLAGS += -Wno-narrowing
++PKCS11_INC ?= $(HOME)/pkcs11
+ 
+ export TC_BUILD_CONFIG := Release
+ 

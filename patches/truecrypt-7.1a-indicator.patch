@@ -1,18 +1,6 @@
-diff -ur truecrypt-7.1a-orig/Build/Include/Makefile.inc truecrypt-7.1a-indicator/Build/Include/Makefile.inc
---- truecrypt-7.1a-orig/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Build/Include/Makefile.inc	2015-04-12 14:39:36.069920066 -0700
-@@ -10,7 +10,7 @@
- 
- clean:
- 	@echo Cleaning $(NAME)
--	rm -f $(APPNAME) $(NAME).a $(OBJS) $(OBJS:.o=.d) *.gch
-+	rm -f $(APPNAME) $(NAME).a $(OBJS) $(OBJS:.o=.d) *.gch $(RESOURCES) SystemPrecompiled.d
- 
- %.o: %.c
- 	@echo Compiling $(<F)
-diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.cpp truecrypt-7.1a-indicator/Main/Forms/Forms.cpp
---- truecrypt-7.1a-orig/Main/Forms/Forms.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/Forms.cpp	2015-04-12 17:14:35.282457169 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/Forms.cpp truecrypt-7.1a-indicator/Main/Forms/Forms.cpp
+--- truecrypt-7.1a-build-fixes/Main/Forms/Forms.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/Forms.cpp	2015-12-15 20:55:53.279220415 -0800
 @@ -1582,7 +1582,7 @@
  	KeyfileNameTextCtrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NewSecurityTokenKeyfileDialogBase::OnKeyfileNameChanged ), NULL, this );
  }
@@ -56,18 +44,18 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.cpp truecrypt-7.1a-indicator/Main/
  	StartOnLogonCheckBox = new wxCheckBox( SystemIntegrationPage, wxID_ANY, _("Start TrueCrypt Background Task"), wxDefaultPosition, wxDefaultSize, 0 );
  	
  	LogOnSizer->Add( StartOnLogonCheckBox, 0, wxALL, 5 );
-@@ -2023,6 +2009,7 @@
- 	ForceAutoDismountCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnForceAutoDismountCheckBoxClick ), NULL, this );
+@@ -2024,6 +2010,7 @@
  	PreserveTimestampsCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnPreserveTimestampsCheckBoxClick ), NULL, this );
  	BackgroundTaskEnabledCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnBackgroundTaskEnabledCheckBoxClick ), NULL, this );
-+	ConfigureAutostartButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnConfigureAutostartButtonClick ), NULL, this );
  	NoKernelCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoKernelCryptoCheckBoxClick ), NULL, this );
++	ConfigureAutostartButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnConfigureAutostartButtonClick ), NULL, this );
  	NoHardwareCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoHardwareCryptoCheckBoxClick ), NULL, this );
  	SelectPkcs11ModuleButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnSelectPkcs11ModuleButtonClick ), NULL, this );
-diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.h truecrypt-7.1a-indicator/Main/Forms/Forms.h
---- truecrypt-7.1a-orig/Main/Forms/Forms.h	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/Forms.h	2015-04-12 16:56:13.586429425 -0700
-@@ -551,11 +551,9 @@
+ 	HotkeyListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( PreferencesDialogBase::OnHotkeyListItemDeselected ), NULL, this );
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/Forms.h truecrypt-7.1a-indicator/Main/Forms/Forms.h
+--- truecrypt-7.1a-build-fixes/Main/Forms/Forms.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/Forms.h	2015-12-15 21:27:01.426005445 -0800
+@@ -551,11 +551,10 @@
  			wxPanel* BackgroundTaskPanel;
  			wxCheckBox* BackgroundTaskEnabledCheckBox;
  			wxCheckBox* CloseBackgroundTaskOnNoVolumesCheckBox;
@@ -77,10 +65,11 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.h truecrypt-7.1a-indicator/Main/Fo
  			wxPanel* SystemIntegrationPage;
  			wxStaticBoxSizer* LogOnSizer;
 +			wxButton* ConfigureAutostartButton;
++			wxCheckBox* BackgroundTaskMenuDismountItemsEnabledCheckBox;
  			wxCheckBox* StartOnLogonCheckBox;
  			wxCheckBox* MountFavoritesOnLogonCheckBox;
  			wxCheckBox* MountDevicesOnLogonCheckBox;
-@@ -595,6 +593,7 @@
+@@ -595,6 +594,7 @@
  			virtual void OnForceAutoDismountCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnPreserveTimestampsCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnBackgroundTaskEnabledCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
@@ -88,9 +77,9 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/Forms.h truecrypt-7.1a-indicator/Main/Fo
  			virtual void OnNoKernelCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnNoHardwareCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnSelectPkcs11ModuleButtonClick( wxCommandEvent& event ){ event.Skip(); }
-diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
---- truecrypt-7.1a-orig/Main/Forms/MainFrame.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2015-04-12 16:06:56.058354944 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp
+--- truecrypt-7.1a-build-fixes/Main/Forms/MainFrame.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.cpp	2015-12-15 21:31:03.170817443 -0800
 @@ -37,6 +37,7 @@
  namespace TrueCrypt
  {
@@ -233,9 +222,9 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.cpp truecrypt-7.1a-indicator/M
  		}
  	}
  
-diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
---- truecrypt-7.1a-orig/Main/Forms/MainFrame.h	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2015-04-12 15:52:08.837386604 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Main/Forms/MainFrame.h
+--- truecrypt-7.1a-build-fixes/Main/Forms/MainFrame.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/MainFrame.h	2015-12-15 21:01:44.315220415 -0800
 @@ -9,6 +9,10 @@
  #ifndef TC_HEADER_Main_Forms_MainFrame
  #define TC_HEADER_Main_Forms_MainFrame
@@ -243,7 +232,7 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Mai
 +#define GSocket GlibGSocket
 +#include <libappindicator/app-indicator.h>
 +#undef GSocket
-+ 
++
  #include "Forms.h"
  #include "ChangePasswordDialog.h"
  
@@ -272,9 +261,9 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/MainFrame.h truecrypt-7.1a-indicator/Mai
  		void MountVolume ();
  		void OnAboutMenuItemSelected (wxCommandEvent& event);
  		void OnActivate (wxActivateEvent& event);
-diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.cpp truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp
---- truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp	2015-04-12 17:08:46.934448397 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/PreferencesDialog.cpp truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp
+--- truecrypt-7.1a-build-fixes/Main/Forms/PreferencesDialog.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.cpp	2015-12-15 21:03:07.971220415 -0800
 @@ -11,6 +11,7 @@
  #ifdef TC_WINDOWS
  #include <wx/msw/registry.h>
@@ -324,9 +313,9 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.cpp truecrypt-7.1a-ind
  	void PreferencesDialog::OnNoHardwareCryptoCheckBoxClick (wxCommandEvent& event)
  	{
  		if (event.IsChecked())
-diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.h truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h
---- truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.h	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h	2015-04-12 17:06:22.770444766 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/Forms/PreferencesDialog.h truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h
+--- truecrypt-7.1a-build-fixes/Main/Forms/PreferencesDialog.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/Forms/PreferencesDialog.h	2015-12-15 21:03:35.555456885 -0800
 @@ -26,6 +26,7 @@
  	protected:
  		void OnAssignHotkeyButtonClick (wxCommandEvent& event);
@@ -335,30 +324,10 @@ diff -ur truecrypt-7.1a-orig/Main/Forms/PreferencesDialog.h truecrypt-7.1a-indic
  		void OnCancelButtonClick (wxCommandEvent& event) { Close(); }
  		void OnClose (wxCloseEvent& event);
  		void OnDismountOnPowerSavingCheckBoxClick (wxCommandEvent& event);
-diff -ur truecrypt-7.1a-orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
---- truecrypt-7.1a-orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp	2015-04-12 16:04:30.310351274 -0700
-@@ -1250,19 +1250,16 @@
- 			File backupFile;
- 			backupFile.Open (*files.front(), File::OpenRead);
- 
--			uint64 headerSize;
- 			bool legacyBackup;
- 
- 			// Determine the format of the backup file
- 			switch (backupFile.Length())
- 			{
- 			case TC_VOLUME_HEADER_GROUP_SIZE:
--				headerSize = TC_VOLUME_HEADER_SIZE;
- 				legacyBackup = false;
- 				break;
- 
- 			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
--				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
- 				legacyBackup = true;
- 				break;
- 
-@@ -1472,6 +1469,8 @@
+diff -ur truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp	2015-12-15 20:44:32.088962785 -0800
++++ truecrypt-7.1a-indicator/Main/GraphicUserInterface.cpp	2015-12-15 21:04:01.152247958 -0800
+@@ -1469,6 +1469,8 @@
  		}
  
  		BackgroundMode = state;
@@ -367,44 +336,21 @@ diff -ur truecrypt-7.1a-orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-indica
  	}
  
  	void GraphicUserInterface::SetListCtrlColumnWidths (wxListCtrl *listCtrl, list <int> columnWidthPermilles, bool hasVerticalScrollbar) const
-diff -ur truecrypt-7.1a-orig/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
---- truecrypt-7.1a-orig/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/Main.make	2015-04-12 14:39:36.069920066 -0700
-@@ -105,7 +105,7 @@
+diff -ur truecrypt-7.1a-build-fixes/Main/Main.make truecrypt-7.1a-indicator/Main/Main.make
+--- truecrypt-7.1a-build-fixes/Main/Main.make	2015-12-15 20:48:31.489182912 -0800
++++ truecrypt-7.1a-indicator/Main/Main.make	2015-12-15 21:04:34.364844755 -0800
+@@ -61,6 +61,8 @@
+ PCH := SystemPrecompiled.h.gch
+ endif
  
- $(APPNAME): $(LIBS) $(OBJS)
- 	@echo Linking $@
--	$(CXX) -o $(APPNAME) $(LFLAGS) $(OBJS) $(LIBS) $(FUSE_LIBS) $(WX_LIBS)
-+	$(CXX) -o $(APPNAME) $(LFLAGS) $(OBJS) $(LIBS) $(FUSE_LIBS) $(WX_LIBS) -ldl $(shell pkg-config --libs appindicator-0.1)
- 
- ifeq "$(TC_BUILD_CONFIG)" "Release"
- ifndef NOSTRIP
-diff -ur truecrypt-7.1a-orig/Main/TextUserInterface.cpp truecrypt-7.1a-indicator/Main/TextUserInterface.cpp
---- truecrypt-7.1a-orig/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/TextUserInterface.cpp	2015-04-12 16:05:14.794352394 -0700
-@@ -1371,19 +1371,16 @@
- 			File backupFile;
- 			backupFile.Open (filePath, File::OpenRead);
- 
--			uint64 headerSize;
- 			bool legacyBackup;
- 
- 			// Determine the format of the backup file
- 			switch (backupFile.Length())
- 			{
- 			case TC_VOLUME_HEADER_GROUP_SIZE:
--				headerSize = TC_VOLUME_HEADER_SIZE;
- 				legacyBackup = false;
- 				break;
- 
- 			case TC_VOLUME_HEADER_SIZE_LEGACY * 2:
--				headerSize = TC_VOLUME_HEADER_SIZE_LEGACY;
- 				legacyBackup = true;
- 				break;
- 
-diff -ur truecrypt-7.1a-orig/Main/UserPreferences.cpp truecrypt-7.1a-indicator/Main/UserPreferences.cpp
---- truecrypt-7.1a-orig/Main/UserPreferences.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/UserPreferences.cpp	2015-04-12 14:55:58.161944799 -0700
++LIBS += $(shell pkg-config --libs appindicator-0.1)
++
+ RESOURCES :=
+ RESOURCES += ../License.txt.h
+ RESOURCES += ../Common/Language.xml.h
+diff -ur truecrypt-7.1a-build-fixes/Main/UserPreferences.cpp truecrypt-7.1a-indicator/Main/UserPreferences.cpp
+--- truecrypt-7.1a-build-fixes/Main/UserPreferences.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/UserPreferences.cpp	2015-12-15 21:04:58.056683897 -0800
 @@ -67,9 +67,6 @@
  #define TC_CONFIG_SET(NAME) SetValue (configMap[L###NAME], NAME)
  
@@ -425,9 +371,9 @@ diff -ur truecrypt-7.1a-orig/Main/UserPreferences.cpp truecrypt-7.1a-indicator/M
  		TC_CONFIG_ADD (BeepAfterHotkeyMountDismount);
  		formatter.AddEntry (L"CachePasswords", DefaultMountOptions.CachePassword);
  		TC_CONFIG_ADD (CloseBackgroundTaskOnNoVolumes);
-diff -ur truecrypt-7.1a-orig/Main/UserPreferences.h truecrypt-7.1a-indicator/Main/UserPreferences.h
---- truecrypt-7.1a-orig/Main/UserPreferences.h	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Main/UserPreferences.h	2015-04-12 15:47:52.805428159 -0700
+diff -ur truecrypt-7.1a-build-fixes/Main/UserPreferences.h truecrypt-7.1a-indicator/Main/UserPreferences.h
+--- truecrypt-7.1a-build-fixes/Main/UserPreferences.h	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-indicator/Main/UserPreferences.h	2015-12-15 21:05:33.002146631 -0800
 @@ -20,11 +20,8 @@
  		UserPreferences ()
  			:
@@ -451,27 +397,15 @@ diff -ur truecrypt-7.1a-orig/Main/UserPreferences.h truecrypt-7.1a-indicator/Mai
  		bool BeepAfterHotkeyMountDismount;
  		bool CloseBackgroundTaskOnNoVolumes;
  		bool CloseExplorerWindowsOnDismount;
-diff -ur truecrypt-7.1a-orig/Makefile truecrypt-7.1a-indicator/Makefile
---- truecrypt-7.1a-orig/Makefile	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-indicator/Makefile	2015-04-12 16:28:52.454388095 -0700
-@@ -35,8 +35,8 @@
- export AS := nasm
- export RANLIB ?= ranlib
- 
--export CFLAGS := -Wall
--export CXXFLAGS := -Wall -Wno-unused-parameter
-+export CFLAGS := -Wall -Wno-sequence-point
-+export CXXFLAGS := -Wall -Wno-unused-parameter -Wno-narrowing
- C_CXX_FLAGS := -MMD -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGE_FILES -I$(BASE_DIR) -I$(BASE_DIR)/Crypto
+diff -ur truecrypt-7.1a-build-fixes/Makefile truecrypt-7.1a-indicator/Makefile
+--- truecrypt-7.1a-build-fixes/Makefile	2015-12-15 20:48:37.214318437 -0800
++++ truecrypt-7.1a-indicator/Makefile	2015-12-15 21:26:03.008811444 -0800
+@@ -41,6 +41,8 @@
  export ASFLAGS := -Ox -D __GNUC__
  export LFLAGS :=
-@@ -50,6 +50,9 @@
- export WXCONFIG_CXXFLAGS :=
- WX_ROOT ?= ..
  
-+# export PKCS11_INC := $(BASE_DIR)/pkcs11
-+
 +C_CXX_FLAGS += $(shell pkg-config --cflags appindicator-0.1)
++
+ export PKG_CONFIG_PATH ?= /usr/local/lib/pkgconfig
  
- export TC_BUILD_CONFIG := Release
- 
+ export WX_CONFIG ?= wx-config
