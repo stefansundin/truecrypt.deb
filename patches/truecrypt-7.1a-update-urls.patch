@@ -1,0 +1,118 @@
+diff -ur truecrypt-7.1a.orig/Main/Forms/AboutDialog.cpp truecrypt-7.1a/Main/Forms/AboutDialog.cpp
+--- truecrypt-7.1a.orig/Main/Forms/AboutDialog.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a/Main/Forms/AboutDialog.cpp	2015-12-15 19:31:29.845494540 -0800
+@@ -25,7 +25,7 @@
+ 
+ 		VersionStaticText->SetLabel (Application::GetName() + L" " + StringConverter::ToWide (Version::String()));
+ 		CopyrightStaticText->SetLabel (StringConverter::ToWide (TC_STR_RELEASED_BY));
+-		WebsiteHyperlink->SetLabel (L"www.truecrypt.org");
++		WebsiteHyperlink->SetLabel (L"website");
+ 
+ 		CreditsTextCtrl->SetMinSize (wxSize (
+ 			Gui->GetCharWidth (CreditsTextCtrl) * 70,
+diff -ur truecrypt-7.1a.orig/Main/Forms/Forms.cpp truecrypt-7.1a/Main/Forms/Forms.cpp
+--- truecrypt-7.1a.orig/Main/Forms/Forms.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a/Main/Forms/Forms.cpp	2015-12-15 19:32:07.813494540 -0800
+@@ -168,27 +168,19 @@
+ 	HelpMenu->AppendSeparator();
+ 	
+ 	wxMenuItem* WebsiteMenuItem;
+-	WebsiteMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("TrueCrypt Website") ) , wxEmptyString, wxITEM_NORMAL );
++	WebsiteMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Website") ) , wxEmptyString, wxITEM_NORMAL );
+ 	HelpMenu->Append( WebsiteMenuItem );
+ 	
+ 	wxMenuItem* DownloadsMenuItem;
+ 	DownloadsMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Downloads") ) , wxEmptyString, wxITEM_NORMAL );
+ 	HelpMenu->Append( DownloadsMenuItem );
+ 	
+-	wxMenuItem* NewsMenuItem;
+-	NewsMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("News") ) , wxEmptyString, wxITEM_NORMAL );
+-	HelpMenu->Append( NewsMenuItem );
+-	
+ 	wxMenuItem* VersionHistoryMenuItem;
+ 	VersionHistoryMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Version History") ) , wxEmptyString, wxITEM_NORMAL );
+ 	HelpMenu->Append( VersionHistoryMenuItem );
+ 	
+ 	HelpMenu->AppendSeparator();
+ 	
+-	wxMenuItem* ContactMenuItem;
+-	ContactMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Contact") ) , wxEmptyString, wxITEM_NORMAL );
+-	HelpMenu->Append( ContactMenuItem );
+-	
+ 	wxMenuItem* LegalNoticesMenuItem;
+ 	LegalNoticesMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Legal Notices") ) , wxEmptyString, wxITEM_NORMAL );
+ 	HelpMenu->Append( LegalNoticesMenuItem );
+@@ -411,9 +403,7 @@
+ 	this->Connect( FaqMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnFaqMenuItemSelected ) );
+ 	this->Connect( WebsiteMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnWebsiteMenuItemSelected ) );
+ 	this->Connect( DownloadsMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnDownloadsMenuItemSelected ) );
+-	this->Connect( NewsMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnNewsMenuItemSelected ) );
+ 	this->Connect( VersionHistoryMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnVersionHistoryMenuItemSelected ) );
+-	this->Connect( ContactMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnContactMenuItemSelected ) );
+ 	this->Connect( LegalNoticesMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnLegalNoticesMenuItemSelected ) );
+ 	this->Connect( AboutMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnAboutMenuItemSelected ) );
+ 	SlotListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler( MainFrameBase::OnListItemActivated ), NULL, this );
+diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a/Main/GraphicUserInterface.cpp	2015-12-15 19:42:57.549494540 -0800
+@@ -1012,49 +1012,17 @@
+ 
+ 	wxString GraphicUserInterface::GetHomepageLinkURL (const wxString &linkId, bool secure, const wxString &extraVars) const
+ 	{
+-		wxString url = wxString (StringConverter::ToWide (secure ? TC_APPLINK_SECURE : TC_APPLINK)) + L"&dest=" + linkId;
+-		wxString os, osVersion, architecture;
+-
+-#ifdef TC_WINDOWS
+-
+-		os = L"Windows";
+-
+-#elif defined (TC_UNIX)
+-		struct utsname unameData;
+-		if (uname (&unameData) != -1)
+-		{
+-			os = StringConverter::ToWide (unameData.sysname);
+-			osVersion = StringConverter::ToWide (unameData.release);
+-			architecture = StringConverter::ToWide (unameData.machine);
+-
+-			if (os == L"Darwin")
+-				os = L"MacOSX";
+-		}
+-		else
+-			os = L"Unknown";
+-#else
+-		os = L"Unknown";
+-#endif
+-
+-		os.Replace (L" ", L"-");
+-		url += L"&os=";
+-		url += os;
+-
+-		osVersion.Replace (L" ", L"-");
+-		url += L"&osver=";
+-		url += osVersion;
+-
+-		architecture.Replace (L" ", L"-");
+-		url += L"&arch=";
+-		url += architecture;
+-
+-		if (!extraVars.empty())
+-		{
+-			 url += L"&";
+-			 url += extraVars;
+-		}
+-
+-		return url;
++		if (linkId.Cmp(L"help") == 0)
++			return wxString(L"https://www.truecrypt71a.com/documentation/");
++		else if (linkId.Cmp(L"tutorial") == 0)
++			return wxString(L"https://www.truecrypt71a.com/documentation/beginners-tutorial/");
++		else if (linkId.Cmp(L"faq") == 0)
++			return wxString(L"https://www.truecrypt71a.com/faq/");
++		else if (linkId.Cmp(L"downloads") == 0)
++			return wxString(L"https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt");
++		else if (linkId.Cmp(L"history") == 0)
++			return wxString(L"https://github.com/stefansundin/truecrypt.deb/releases");
++		return wxString(L"https://github.com/stefansundin/truecrypt.deb");
+ 	}
+ 
+ 	void GraphicUserInterface::OpenHomepageLink (wxWindow *parent, const wxString &linkId, const wxString &extraVars)
