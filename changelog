@@ -1,3 +1,12 @@
+truecrypt (7.1a-9) xenial; urgency=medium
+
+  * Fix "Invalid characters encountered" error when mounting that started happening in 16.04.
+  * Use xdg-open as fallback when opening directories.
+  * The "User's Guide" menu item now works.
+  * Updated help items to community websites that have more useful info than the discontinued notice on truecrypt.org.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 23 Apr 2016 22:19:18 -0700
+
 truecrypt (7.1a-8) vivid; urgency=low
 
   * TrueCrypt is now automatically added to your Startup Applications.
