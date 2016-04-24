@@ -1,9 +1,14 @@
 /truecrypt
 /files
 /.vagrant
+.debhelper
 *.debhelper.log
+debhelper-*-stamp
 *.substvars
 *.deb
+
+wxWidgets-2.8.12
+wxWidgets-2.8.12.tar.gz
 
 Thumbs.db
 .DS_Store

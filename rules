@@ -5,10 +5,16 @@
 #export DH_VERBOSE=1
 
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
-export TC_EXTRA_LIBS=-ldl
+export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
+export TC_EXTRA_LIBS=-ldl -lX11
 
 %:
 	dh $@
+
+configure-stamp:
+	dh_testdir
+	tar -C debian -xzf debian/wxWidgets-2.8.12.tar.gz
+	touch $@
 
 build: build-arch build-indep
 
@@ -16,9 +22,10 @@ build-arch: build-stamp
 
 build-indep: build-stamp
 
-build-stamp:
+build-stamp: configure-stamp
 	dh_testdir
-	$(MAKE)
+	$(MAKE) wxbuild
+	$(MAKE) WXSTATIC=1
 	touch $@
 
 clean: do-clean
@@ -26,9 +33,10 @@ clean: do-clean
 do-clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp
-	$(MAKE) clean
+	rm -f configure-stamp build-stamp
+	$(MAKE) clean WXSTATIC=1
 	rm -f Common/Language.xml.h Common/Textual_logo_96dpi.bmp.h Format/TrueCrypt_Wizard.bmp.h License.txt.h Main/SystemPrecompiled.d Mount/Drive_icon_96dpi.bmp.h Mount/Drive_icon_mask_96dpi.bmp.h Mount/Logo_96dpi.bmp.h
+	rm -rf wxWidgets-2.8.12
 	dh_clean
 
 install: build

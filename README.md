@@ -4,12 +4,16 @@
 
 The goal of this project is to build a .deb of TrueCrypt 7.1a, plus [a few patches](patches) that fixes minor issues. Besides those improvements, there are no attempts to change the crypto or continue development in any significant way.
 
+In Ubuntu 16.04, development packages of wxWidgets 2.8 are no longer available. Right now I work around it by downloading the source code from wxwidgets.org, but later I might attempt to port TrueCrypt to version 3.0.
+
+To disable annoying warnings coming from the wxWidgets sources, open `wx/wx.h` and `wx/notebook.h` and add `#pragma GCC system_header` at the top.
+
 For installation instructions, go to: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
 #### Other projects
 
 - https://launchpad.net/~eugenesan/+archive/ubuntu/ppa
-- https://launchpad.net/~alex-p/+archive/ubuntu/notesalexp-natty
+- https://launchpad.net/~alex-p/+archive/ubuntu/notesalexp-wily
 - http://www.unchartedbackwaters.co.uk/pyblosxom/static/truecrypt_debian_packaging
 
 
@@ -30,7 +34,7 @@ Follow the instructions printed by the Vagrantfile.
 ### Prerequisites
 
 ```shell
-sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
+sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion wxformbuilder
 ```
 
 ### Build
@@ -42,6 +46,7 @@ wget https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/truecr
 tar xzf truecrypt_7.1a.orig.tar.gz
 cd truecrypt-7.1a-source
 git clone https://github.com/stefansundin/truecrypt.deb.git debian
+wget -O debian/wxWidgets-2.8.12.tar.gz https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxWidgets-2.8.12.tar.gz
 debuild -i -us -uc -b
 ```
 

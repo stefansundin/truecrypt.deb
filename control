@@ -3,8 +3,7 @@ Section: utils
 Priority: extra
 Maintainer: Stefan Sundin <stefan@stefansundin.com>
 Build-Depends: debhelper (>= 9.20120909), pkg-config, libgtk2.0-dev,
- libwxgtk2.8-dev, libfuse-dev, libwxbase2.8-dev, nasm, libappindicator-dev,
- bash-completion
+ libfuse-dev, nasm, libappindicator-dev, bash-completion
 Standards-Version: 3.9.6
 Homepage: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
