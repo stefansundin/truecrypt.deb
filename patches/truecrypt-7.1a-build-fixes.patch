@@ -96,8 +96,8 @@ diff -ur truecrypt-7.1a/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Ma
  				break;
  
 diff -ur truecrypt-7.1a/Makefile truecrypt-7.1a-build-fixes/Makefile
---- truecrypt-7.1a/Makefile	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Makefile	2016-04-23 16:50:23.891394427 -0700
+--- truecrypt-7.1a/Makefile	2016-04-23 22:41:54.267143977 -0700
++++ truecrypt-7.1a-build-fixes/Makefile	2016-04-23 22:42:02.895144194 -0700
 @@ -50,6 +50,9 @@
  export WXCONFIG_CXXFLAGS :=
  WX_ROOT ?= ..
@@ -107,4 +107,13 @@ diff -ur truecrypt-7.1a/Makefile truecrypt-7.1a-build-fixes/Makefile
 +PKCS11_INC ?= $(HOME)/pkcs11
  
  export TC_BUILD_CONFIG := Release
+ 
+@@ -278,7 +281,7 @@
+ 
+ ifeq "$(MAKECMDGOALS)" "wxbuild"
+ CFLAGS :=
+-CXXFLAGS :=
++CXXFLAGS := -w
+ LFLAGS :=
+ endif
  
