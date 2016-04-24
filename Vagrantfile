@@ -2,7 +2,7 @@ $root_provision = <<SCRIPT
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y git gnupg2 vim
-apt-get install -y devscripts debhelper pkg-config libgtk2.0-dev libwxgtk2.8-dev libfuse-dev libwxbase2.8-dev nasm libappindicator-dev bash-completion wxformbuilder
+apt-get install -y devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion
 SCRIPT
 
 $user_provision = <<SCRIPT
@@ -11,10 +11,11 @@ wget -q https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/tru
 tar xzf truecrypt_7.1a.orig.tar.gz
 cd truecrypt-7.1a-source
 ln -s /vagrant debian
+wget -O debian/wxWidgets-2.8.12.tar.gz https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxWidgets-2.8.12.tar.gz
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
   config.vm.hostname = "truecrypt.deb"
   config.vm.provision "shell", inline: $root_provision
   config.vm.provision "shell", inline: $user_provision, privileged: false
