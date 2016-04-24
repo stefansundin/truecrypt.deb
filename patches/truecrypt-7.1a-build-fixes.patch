@@ -1,6 +1,6 @@
-diff -ur truecrypt-7.1a.orig/Build/Include/Makefile.inc truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc
---- truecrypt-7.1a.orig/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc	2015-12-15 20:00:28.741494540 -0800
+diff -ur truecrypt-7.1a/Build/Include/Makefile.inc truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc
+--- truecrypt-7.1a/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc	2016-04-23 16:50:23.891394427 -0700
 @@ -10,7 +10,7 @@
  
  clean:
@@ -10,9 +10,9 @@ diff -ur truecrypt-7.1a.orig/Build/Include/Makefile.inc truecrypt-7.1a-build-fix
  
  %.o: %.c
  	@echo Compiling $(<F)
-diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp
---- truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp	2015-12-15 20:44:32.088962785 -0800
+diff -ur truecrypt-7.1a/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp
+--- truecrypt-7.1a/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp	2016-04-23 16:50:23.891394427 -0700
 @@ -1250,19 +1250,16 @@
  			File backupFile;
  			backupFile.Open (*files.front(), File::OpenRead);
@@ -33,21 +33,39 @@ diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-
  				legacyBackup = true;
  				break;
  
-diff -ur truecrypt-7.1a.orig/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
---- truecrypt-7.1a.orig/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/Main.make	2015-12-15 20:48:31.489182912 -0800
-@@ -55,6 +55,8 @@
- OBJS += Forms/WizardFrame.o
+diff -ur truecrypt-7.1a/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
+--- truecrypt-7.1a/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/Main.make	2016-04-23 16:50:58.662919688 -0700
+@@ -105,7 +105,7 @@
+ 
+ $(APPNAME): $(LIBS) $(OBJS)
+ 	@echo Linking $@
+-	$(CXX) -o $(APPNAME) $(LFLAGS) $(OBJS) $(LIBS) $(FUSE_LIBS) $(WX_LIBS)
++	$(CXX) -o $(APPNAME) $(LFLAGS) $(OBJS) $(LIBS) $(FUSE_LIBS) $(WX_LIBS) $(TC_EXTRA_LIBS)
+ 
+ ifeq "$(TC_BUILD_CONFIG)" "Release"
+ ifndef NOSTRIP
+@@ -124,7 +124,7 @@
+ ifeq "$(PLATFORM)" "MacOSX"
+ 	mkdir -p $(APPNAME).app/Contents/MacOS $(APPNAME).app/Contents/Resources
+ 	-rm -f $(APPNAME).app/Contents/MacOS/$(APPNAME)
+-	
++
+ ifeq "$(TC_BUILD_CONFIG)" "Release"
+ 	cp $(PWD)/Main/$(APPNAME) $(APPNAME).app/Contents/MacOS/$(APPNAME)
+ else
+@@ -132,7 +132,7 @@
  endif
  
-+LIBS += -ldl
+ 	cp $(PWD)/Resources/Icons/TrueCrypt.icns $(APPNAME).app/Contents/Resources
+-	
 +
- ifndef DISABLE_PRECOMPILED_HEADERS
- PCH := SystemPrecompiled.h.gch
+ 	echo -n APPLTRUE >$(APPNAME).app/Contents/PkgInfo
+ 	sed -e 's/_VERSION_/$(patsubst %a,%.1,$(patsubst %b,%.2,$(TC_VERSION)))/' ../Build/Resources/MacOSX/Info.plist.xml >$(APPNAME).app/Contents/Info.plist
  endif
-diff -ur truecrypt-7.1a.orig/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp
---- truecrypt-7.1a.orig/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp	2015-12-15 20:47:27.721088206 -0800
+diff -ur truecrypt-7.1a/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp
+--- truecrypt-7.1a/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp	2016-04-23 16:50:23.891394427 -0700
 @@ -1371,19 +1371,16 @@
  			File backupFile;
  			backupFile.Open (filePath, File::OpenRead);
@@ -68,9 +86,9 @@ diff -ur truecrypt-7.1a.orig/Main/TextUserInterface.cpp truecrypt-7.1a-build-fix
  				legacyBackup = true;
  				break;
  
-diff -ur truecrypt-7.1a.orig/Makefile truecrypt-7.1a-build-fixes/Makefile
---- truecrypt-7.1a.orig/Makefile	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Makefile	2015-12-15 20:48:37.214318437 -0800
+diff -ur truecrypt-7.1a/Makefile truecrypt-7.1a-build-fixes/Makefile
+--- truecrypt-7.1a/Makefile	2012-02-07 02:36:48.000000000 -0800
++++ truecrypt-7.1a-build-fixes/Makefile	2016-04-23 16:50:23.891394427 -0700
 @@ -50,6 +50,9 @@
  export WXCONFIG_CXXFLAGS :=
  WX_ROOT ?= ..

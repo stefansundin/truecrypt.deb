@@ -5,6 +5,7 @@
 #export DH_VERBOSE=1
 
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
+export TC_EXTRA_LIBS=-ldl
 
 %:
 	dh $@
