@@ -35,7 +35,16 @@ diff -ur truecrypt-7.1a/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes
  
 diff -ur truecrypt-7.1a/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
 --- truecrypt-7.1a/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/Main.make	2016-04-23 16:50:58.662919688 -0700
++++ truecrypt-7.1a-build-fixes/Main/Main.make	2016-04-23 21:39:18.770236760 -0700
+@@ -76,7 +76,7 @@
+ #------ wxWidgets configuration ------
+ 
+ ifdef TC_NO_GUI
+-WX_CONFIG_LIBS := base
++WX_CONFIG_LIBS := core,base
+ else
+ WX_CONFIG_LIBS := adv,core,base
+ endif
 @@ -105,7 +105,7 @@
  
  $(APPNAME): $(LIBS) $(OBJS)
