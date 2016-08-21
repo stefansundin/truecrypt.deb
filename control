@@ -9,7 +9,7 @@ Homepage: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
 Package: truecrypt
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, dmsetup
 Suggests: bash-completion, opensc, xterm, xdg-open, sudo
 Description: Free open-source disk encryption software
  TrueCrypt is a software system for establishing and maintaining an
