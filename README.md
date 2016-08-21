@@ -34,7 +34,15 @@ Follow the instructions printed by the Vagrantfile.
 ### Prerequisites
 
 ```shell
-sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion wxformbuilder
+sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion
+```
+
+If you want to use wxformbuilder:
+
+```shell
+sudo add-apt-repository ppa:wxformbuilder/release
+sudo apt-get update
+sudo apt-get install wxformbuilder
 ```
 
 ### Build
