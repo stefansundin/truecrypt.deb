@@ -58,6 +58,7 @@ binary-arch: build install
 	install -m 644 -D debian/truecrypt.sharedmimeinfo debian/truecrypt/usr/share/mime/packages/truecrypt.xml
 	install -m 644 -D debian/truecrypt.desktop debian/truecrypt/usr/share/applications/truecrypt.desktop
 	install -m 644 -D debian/truecrypt-autostart.desktop debian/truecrypt/etc/xdg/autostart/truecrypt.desktop
+	install -m 755 -D debian/mount.truecrypt debian/truecrypt/sbin/mount.truecrypt
 	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
 	dh_installman debian/truecrypt.1
 	dh_bash-completion

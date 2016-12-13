@@ -62,6 +62,15 @@ debuild -i -us -uc -b
 
 `pkcs11.h`, `pkcs11f.h` and `pkcs11t.h` were downloaded from ftp://ftp.rsasecurity.com/pub/pkcs/pkcs-11/v2-20/
 
+## fstab
+
+Example `/etc/fstab`:
+
+```
+/dev/sdb1 /mnt/secrets truecrypt password=mightnotbeagoodidea,keyfiles=/mnt/flashdrive/keyfile,defaults 0 0
+```
+
+See [mount.truecrypt](mount.truecrypt) for usage.
 
 ## Bash completion for Mac OS X
 

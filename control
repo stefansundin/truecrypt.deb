@@ -22,8 +22,9 @@ Description: Free open-source disk encryption software
  .
  This package includes the following patches:
  1) The standard tray icon has been replaced with a unity indicator.
- 2) A bash completion script is included.
- 3) TrueCrypt is automatically added to your Startup Applications.
+ 2) TrueCrypt is automatically added to your Startup Applications.
+ 3) A bash completion script is included.
+ 4) A mount external helper is included (can be used with fstab).
  .
  To automatically grant TrueCrypt root privileges to mount volumes, run
  `sudo visudo` and add this to the end of the file:
