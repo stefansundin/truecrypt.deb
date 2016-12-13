@@ -11,8 +11,11 @@ wget -q https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/tru
 tar xzf truecrypt_7.1a.orig.tar.gz
 cd truecrypt-7.1a-source
 ln -s /vagrant debian
-wget -O debian/wxWidgets-2.8.12.tar.gz https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxWidgets-2.8.12.tar.gz
+echo "Downloading wxWidgets-2.8.12.tar.gz"
+wget -q -O debian/wxWidgets-2.8.12.tar.gz https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxWidgets-2.8.12.tar.gz
 SCRIPT
+
+$version = File.read("changelog")[/7.1a-[^)]+/]
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
@@ -25,6 +28,6 @@ cd truecrypt-7.1a-source
 debuild -i -us -uc -b
 
 To copy the finished deb file out of the VM, run:
-cp ../truecrypt_7.1a-8_amd64.deb /vagrant/
+cp ../truecrypt_#{$version}_amd64.deb /vagrant/
 EOF
 end
