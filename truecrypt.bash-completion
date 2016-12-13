@@ -19,6 +19,7 @@ _truecrypt_opt() {
 
 _truecrypt() {
   COMPREPLY=()
+  local COMP_FILEDIR_FALLBACK=1
   local cur prev opt val
   _get_comp_words_by_ref cur prev
 
