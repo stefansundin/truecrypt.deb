@@ -10,7 +10,8 @@ Homepage: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 Package: truecrypt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, dmsetup
-Suggests: bash-completion, opensc, xterm, xdg-open, sudo
+Suggests: sudo, bash-completion, opensc, xterm, xdg-open
+Conflicts: truecrypt-cli
 Description: Free open-source disk encryption software
  TrueCrypt is a software system for establishing and maintaining an
  on-the-fly-encrypted volume (data storage device). On-the-fly encryption
@@ -25,6 +26,29 @@ Description: Free open-source disk encryption software
  2) TrueCrypt is automatically added to your Startup Applications.
  3) A bash completion script is included.
  4) A mount external helper is included (can be used with fstab).
+ .
+ To automatically grant TrueCrypt root privileges to mount volumes, run:
+ sudo visudo -f /etc/sudoers.d/truecrypt
+ And put the following in the file:
+ your_username ALL=(ALL) NOPASSWD:/usr/bin/truecrypt
+
+Package: truecrypt-cli
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, dmsetup
+Suggests: sudo, bash-completion, opensc
+Conflicts: truecrypt
+Description: Free open-source disk encryption software (command-line version)
+ TrueCrypt is a software system for establishing and maintaining an
+ on-the-fly-encrypted volume (data storage device). On-the-fly encryption
+ means that data are automatically encrypted or decrypted right before they
+ are loaded or saved, without any user intervention. No data stored on an
+ encrypted volume can be read (decrypted) without using the correct
+ password/keyfile(s) or correct encryption keys. Entire file systems can be
+ encrypted.
+ .
+ This package includes the following patches:
+ 1) A bash completion script is included.
+ 2) A mount external helper is included (can be used with fstab).
  .
  To automatically grant TrueCrypt root privileges to mount volumes, run:
  sudo visudo -f /etc/sudoers.d/truecrypt

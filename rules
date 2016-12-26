@@ -10,9 +10,11 @@
 
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
 export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
-export TC_EXTRA_LIBS=-ldl -lX11
 VERSION=$(shell grep -m1 -oE '7.1a-[0-9a-z]+' debian/changelog)
 export TC_EXTRA_CXXFLAGS=-DVERSION_STRING='"$(VERSION)"' -DTC_STR_RELEASED_BY='"Released by Stefan Sundin"'
+
+Main/truecrypt-gui: export TC_EXTRA_LIBS=-ldl -lX11
+Main/truecrypt-cli: export TC_EXTRA_LIBS=-ldl
 
 %:
 	dh $@
@@ -22,27 +24,29 @@ configure-stamp:
 	tar -C debian -xzf debian/wxWidgets-2.8.12.tar.gz
 	touch $@
 
-build: build-arch build-indep
-
-build-arch: build-stamp
-
-build-indep: build-stamp
-
-build-stamp: configure-stamp
+Main/truecrypt-gui: configure-stamp
 	dh_testdir
+	$(MAKE) WXSTATIC=1 clean
 	$(MAKE) wxbuild
 	$(MAKE) WXSTATIC=1
-	touch $@
+	mv Main/truecrypt Main/truecrypt-gui
 
-clean: do-clean
-
-do-clean:
+Main/truecrypt-cli: configure-stamp
 	dh_testdir
-	rm -f configure-stamp build-stamp
-	$(MAKE) clean WXSTATIC=1
+	$(MAKE) WXSTATIC=1 clean
+	$(MAKE) NOGUI=1 wxbuild
+	$(MAKE) NOGUI=1 WXSTATIC=1
+	mv Main/truecrypt Main/truecrypt-cli
+
+build: Main/truecrypt-gui Main/truecrypt-cli
+
+clean:
+	dh_testdir
+	dh_clean
+	rm -f configure-stamp Main/truecrypt-gui Main/truecrypt-cli
+	$(MAKE) WXSTATIC=1 clean
 	rm -f Common/Language.xml.h Common/Textual_logo_96dpi.bmp.h Format/TrueCrypt_Wizard.bmp.h License.txt.h Main/SystemPrecompiled.d Mount/Drive_icon_96dpi.bmp.h Mount/Drive_icon_mask_96dpi.bmp.h Mount/Logo_96dpi.bmp.h
 	rm -rf debian/wxWidgets-2.8.12
-	dh_clean
 
 install: build
 	dh_testdir
@@ -50,23 +54,24 @@ install: build
 	dh_prep
 	dh_installdirs
 	mkdir -p debian/truecrypt/usr/bin/
-	install -m 755 Main/truecrypt debian/truecrypt/usr/bin/
+	mkdir -p debian/truecrypt-cli/usr/bin/
+	install -m 755 Main/truecrypt-gui debian/truecrypt/usr/bin/truecrypt
+	install -m 755 Main/truecrypt-cli debian/truecrypt-cli/usr/bin/truecrypt
 
-binary-indep: build install
-
-binary-arch: build install
+binary: build install
 	dh_testdir
 	dh_testroot
-	dh_installdocs
 	dh_installchangelogs
+	dh_installdocs
+	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
 	install -m 644 -D "Resources/Icons/TrueCrypt-48x48.xpm" debian/truecrypt/usr/share/pixmaps/truecrypt.xpm
 	install -m 644 -D debian/truecrypt-indicator.png debian/truecrypt/usr/share/pixmaps/truecrypt-indicator.png
 	install -m 644 -D debian/truecrypt.sharedmimeinfo debian/truecrypt/usr/share/mime/packages/truecrypt.xml
 	install -m 644 -D debian/truecrypt.desktop debian/truecrypt/usr/share/applications/truecrypt.desktop
 	install -m 644 -D debian/truecrypt-autostart.desktop debian/truecrypt/etc/xdg/autostart/truecrypt.desktop
 	install -m 755 -D debian/mount.truecrypt debian/truecrypt/sbin/mount.truecrypt
-	dh_installdocs "Release/Setup Files/TrueCrypt User Guide.pdf"
-	dh_installman debian/truecrypt.1
+	install -m 755 -D debian/mount.truecrypt debian/truecrypt-cli/sbin/mount.truecrypt
+	dh_installman -A debian/truecrypt.1
 	dh_bash-completion
 	dh_compress
 	dh_fixperms
@@ -77,5 +82,4 @@ binary-arch: build install
 	dh_md5sums
 	dh_builddeb
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install patch unpatch do-clean
+.PHONY: build clean binary install patch unpatch

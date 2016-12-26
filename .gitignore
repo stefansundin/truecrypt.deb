@@ -1,4 +1,5 @@
 /truecrypt
+/truecrypt-cli
 /files
 /.vagrant
 .debhelper

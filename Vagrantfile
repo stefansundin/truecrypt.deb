@@ -33,5 +33,6 @@ debuild -i -us -uc -b
 
 To copy the finished deb file out of the VM, run:
 cp ../truecrypt_#{$version}_amd64.deb /vagrant/
+cp ../truecrypt-cli_#{$version}_amd64.deb /vagrant/
 EOF
 end
