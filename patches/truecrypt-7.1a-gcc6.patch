@@ -1,0 +1,67 @@
+diff --git a/Main/Forms/PreferencesDialog.cpp b/Main/Forms/PreferencesDialog.cpp
+index b10a5cd..e6bc8da 100644
+--- a/Main/Forms/PreferencesDialog.cpp
++++ b/Main/Forms/PreferencesDialog.cpp
+@@ -414,11 +414,11 @@ namespace TrueCrypt
+ 		libExtension = wxDynamicLibrary::CanonicalizeName (L"x");
+ 
+ #ifdef TC_MACOSX
+-		extensions.push_back (make_pair (L"dylib", LangString["DLL_FILES"]));
++		extensions.push_back (make_pair (L"dylib", wstring(LangString["DLL_FILES"])));
+ #endif
+ 		if (!libExtension.empty())
+ 		{
+-			extensions.push_back (make_pair (libExtension.Mid (libExtension.find (L'.') + 1), LangString["DLL_FILES"]));
++			extensions.push_back (make_pair (wstring(libExtension.Mid (libExtension.find (L'.') + 1)), wstring(LangString["DLL_FILES"])));
+ 			extensions.push_back (make_pair (L"*", L""));
+ 		}
+ 
+diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
+index 3a9932d..b3a91d2 100644
+--- a/Main/GraphicUserInterface.cpp
++++ b/Main/GraphicUserInterface.cpp
+@@ -1442,7 +1442,7 @@ namespace TrueCrypt
+ 	FilePath GraphicUserInterface::SelectVolumeFile (wxWindow *parent, bool saveMode, const DirectoryPath &directory) const
+ 	{
+ 		list < pair <wstring, wstring> > extensions;
+-		extensions.push_back (make_pair (L"tc", LangString["TC_VOLUMES"]));
++		extensions.push_back (make_pair (L"tc", wstring(LangString["TC_VOLUMES"])));
+ 
+ 		FilePathList selFiles = Gui->SelectFiles (parent, LangString[saveMode ? "OPEN_NEW_VOLUME" : "OPEN_VOL_TITLE"], saveMode, false, extensions, directory);
+ 
+diff --git a/Main/Resources.cpp b/Main/Resources.cpp
+index 2891134..7319faf 100644
+--- a/Main/Resources.cpp
++++ b/Main/Resources.cpp
+@@ -45,13 +45,13 @@ namespace TrueCrypt
+ 		strBuf.CopyFrom (res);
+ 		return string (reinterpret_cast <char *> (strBuf.Ptr()));
+ #else
+-		static const char LanguageXml[] =
++		static byte LanguageXml[] =
+ 		{
+ #			include "Common/Language.xml.h"
+ 			, 0
+ 		};
+ 
+-		return string (LanguageXml);
++		return string ((const char*) LanguageXml);
+ #endif
+ 	}
+ 
+@@ -64,13 +64,13 @@ namespace TrueCrypt
+ 		strBuf.CopyFrom (res);
+ 		return string (reinterpret_cast <char *> (strBuf.Ptr()));
+ #else
+-		static const char License[] =
++		static byte License[] =
+ 		{
+ #			include "License.txt.h"
+ 			, 0
+ 		};
+ 
+-		return string (License);
++		return string ((const char*) License);
+ #endif
+ 	}
+ 
