@@ -13,7 +13,7 @@ For installation instructions, go to: https://launchpad.net/~stefansundin/+archi
 #### Other projects
 
 - https://launchpad.net/~eugenesan/+archive/ubuntu/ppa
-- https://launchpad.net/~alex-p/+archive/ubuntu/notesalexp-wily
+- https://launchpad.net/~alex-p/+archive/ubuntu/notesalexp-xenial
 - http://www.unchartedbackwaters.co.uk/pyblosxom/static/truecrypt_debian_packaging
 
 

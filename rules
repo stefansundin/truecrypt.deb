@@ -4,9 +4,15 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+# Use the following to use a specific gcc version:
+#export CC=gcc-5
+#export CXX=g++-5
+
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
 export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
 export TC_EXTRA_LIBS=-ldl -lX11
+VERSION=$(shell grep -m1 -oE '7.1a-[0-9a-z]+' debian/changelog)
+export TC_EXTRA_CXXFLAGS=-DVERSION_STRING='"$(VERSION)"' -DTC_STR_RELEASED_BY='"Released by Stefan Sundin"'
 
 %:
 	dh $@
