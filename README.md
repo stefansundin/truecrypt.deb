@@ -67,7 +67,7 @@ debuild -i -us -uc -b
 Example `/etc/fstab`:
 
 ```
-/dev/sdb1 /mnt/secrets truecrypt password=mightnotbeagoodidea,keyfiles=/mnt/flashdrive/keyfile,defaults 0 0
+/dev/sdb1 /mnt/secrets truecrypt defaults,users,nofail,password=mightnotbeagoodidea,keyfiles=/mnt/flashdrive/keyfile 0 0
 ```
 
 See [mount.truecrypt](mount.truecrypt) for usage.
