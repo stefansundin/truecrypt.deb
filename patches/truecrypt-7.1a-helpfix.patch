@@ -1,5 +1,7 @@
---- truecrypt-7.1a.orig/Main/UserInterface.cpp
-+++ truecrypt-7.1a/Main/UserInterface.cpp
+diff --git a/Main/UserInterface.cpp b/Main/UserInterface.cpp
+index 9e8179f..8f9cc0d 100644
+--- a/Main/UserInterface.cpp
++++ b/Main/UserInterface.cpp
 @@ -1027,11 +1027,11 @@ namespace TrueCrypt
  					"--auto-mount=devices|favorites\n"
  					" Auto mount device-hosted or favorite volumes.\n"

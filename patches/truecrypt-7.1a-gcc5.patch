@@ -1,8 +1,8 @@
 diff --git a/Platform/Unix/Process.cpp b/Platform/Unix/Process.cpp
-index 388bda6..0770364 100644
+index d99dff8..07874a0 100644
 --- a/Platform/Unix/Process.cpp
 +++ b/Platform/Unix/Process.cpp
-@@ -53,13 +53,33 @@ namespace VeraCrypt
+@@ -49,13 +49,33 @@ namespace TrueCrypt
  				try
  				{
  					int argIndex = 0;
@@ -23,18 +23,18 @@ index 388bda6..0770364 100644
 +					{
 +						argsCopy[argIndex++] = processName;
 +					}
-
+ 
  					foreach (const string &arg, arguments)
  					{
 -						args[argIndex++] = const_cast <char*> (arg.c_str());
 +						argsCopy[argIndex++] = arg;
- 					}
++					}
 +
 +					for (int i = 0; i < argIndex; i++)
 +					{
 +						args[i] = const_cast <char*> (argsCopy[i].c_str());
-+					}
+ 					}
 +
  					args[argIndex] = nullptr;
-
+ 
  					if (inputData)

@@ -1,7 +1,8 @@
-diff -ur truecrypt-7.1a-source/Main/UserInterface.cpp truecrypt-7.1a-xdg/Main/UserInterface.cpp
---- truecrypt-7.1a-source/Main/UserInterface.cpp	2015-12-15 15:58:13.603429387 -0800
-+++ truecrypt-7.1a-xdg/Main/UserInterface.cpp	2015-12-15 16:03:02.187429387 -0800
-@@ -828,7 +828,7 @@
+diff --git a/Main/UserInterface.cpp b/Main/UserInterface.cpp
+index 9e8179f..420d1d3 100644
+--- a/Main/UserInterface.cpp
++++ b/Main/UserInterface.cpp
+@@ -828,7 +828,7 @@ namespace TrueCrypt
  		// MIME handler for directory seems to be unavailable through wxWidgets
  		wxString desktop = GetTraits()->GetDesktopEnvironment();
  
@@ -10,7 +11,7 @@ diff -ur truecrypt-7.1a-source/Main/UserInterface.cpp truecrypt-7.1a-xdg/Main/Us
  		{
  			args.push_back ("--no-default-window");
  			args.push_back ("--no-desktop");
-@@ -861,6 +861,16 @@
+@@ -861,6 +861,16 @@ namespace TrueCrypt
  				catch (exception &e) { ShowError (e); }
  			}
  		}

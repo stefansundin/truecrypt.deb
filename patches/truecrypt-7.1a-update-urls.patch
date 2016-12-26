@@ -1,7 +1,8 @@
-diff -ur truecrypt-7.1a.orig/Main/Forms/AboutDialog.cpp truecrypt-7.1a/Main/Forms/AboutDialog.cpp
---- truecrypt-7.1a.orig/Main/Forms/AboutDialog.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a/Main/Forms/AboutDialog.cpp	2015-12-15 19:31:29.845494540 -0800
-@@ -25,7 +25,7 @@
+diff --git a/Main/Forms/AboutDialog.cpp b/Main/Forms/AboutDialog.cpp
+index 736a669..29b6003 100644
+--- a/Main/Forms/AboutDialog.cpp
++++ b/Main/Forms/AboutDialog.cpp
+@@ -25,7 +25,7 @@ namespace TrueCrypt
  
  		VersionStaticText->SetLabel (Application::GetName() + L" " + StringConverter::ToWide (Version::String()));
  		CopyrightStaticText->SetLabel (StringConverter::ToWide (TC_STR_RELEASED_BY));
@@ -10,10 +11,11 @@ diff -ur truecrypt-7.1a.orig/Main/Forms/AboutDialog.cpp truecrypt-7.1a/Main/Form
  
  		CreditsTextCtrl->SetMinSize (wxSize (
  			Gui->GetCharWidth (CreditsTextCtrl) * 70,
-diff -ur truecrypt-7.1a.orig/Main/Forms/Forms.cpp truecrypt-7.1a/Main/Forms/Forms.cpp
---- truecrypt-7.1a.orig/Main/Forms/Forms.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a/Main/Forms/Forms.cpp	2015-12-15 19:32:07.813494540 -0800
-@@ -168,27 +168,19 @@
+diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
+index 5825381..40cfddf 100644
+--- a/Main/Forms/Forms.cpp
++++ b/Main/Forms/Forms.cpp
+@@ -168,27 +168,19 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
  	HelpMenu->AppendSeparator();
  	
  	wxMenuItem* WebsiteMenuItem;
@@ -42,7 +44,7 @@ diff -ur truecrypt-7.1a.orig/Main/Forms/Forms.cpp truecrypt-7.1a/Main/Forms/Form
  	wxMenuItem* LegalNoticesMenuItem;
  	LegalNoticesMenuItem = new wxMenuItem( HelpMenu, wxID_ANY, wxString( _("Legal Notices") ) , wxEmptyString, wxITEM_NORMAL );
  	HelpMenu->Append( LegalNoticesMenuItem );
-@@ -411,9 +403,7 @@
+@@ -411,9 +403,7 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
  	this->Connect( FaqMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnFaqMenuItemSelected ) );
  	this->Connect( WebsiteMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnWebsiteMenuItemSelected ) );
  	this->Connect( DownloadsMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnDownloadsMenuItemSelected ) );
@@ -52,10 +54,11 @@ diff -ur truecrypt-7.1a.orig/Main/Forms/Forms.cpp truecrypt-7.1a/Main/Forms/Form
  	this->Connect( LegalNoticesMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnLegalNoticesMenuItemSelected ) );
  	this->Connect( AboutMenuItem->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnAboutMenuItemSelected ) );
  	SlotListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler( MainFrameBase::OnListItemActivated ), NULL, this );
-diff -ur truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp truecrypt-7.1a/Main/GraphicUserInterface.cpp
---- truecrypt-7.1a.orig/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a/Main/GraphicUserInterface.cpp	2015-12-15 19:42:57.549494540 -0800
-@@ -1012,49 +1012,17 @@
+diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
+index 04426bd..41ce402 100644
+--- a/Main/GraphicUserInterface.cpp
++++ b/Main/GraphicUserInterface.cpp
+@@ -1012,49 +1012,17 @@ namespace TrueCrypt
  
  	wxString GraphicUserInterface::GetHomepageLinkURL (const wxString &linkId, bool secure, const wxString &extraVars) const
  	{

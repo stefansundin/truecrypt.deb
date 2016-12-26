@@ -1,7 +1,8 @@
-diff -ur truecrypt-7.1a/Build/Include/Makefile.inc truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc
---- truecrypt-7.1a/Build/Include/Makefile.inc	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Build/Include/Makefile.inc	2016-04-23 16:50:23.891394427 -0700
-@@ -10,7 +10,7 @@
+diff --git a/Build/Include/Makefile.inc b/Build/Include/Makefile.inc
+index 39395e9..3bd6efb 100644
+--- a/Build/Include/Makefile.inc
++++ b/Build/Include/Makefile.inc
+@@ -10,7 +10,7 @@ $(NAME): $(NAME).a
  
  clean:
  	@echo Cleaning $(NAME)
@@ -10,10 +11,35 @@ diff -ur truecrypt-7.1a/Build/Include/Makefile.inc truecrypt-7.1a-build-fixes/Bu
  
  %.o: %.c
  	@echo Compiling $(<F)
-diff -ur truecrypt-7.1a/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp
---- truecrypt-7.1a/Main/GraphicUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/GraphicUserInterface.cpp	2016-04-23 16:50:23.891394427 -0700
-@@ -1250,19 +1250,16 @@
+diff --git a/Common/Tcdefs.h b/Common/Tcdefs.h
+index 9ab14a4..b5bda98 100644
+--- a/Common/Tcdefs.h
++++ b/Common/Tcdefs.h
+@@ -15,7 +15,9 @@
+ #define TC_APP_NAME						"TrueCrypt"
+ 
+ // Version displayed to user 
++#ifndef VERSION_STRING
+ #define VERSION_STRING					"7.1a"
++#endif
+ 
+ // Version number to compare against driver
+ #define VERSION_NUM						0x071a
+@@ -247,7 +249,9 @@ void EraseMemory (void *memory, int size);
+ #define TC_MAX_PATH		260	/* Includes the null terminator */
+ #endif
+ 
++#ifndef TC_STR_RELEASED_BY
+ #define TC_STR_RELEASED_BY "Released by TrueCrypt Foundation on " TC_STR_RELEASE_DATE
++#endif
+ 
+ #define MAX_URL_LENGTH	2084 /* Internet Explorer limit. Includes the terminating null character. */
+ 
+diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
+index 04426bd..3a9932d 100644
+--- a/Main/GraphicUserInterface.cpp
++++ b/Main/GraphicUserInterface.cpp
+@@ -1250,19 +1250,16 @@ namespace TrueCrypt
  			File backupFile;
  			backupFile.Open (*files.front(), File::OpenRead);
  
@@ -33,19 +59,11 @@ diff -ur truecrypt-7.1a/Main/GraphicUserInterface.cpp truecrypt-7.1a-build-fixes
  				legacyBackup = true;
  				break;
  
-diff -ur truecrypt-7.1a/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
---- truecrypt-7.1a/Main/Main.make	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/Main.make	2016-04-23 21:39:18.770236760 -0700
-@@ -76,7 +76,7 @@
- #------ wxWidgets configuration ------
- 
- ifdef TC_NO_GUI
--WX_CONFIG_LIBS := base
-+WX_CONFIG_LIBS := core,base
- else
- WX_CONFIG_LIBS := adv,core,base
- endif
-@@ -105,7 +105,7 @@
+diff --git a/Main/Main.make b/Main/Main.make
+index 565ed40..1b97cb6 100644
+--- a/Main/Main.make
++++ b/Main/Main.make
+@@ -105,7 +105,7 @@ TC_VERSION = $(shell grep VERSION_STRING ../Common/Tcdefs.h | head -n 1 | cut -d
  
  $(APPNAME): $(LIBS) $(OBJS)
  	@echo Linking $@
@@ -54,28 +72,11 @@ diff -ur truecrypt-7.1a/Main/Main.make truecrypt-7.1a-build-fixes/Main/Main.make
  
  ifeq "$(TC_BUILD_CONFIG)" "Release"
  ifndef NOSTRIP
-@@ -124,7 +124,7 @@
- ifeq "$(PLATFORM)" "MacOSX"
- 	mkdir -p $(APPNAME).app/Contents/MacOS $(APPNAME).app/Contents/Resources
- 	-rm -f $(APPNAME).app/Contents/MacOS/$(APPNAME)
--	
-+
- ifeq "$(TC_BUILD_CONFIG)" "Release"
- 	cp $(PWD)/Main/$(APPNAME) $(APPNAME).app/Contents/MacOS/$(APPNAME)
- else
-@@ -132,7 +132,7 @@
- endif
- 
- 	cp $(PWD)/Resources/Icons/TrueCrypt.icns $(APPNAME).app/Contents/Resources
--	
-+
- 	echo -n APPLTRUE >$(APPNAME).app/Contents/PkgInfo
- 	sed -e 's/_VERSION_/$(patsubst %a,%.1,$(patsubst %b,%.2,$(TC_VERSION)))/' ../Build/Resources/MacOSX/Info.plist.xml >$(APPNAME).app/Contents/Info.plist
- endif
-diff -ur truecrypt-7.1a/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp
---- truecrypt-7.1a/Main/TextUserInterface.cpp	2012-02-07 02:36:48.000000000 -0800
-+++ truecrypt-7.1a-build-fixes/Main/TextUserInterface.cpp	2016-04-23 16:50:23.891394427 -0700
-@@ -1371,19 +1371,16 @@
+diff --git a/Main/TextUserInterface.cpp b/Main/TextUserInterface.cpp
+index d9e93e6..852109b 100644
+--- a/Main/TextUserInterface.cpp
++++ b/Main/TextUserInterface.cpp
+@@ -1371,19 +1371,16 @@ namespace TrueCrypt
  			File backupFile;
  			backupFile.Open (filePath, File::OpenRead);
  
@@ -95,10 +96,11 @@ diff -ur truecrypt-7.1a/Main/TextUserInterface.cpp truecrypt-7.1a-build-fixes/Ma
  				legacyBackup = true;
  				break;
  
-diff -ur truecrypt-7.1a/Makefile truecrypt-7.1a-build-fixes/Makefile
---- truecrypt-7.1a/Makefile	2016-04-23 22:41:54.267143977 -0700
-+++ truecrypt-7.1a-build-fixes/Makefile	2016-04-23 22:42:02.895144194 -0700
-@@ -50,6 +50,9 @@
+diff --git a/Makefile b/Makefile
+index 265bb6f..cdfaad8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -50,6 +50,9 @@ export WXCONFIG_CFLAGS :=
  export WXCONFIG_CXXFLAGS :=
  WX_ROOT ?= ..
  
@@ -108,7 +110,7 @@ diff -ur truecrypt-7.1a/Makefile truecrypt-7.1a-build-fixes/Makefile
  
  export TC_BUILD_CONFIG := Release
  
-@@ -278,7 +281,7 @@
+@@ -278,7 +281,7 @@ all clean:
  
  ifeq "$(MAKECMDGOALS)" "wxbuild"
  CFLAGS :=
