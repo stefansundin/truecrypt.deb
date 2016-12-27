@@ -72,6 +72,8 @@ Example `/etc/fstab`:
 
 See [mount.truecrypt](mount.truecrypt) for usage.
 
+If you mount a device on boot using fstab, it will not show up in the TrueCrypt GUI or in `truecrypt -l` unless you run the program as root. If you then try to mount another device in the same slot, you will receive the error "Volume slot unavailable". To avoid this, you can use `slot=10` to mount the device on a higher slot number, which will leave the common slots available.
+
 ## Bash completion for Mac OS X
 
 The bash completion script is not perfectly compatible with Mac OS X, notably the switches with an equal sign do not behave correctly and there are errors printed.
