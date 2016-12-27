@@ -1,16 +1,7 @@
 diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
-index 5825381..54291d2 100644
+index 5825381..5b05125 100644
 --- a/Main/Forms/Forms.cpp
 +++ b/Main/Forms/Forms.cpp
-@@ -1582,7 +1582,7 @@ NewSecurityTokenKeyfileDialogBase::~NewSecurityTokenKeyfileDialogBase()
- 	KeyfileNameTextCtrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NewSecurityTokenKeyfileDialogBase::OnKeyfileNameChanged ), NULL, this );
- }
- 
--PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
-+PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
- {
- 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
- 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
 @@ -1738,23 +1738,6 @@ PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, c
  	
  	sbSizer18->Add( CloseBackgroundTaskOnNoVolumesCheckBox, 0, wxALL, 5 );
