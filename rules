@@ -39,6 +39,8 @@ Main/truecrypt-cli: configure-stamp
 	mv Main/truecrypt Main/truecrypt-cli
 
 build: Main/truecrypt-gui Main/truecrypt-cli
+build-arch: build
+build-indep: build
 
 clean:
 	dh_testdir
@@ -82,4 +84,7 @@ binary: build install
 	dh_md5sums
 	dh_builddeb
 
-.PHONY: build clean binary install patch unpatch
+binary-arch: binary
+binary-indep: binary
+
+.PHONY: build build-arch build-indep clean binary binary-arch binary-indep install patch unpatch
