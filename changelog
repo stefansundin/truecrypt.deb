@@ -1,3 +1,10 @@
+truecrypt (7.1a-10) xenial; urgency=low
+
+  * Add truecrypt-cli: command-line only package without GUI dependencies.
+  * Add truecrypt mount helper. You can use this to mount truecrypt volumes in fstab.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Thu, 29 Dec 2016 12:22:43 -0800
+
 truecrypt (7.1a-9) xenial; urgency=medium
 
   * Fix "Invalid characters encountered" error when mounting that started happening in 16.04.
