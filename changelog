@@ -1,3 +1,9 @@
+truecrypt (7.1a-11) xenial; urgency=low
+
+  * Fix i386 build.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Thu, 29 Dec 2016 13:21:48 -0800
+
 truecrypt (7.1a-10) xenial; urgency=low
 
   * Add truecrypt-cli: command-line only package without GUI dependencies.
