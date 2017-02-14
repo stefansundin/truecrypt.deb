@@ -1,5 +1,5 @@
 diff --git a/Main/Forms/PreferencesDialog.cpp b/Main/Forms/PreferencesDialog.cpp
-index b10a5cd..e6bc8da 100644
+index b10a5cd..1808589 100644
 --- a/Main/Forms/PreferencesDialog.cpp
 +++ b/Main/Forms/PreferencesDialog.cpp
 @@ -414,11 +414,11 @@ namespace TrueCrypt
@@ -17,7 +17,7 @@ index b10a5cd..e6bc8da 100644
  		}
  
 diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
-index 3a9932d..b3a91d2 100644
+index 3a9932d..a6fc96d 100644
 --- a/Main/GraphicUserInterface.cpp
 +++ b/Main/GraphicUserInterface.cpp
 @@ -1442,7 +1442,7 @@ namespace TrueCrypt
@@ -30,7 +30,7 @@ index 3a9932d..b3a91d2 100644
  		FilePathList selFiles = Gui->SelectFiles (parent, LangString[saveMode ? "OPEN_NEW_VOLUME" : "OPEN_VOL_TITLE"], saveMode, false, extensions, directory);
  
 diff --git a/Main/Resources.cpp b/Main/Resources.cpp
-index 2891134..7319faf 100644
+index 2891134..d2bf31f 100644
 --- a/Main/Resources.cpp
 +++ b/Main/Resources.cpp
 @@ -45,13 +45,13 @@ namespace TrueCrypt

@@ -1,7 +1,43 @@
 diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
-index 5825381..732bbed 100644
+index 5825381..4b58857 100644
 --- a/Main/Forms/Forms.cpp
 +++ b/Main/Forms/Forms.cpp
+@@ -785,7 +785,7 @@ BenchmarkDialogBase::~BenchmarkDialogBase()
+ 	BenchmarkButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( BenchmarkDialogBase::OnBenchmarkButtonClick ), NULL, this );
+ }
+ 
+-ChangePasswordDialogBase::ChangePasswordDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
++ChangePasswordDialogBase::ChangePasswordDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
+ {
+ 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+ 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
+@@ -845,7 +845,7 @@ ChangePasswordDialogBase::~ChangePasswordDialogBase()
+ 	OKButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ChangePasswordDialogBase::OnOKButtonClick ), NULL, this );
+ }
+ 
+-DeviceSelectionDialogBase::DeviceSelectionDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
++DeviceSelectionDialogBase::DeviceSelectionDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
+ {
+ 	this->SetSizeHints( wxSize( -1,-1 ), wxDefaultSize );
+ 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
+@@ -1126,7 +1126,7 @@ FavoriteVolumesDialogBase::~FavoriteVolumesDialogBase()
+ 	OKButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( FavoriteVolumesDialogBase::OnOKButtonClick ), NULL, this );
+ }
+ 
+-KeyfilesDialogBase::KeyfilesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
++KeyfilesDialogBase::KeyfilesDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
+ {
+ 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+ 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
+@@ -1345,7 +1345,7 @@ LegalNoticesDialogBase::~LegalNoticesDialogBase()
+ {
+ }
+ 
+-MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
++MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style & (~wxCLOSE_BOX) )
+ {
+ 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+ 	this->SetExtraStyle( wxWS_EX_VALIDATE_RECURSIVELY );
 @@ -1582,7 +1582,7 @@ NewSecurityTokenKeyfileDialogBase::~NewSecurityTokenKeyfileDialogBase()
  	KeyfileNameTextCtrl->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NewSecurityTokenKeyfileDialogBase::OnKeyfileNameChanged ), NULL, this );
  }

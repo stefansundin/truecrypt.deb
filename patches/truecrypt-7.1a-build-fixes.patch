@@ -12,7 +12,7 @@ index 39395e9..3bd6efb 100644
  %.o: %.c
  	@echo Compiling $(<F)
 diff --git a/Common/Tcdefs.h b/Common/Tcdefs.h
-index 9ab14a4..b5bda98 100644
+index 9ab14a4..9cada69 100644
 --- a/Common/Tcdefs.h
 +++ b/Common/Tcdefs.h
 @@ -15,7 +15,9 @@
@@ -60,7 +60,7 @@ index 04426bd..3a9932d 100644
  				break;
  
 diff --git a/Main/Main.make b/Main/Main.make
-index 565ed40..1b97cb6 100644
+index 565ed40..2a00269 100644
 --- a/Main/Main.make
 +++ b/Main/Main.make
 @@ -105,7 +105,7 @@ TC_VERSION = $(shell grep VERSION_STRING ../Common/Tcdefs.h | head -n 1 | cut -d

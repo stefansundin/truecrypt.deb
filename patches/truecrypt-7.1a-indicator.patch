@@ -335,7 +335,7 @@ index 3a9932d..414e623 100644
  
  	void GraphicUserInterface::SetListCtrlColumnWidths (wxListCtrl *listCtrl, list <int> columnWidthPermilles, bool hasVerticalScrollbar) const
 diff --git a/Main/Main.make b/Main/Main.make
-index 1b97cb6..efb5211 100644
+index 2a00269..2a5c260 100644
 --- a/Main/Main.make
 +++ b/Main/Main.make
 @@ -72,6 +72,9 @@ endif
