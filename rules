@@ -73,8 +73,9 @@ binary: build install
 	install -m 644 -D debian/truecrypt-autostart.desktop debian/truecrypt/etc/xdg/autostart/truecrypt.desktop
 	install -m 755 -D debian/mount.truecrypt debian/truecrypt/sbin/mount.truecrypt
 	install -m 755 -D debian/mount.truecrypt debian/truecrypt-cli/sbin/mount.truecrypt
+	install -m 644 -D debian/truecrypt.bash-completion debian/truecrypt/usr/share/bash-completion/completions/truecrypt
+	install -m 644 -D debian/truecrypt.bash-completion debian/truecrypt-cli/usr/share/bash-completion/completions/truecrypt
 	dh_installman -A debian/truecrypt.1
-	dh_bash-completion
 	dh_compress
 	dh_fixperms
 	dh_installdeb
