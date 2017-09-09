@@ -12,6 +12,7 @@ export PKCS11_INC=$(shell pwd)/debian/pkcs11
 export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
 VERSION=$(shell grep -m1 -oE '7.1a-[0-9a-z]+' debian/changelog)
 export TC_EXTRA_CXXFLAGS=-DVERSION_STRING='"$(VERSION)"' -DTC_STR_RELEASED_BY='"Released by Stefan Sundin"'
+export TC_EXTRA_LFLAGS=-Wl,--as-needed
 
 Main/truecrypt-gui: export TC_EXTRA_LIBS=-ldl -lX11
 Main/truecrypt-cli: export TC_EXTRA_LIBS=-ldl
