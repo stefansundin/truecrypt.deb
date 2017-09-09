@@ -1,3 +1,5 @@
+ENV["LC_ALL"] = "en_US.UTF-8"
+
 $root_provision = <<SCRIPT
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
