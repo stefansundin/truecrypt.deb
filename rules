@@ -17,6 +17,10 @@ export TC_EXTRA_LFLAGS=-Wl,--as-needed
 Main/truecrypt-gui: export TC_EXTRA_LIBS=-ldl -lX11
 Main/truecrypt-cli: export TC_EXTRA_LIBS=-ldl
 
+ifeq (,$(wildcard debian/wxWidgets-2.8.12.tar.gz))
+$(error wxWidgets-2.8.12.tar.gz is missing!)
+endif
+
 %:
 	dh $@
 
