@@ -1,3 +1,10 @@
+truecrypt (7.1a-12) xenial; urgency=low
+
+  * Add armhf build (for Raspberry Pi).
+  * Minor improvements and bug fixes.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sat, 09 Sep 2017 18:08:26 -0700
+
 truecrypt (7.1a-11) xenial; urgency=low
 
   * Fix i386 build.
