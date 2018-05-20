@@ -1,3 +1,10 @@
+truecrypt (7.1a-14) bionic; urgency=medium
+
+  * No changes. Recompiled to take advantage of new security features in GCC
+    (see hardening-check).
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sun, 20 May 2018 11:47:14 -0700
+
 truecrypt (7.1a-13) xenial; urgency=low
 
   * I forgot to bundle the wxWidgets tar so the build failed.
