@@ -3,6 +3,7 @@ ENV["LC_ALL"] = "en_US.UTF-8"
 $root_provision = <<SCRIPT
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
+apt-get upgrade -y
 apt-get install -y git gnupg2 vim
 apt-get install -y devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion
 SCRIPT
@@ -24,7 +25,7 @@ SCRIPT
 $version = File.read("changelog")[/7.1a-[^)]+/]
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
   config.vm.hostname = "truecrypt.deb"
   config.vm.provision "shell", inline: $root_provision
   config.vm.provision "shell", inline: $user_provision, privileged: false
