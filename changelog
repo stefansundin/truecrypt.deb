@@ -1,3 +1,9 @@
+truecrypt (7.1a-15) xenial; urgency=medium
+
+  * Add arm64 build.
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Wed, 19 Dec 2018 22:24:45 -0800
+
 truecrypt (7.1a-14) bionic; urgency=medium
 
   * No changes. Recompiled to take advantage of new security features in GCC
