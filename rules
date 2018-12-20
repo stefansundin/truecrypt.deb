@@ -8,6 +8,11 @@
 #export CC=gcc-5
 #export CXX=g++-5
 
+# Note: For wxWidgets to compile cleanly on arm64 (aka aarch64),
+#       config.guess and config.sub have to be updated to a newer version.
+# wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+# wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
 export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
 VERSION=$(shell grep -m1 -oE '7.1a-[0-9a-z]+' debian/changelog)
@@ -27,6 +32,8 @@ endif
 configure-stamp:
 	dh_testdir
 	tar -C debian -xzf debian/wxWidgets-2.8.12.tar.gz
+	cp debian/wxWidgets/config.guess debian/wxWidgets-2.8.12/
+	cp debian/wxWidgets/config.sub debian/wxWidgets-2.8.12/
 	touch $@
 
 Main/truecrypt-gui: configure-stamp
