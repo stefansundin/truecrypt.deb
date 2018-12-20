@@ -1,10 +1,4 @@
 
-div {
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
 body {
     background: #e2e2e2;
     color: #333333;
@@ -122,6 +116,9 @@ table {
 
 #main, #menu {
     background: #ffffff;
+    
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 
     padding: 1em 1em 1em 1em;
 
@@ -155,6 +152,8 @@ table {
     margin: 0em 0em 2em 0em;
     
     background: #ffffff;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 2em 2em 2em 2em;
 
     -moz-border-radius: 4px;
