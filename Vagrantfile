@@ -22,7 +22,7 @@ cd truecrypt-7.1a-source
 ln -s /vagrant debian
 SCRIPT
 
-$version = File.read("changelog")[/7.1a-[^)]+/]
+$version = File.read("#{__dir__}/changelog")[/7.1a-[^)]+/]
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
