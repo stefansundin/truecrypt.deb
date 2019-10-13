@@ -8,46 +8,25 @@
 #export CC=gcc-5
 #export CXX=g++-5
 
-# Note: For wxWidgets to compile cleanly on arm64 (aka aarch64),
-#       config.guess and config.sub have to be updated to a newer version.
-# wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
-# wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
-
 export PKCS11_INC=$(shell pwd)/debian/pkcs11
-export WX_ROOT=$(shell pwd)/debian/wxWidgets-2.8.12
 VERSION=$(shell grep -m1 -oE '7.1a-[0-9a-z]+' debian/changelog)
 export TC_EXTRA_CXXFLAGS=-DVERSION_STRING='"$(VERSION)"' -DTC_STR_RELEASED_BY='"Released by Stefan Sundin"'
 export TC_EXTRA_LFLAGS=-Wl,--as-needed
-
-Main/truecrypt-gui: export TC_EXTRA_LIBS=-ldl -lX11
-Main/truecrypt-cli: export TC_EXTRA_LIBS=-ldl
-
-ifeq (,$(wildcard debian/wxWidgets-2.8.12.tar.gz))
-$(error wxWidgets-2.8.12.tar.gz is missing!)
-endif
+export TC_EXTRA_LIBS=-ldl
 
 %:
 	dh $@
 
-configure-stamp:
+Main/truecrypt-gui:
 	dh_testdir
-	tar -C debian -xzf debian/wxWidgets-2.8.12.tar.gz
-	cp debian/wxWidgets/config.guess debian/wxWidgets-2.8.12/
-	cp debian/wxWidgets/config.sub debian/wxWidgets-2.8.12/
-	touch $@
-
-Main/truecrypt-gui: configure-stamp
-	dh_testdir
-	$(MAKE) WXSTATIC=1 clean
-	$(MAKE) wxbuild
-	$(MAKE) WXSTATIC=1
+	$(MAKE) clean
+	$(MAKE)
 	mv Main/truecrypt Main/truecrypt-gui
 
-Main/truecrypt-cli: configure-stamp
+Main/truecrypt-cli:
 	dh_testdir
-	$(MAKE) WXSTATIC=1 clean
-	$(MAKE) NOGUI=1 wxbuild
-	$(MAKE) NOGUI=1 WXSTATIC=1
+	$(MAKE) clean
+	$(MAKE) NOGUI=1
 	mv Main/truecrypt Main/truecrypt-cli
 
 build: Main/truecrypt-gui Main/truecrypt-cli
@@ -57,10 +36,9 @@ build-indep: build
 clean:
 	dh_testdir
 	dh_clean
-	rm -f configure-stamp Main/truecrypt-gui Main/truecrypt-cli
-	$(MAKE) WXSTATIC=1 clean
+	rm -f Main/truecrypt-gui Main/truecrypt-cli
+	$(MAKE) clean
 	rm -f Common/Language.xml.h Common/Textual_logo_96dpi.bmp.h Format/TrueCrypt_Wizard.bmp.h License.txt.h Main/SystemPrecompiled.d Mount/Drive_icon_96dpi.bmp.h Mount/Drive_icon_mask_96dpi.bmp.h Mount/Logo_96dpi.bmp.h
-	rm -rf debian/wxWidgets-2.8.12
 
 install: build
 	dh_testdir

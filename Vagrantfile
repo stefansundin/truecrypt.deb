@@ -10,12 +10,9 @@ SCRIPT
 
 $user_provision = <<SCRIPT
 echo 'export PKCS11_INC=$HOME/truecrypt-7.1a-source/debian/pkcs11' >> ~/.bashrc
-echo 'export WX_ROOT=$HOME/truecrypt-7.1a-source/debian/wxWidgets-2.8.12' >> ~/.bashrc
 
 echo "Downloading truecrypt_7.1a.orig.tar.gz"
 wget -q https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt/+files/truecrypt_7.1a.orig.tar.gz
-echo "Downloading wxWidgets-2.8.12.tar.gz"
-wget -q -O /vagrant/wxWidgets-2.8.12.tar.gz https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxWidgets-2.8.12.tar.gz
 
 tar xzf truecrypt_7.1a.orig.tar.gz
 cd truecrypt-7.1a-source

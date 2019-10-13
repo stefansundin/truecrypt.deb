@@ -1,0 +1,304 @@
+diff --git a/Main/Application.cpp b/Main/Application.cpp
+index f6d692c..1010b6f 100644
+--- a/Main/Application.cpp
++++ b/Main/Application.cpp
+@@ -36,7 +36,7 @@ namespace TrueCrypt
+ 
+ 	FilePath Application::GetConfigFilePath (const wxString &configFileName, bool createConfigDir)
+ 	{
+-		wxStandardPaths stdPaths;
++		wxStandardPaths stdPaths = wxStandardPaths::Get();
+ 		DirectoryPath configDir;
+ 		
+ 		if (!Core->IsInPortableMode())
+@@ -61,12 +61,12 @@ namespace TrueCrypt
+ 
+ 	DirectoryPath Application::GetExecutableDirectory ()
+ 	{
+-		return wstring (wxFileName (wxStandardPaths().GetExecutablePath()).GetPath());
++		return wstring (wxFileName (wxStandardPaths::Get().GetExecutablePath()).GetPath());
+ 	}
+ 
+ 	FilePath Application::GetExecutablePath ()
+ 	{
+-		return wstring (wxStandardPaths().GetExecutablePath());
++		return wstring (wxStandardPaths::Get().GetExecutablePath());
+ 	}
+ 
+ 	void Application::Initialize (UserInterfaceType::Enum type)
+diff --git a/Main/CommandLineInterface.cpp b/Main/CommandLineInterface.cpp
+index ab5f90b..181e3a8 100644
+--- a/Main/CommandLineInterface.cpp
++++ b/Main/CommandLineInterface.cpp
+@@ -380,7 +380,7 @@ namespace TrueCrypt
+ 		ArgQuick = parser.Found (L"quick");
+ 
+ 		if (parser.Found (L"random-source", &str))
+-			ArgRandomSourcePath = FilesystemPath (str);
++			ArgRandomSourcePath = FilesystemPath (str.wc_str());
+ 
+ 		if (parser.Found (L"restore-headers"))
+ 		{
+@@ -471,7 +471,7 @@ namespace TrueCrypt
+ 
+ 			if (param1IsFile)
+ 			{
+-				ArgFilePath.reset (new FilePath (parser.GetParam (0)));
++				ArgFilePath.reset (new FilePath (parser.GetParam (0).wc_str()));
+ 			}
+ 		}
+ 
+@@ -524,7 +524,7 @@ namespace TrueCrypt
+ 					arr.Add (L"");
+ 					continue;
+ 				}
+-				arr.Last() += token.empty() ? L',' : token;
++				arr.Last() += token.empty() ? wxString(L',') : token;
+ 			}
+ 			else
+ 				arr.Add (token);
+@@ -562,12 +562,12 @@ namespace TrueCrypt
+ 			{
+ 				filteredVolumes.push_back (volume);
+ 			}
+-			else if (wxString (volume->Path) == pathFilter.GetFullPath())
++			else if (wxString (wstring(volume->Path)) == pathFilter.GetFullPath())
+ 			{
+ 				filteredVolumes.push_back (volume);
+ 			}
+-			else if (wxString (volume->MountPoint) == pathFilter.GetFullPath()
+-				|| (wxString (volume->MountPoint) + wxFileName::GetPathSeparator()) == pathFilter.GetFullPath())
++			else if (wxString (wstring(volume->MountPoint)) == pathFilter.GetFullPath()
++				|| (wxString (wstring(volume->MountPoint)) + wxFileName::GetPathSeparator()) == pathFilter.GetFullPath())
+ 			{
+ 				filteredVolumes.push_back (volume);
+ 			}
+diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
+index 5825381..bef59c6 100644
+--- a/Main/Forms/Forms.cpp
++++ b/Main/Forms/Forms.cpp
+@@ -263,8 +263,6 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
+ 	VolumeStaticBoxSizer = new wxStaticBoxSizer( new wxStaticBox( MainPanel, wxID_ANY, _("Volume") ), wxVERTICAL );
+ 	
+ 	VolumeGridBagSizer = new wxGridBagSizer( 0, 0 );
+-	VolumeGridBagSizer->AddGrowableCol( 1 );
+-	VolumeGridBagSizer->AddGrowableRow( 0 );
+ 	VolumeGridBagSizer->SetFlexibleDirection( wxBOTH );
+ 	VolumeGridBagSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+ 	
+@@ -307,6 +305,9 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
+ 	
+ 	VolumeGridBagSizer->Add( bSizer21, wxGBPosition( 1, 3 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
+ 	
++	VolumeGridBagSizer->AddGrowableCol( 1 );
++	VolumeGridBagSizer->AddGrowableRow( 0 );
++
+ 	VolumeStaticBoxSizer->Add( VolumeGridBagSizer, 1, wxEXPAND|wxALL, 4 );
+ 	
+ 	LowStaticBoxSizer->Add( VolumeStaticBoxSizer, 1, wxEXPAND, 5 );
+@@ -1442,7 +1443,6 @@ MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id,
+ 	bSizer54->Add( bSizer55, 1, wxEXPAND, 5 );
+ 	
+ 	FilesystemOptionsSizer = new wxGridBagSizer( 0, 0 );
+-	FilesystemOptionsSizer->AddGrowableCol( 1 );
+ 	FilesystemOptionsSizer->SetFlexibleDirection( wxBOTH );
+ 	FilesystemOptionsSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+ 	FilesystemOptionsSizer->SetEmptyCellSize( wxSize( 0,0 ) );
+@@ -1468,6 +1468,8 @@ MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id,
+ 	FilesystemOptionsTextCtrl = new wxTextCtrl( m_panel8, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+ 	FilesystemOptionsSizer->Add( FilesystemOptionsTextCtrl, wxGBPosition( 2, 1 ), wxGBSpan( 1, 2 ), wxALIGN_CENTER_VERTICAL|wxEXPAND|wxTOP|wxRIGHT|wxLEFT, 5 );
+ 	
++	FilesystemOptionsSizer->AddGrowableCol( 1 );
++
+ 	bSizer54->Add( FilesystemOptionsSizer, 0, wxEXPAND, 5 );
+ 	
+ 	sbSizer28->Add( bSizer54, 0, wxEXPAND|wxBOTTOM, 5 );
+@@ -2892,7 +2894,6 @@ VolumePasswordPanelBase::VolumePasswordPanelBase( wxWindow* parent, wxWindowID i
+ 	bSizer7 = new wxBoxSizer( wxVERTICAL );
+ 	
+ 	GridBagSizer = new wxGridBagSizer( 0, 0 );
+-	GridBagSizer->AddGrowableCol( 1 );
+ 	GridBagSizer->SetFlexibleDirection( wxBOTH );
+ 	GridBagSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+ 	GridBagSizer->SetEmptyCellSize( wxSize( 0,0 ) );
+@@ -2950,6 +2951,8 @@ VolumePasswordPanelBase::VolumePasswordPanelBase( wxWindow* parent, wxWindowID i
+ 	
+ 	GridBagSizer->Add( PasswordPlaceholderSizer, wxGBPosition( 8, 1 ), wxGBSpan( 1, 2 ), wxTOP|wxEXPAND, 5 );
+ 	
++	GridBagSizer->AddGrowableCol( 1 );
++
+ 	bSizer7->Add( GridBagSizer, 1, wxALL|wxEXPAND, 5 );
+ 	
+ 	this->SetSizer( bSizer7 );
+diff --git a/Main/Forms/MainFrame.cpp b/Main/Forms/MainFrame.cpp
+index cf313a8..46c4d9e 100644
+--- a/Main/Forms/MainFrame.cpp
++++ b/Main/Forms/MainFrame.cpp
+@@ -828,7 +828,7 @@ namespace TrueCrypt
+ 			// File-hosted volumes
+ 			if (!volume->Path.IsDevice() && !mountPoint.IsEmpty())
+ 			{
+-				if (wxString (volume->Path).Upper().StartsWith (wstring (mountPoint).c_str()))
++				if (wxString (wstring(volume->Path)).Upper().StartsWith (wxString (wstring(mountPoint))))
+ 				{
+ 					removedVolumes.push_back (volume);
+ 					continue;
+@@ -1020,7 +1020,7 @@ namespace TrueCrypt
+ 		if (!ListItemRightClickEventPending)
+ 		{
+ 			ListItemRightClickEventPending = true;
+-			SlotListCtrl->AddPendingEvent (event);
++			SlotListCtrl->GetEventHandler()->AddPendingEvent (event);
+ 			return;
+ 		}
+ 
+diff --git a/Main/Forms/PreferencesDialog.cpp b/Main/Forms/PreferencesDialog.cpp
+index b10a5cd..a0c4954 100644
+--- a/Main/Forms/PreferencesDialog.cpp
++++ b/Main/Forms/PreferencesDialog.cpp
+@@ -23,8 +23,7 @@ namespace TrueCrypt
+ 	PreferencesDialog::PreferencesDialog (wxWindow* parent)
+ 		: PreferencesDialogBase (parent),
+ 		LastVirtualKeyPressed (0),
+-		Preferences (Gui->GetPreferences()),
+-		RestoreValidatorBell (false)
++		Preferences (Gui->GetPreferences())
+ 	{
+ #define TC_CHECK_BOX_VALIDATOR(NAME) (TC_JOIN(NAME,CheckBox))->SetValidator (wxGenericValidator (&Preferences.NAME));
+ 
+@@ -153,8 +152,6 @@ namespace TrueCrypt
+ 		Fit();
+ 		Gui->SetListCtrlColumnWidths (HotkeyListCtrl, colPermilles);
+ 
+-		RestoreValidatorBell = !wxTextValidator::IsSilent();
+-		wxTextValidator::SetBellOnError (true);
+ 		HotkeyTextCtrl->SetValidator (wxTextValidator (wxFILTER_INCLUDE_CHAR_LIST));
+ 
+ 		UpdateHotkeyButtons();
+@@ -203,8 +200,6 @@ namespace TrueCrypt
+ 
+ 	PreferencesDialog::~PreferencesDialog ()
+ 	{
+-		if (RestoreValidatorBell)
+-			wxTextValidator::SetBellOnError (false);
+ 	}
+ 
+ 	void PreferencesDialog::SelectPage (wxPanel *page)
+diff --git a/Main/Forms/PreferencesDialog.h b/Main/Forms/PreferencesDialog.h
+index 412d7c4..2cb2318 100644
+--- a/Main/Forms/PreferencesDialog.h
++++ b/Main/Forms/PreferencesDialog.h
+@@ -52,7 +52,6 @@ namespace TrueCrypt
+ 		int LastVirtualKeyPressed; 
+ 		auto_ptr <wxTimer> mTimer;
+ 		UserPreferences Preferences;
+-		bool RestoreValidatorBell;
+ 		HotkeyList UnregisteredHotkeys;
+ 	};
+ }
+diff --git a/Main/Forms/SelectDirectoryWizardPage.cpp b/Main/Forms/SelectDirectoryWizardPage.cpp
+index a6a3ab0..09456f1 100644
+--- a/Main/Forms/SelectDirectoryWizardPage.cpp
++++ b/Main/Forms/SelectDirectoryWizardPage.cpp
+@@ -16,7 +16,7 @@ namespace TrueCrypt
+ 	{
+ 		if (!DirectoryTextCtrl->IsEmpty())
+ 		{
+-			return FilesystemPath (DirectoryTextCtrl->GetValue()).IsDirectory();
++			return FilesystemPath (wstring(DirectoryTextCtrl->GetValue())).IsDirectory();
+ 		}
+ 
+ 		return false;
+diff --git a/Main/Forms/SelectDirectoryWizardPage.h b/Main/Forms/SelectDirectoryWizardPage.h
+index 52335fc..2a44240 100644
+--- a/Main/Forms/SelectDirectoryWizardPage.h
++++ b/Main/Forms/SelectDirectoryWizardPage.h
+@@ -18,7 +18,7 @@ namespace TrueCrypt
+ 	public:
+ 		SelectDirectoryWizardPage (wxPanel* parent) : SelectDirectoryWizardPageBase (parent) { }
+ 
+-		DirectoryPath GetDirectory () const { return DirectoryPath (DirectoryTextCtrl->GetValue()); }
++		DirectoryPath GetDirectory () const { return DirectoryPath (wstring(DirectoryTextCtrl->GetValue())); }
+ 		bool IsValid ();
+ 		void SetDirectory (const DirectoryPath &path) { DirectoryTextCtrl->SetValue (wstring (path)); }
+ 		void SetMaxStaticTextWidth (int width) { InfoStaticText->Wrap (width); }
+diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
+index 04426bd..0148cbd 100644
+--- a/Main/GraphicUserInterface.cpp
++++ b/Main/GraphicUserInterface.cpp
+@@ -1384,7 +1384,7 @@ namespace TrueCrypt
+ #else
+ 			L"",
+ #endif
+-			L"", wxDD_DEFAULT_STYLE | (existingOnly ? wxDD_DIR_MUST_EXIST : 0), wxDefaultPosition, parent));
++			L"", wxDD_DEFAULT_STYLE | (existingOnly ? wxDD_DIR_MUST_EXIST : 0), wxDefaultPosition, parent).wc_str());
+ 	}
+ 
+ 	FilePathList GraphicUserInterface::SelectFiles (wxWindow *parent, const wxString &caption, bool saveMode, bool allowMultiple, const list < pair <wstring, wstring> > &fileExtensions, const DirectoryPath &directory) const
+@@ -1428,14 +1428,14 @@ namespace TrueCrypt
+ 		if (dialog.ShowModal() == wxID_OK)
+ 		{
+ 			if (!allowMultiple)
+-				files.push_back (make_shared <FilePath> (dialog.GetPath()));
++				files.push_back (make_shared <FilePath> (dialog.GetPath().wc_str()));
+ 			else
+ 			{
+ 				wxArrayString paths;
+ 				dialog.GetPaths (paths);
+ 
+ 				foreach (const wxString &path, paths)
+-					files.push_back (make_shared <FilePath> (path));
++					files.push_back (make_shared <FilePath> (path.wc_str()));
+ 			}
+ 		}
+ 
+diff --git a/Main/TextUserInterface.cpp b/Main/TextUserInterface.cpp
+index d9e93e6..27ad193 100644
+--- a/Main/TextUserInterface.cpp
++++ b/Main/TextUserInterface.cpp
+@@ -116,7 +116,7 @@ namespace TrueCrypt
+ 			for (size_t i = 0; i < length && i < VolumePassword::MaxSize; ++i)
+ 			{
+ 				passwordBuf[i] = (wchar_t) passwordStr[i];
+-				const_cast <wchar_t *> (passwordStr.c_str())[i] = L'X';
++				const_cast <wchar_t *> (passwordStr.wc_str())[i] = L'X';
+ 			}
+ 
+ 			if (verify && verPhase)
+@@ -763,8 +763,8 @@ namespace TrueCrypt
+ 
+ 				ShowString (wxString::Format (L"\rDone: %7.3f%%  Speed: %9s  Left: %s         ",
+ 					100.0 - double (options->Size - progress.SizeDone) / (double (options->Size) / 100.0),
+-					speed > 0 ? SpeedToString (speed).c_str() : L" ",
+-					speed > 0 ? TimeSpanToString ((options->Size - progress.SizeDone) / speed).c_str() : L""));
++					speed > 0 ? SpeedToString (speed).wc_str() : L" ",
++					speed > 0 ? TimeSpanToString ((options->Size - progress.SizeDone) / speed).wc_str() : L""));
+ 			}
+ 
+ 			Thread::Sleep (100);
+diff --git a/Main/UserPreferences.cpp b/Main/UserPreferences.cpp
+index e0e8233..6608f79 100644
+--- a/Main/UserPreferences.cpp
++++ b/Main/UserPreferences.cpp
+@@ -219,7 +219,7 @@ namespace TrueCrypt
+ 
+ 			foreach_ref (const Keyfile &keyfile, DefaultKeyfiles)
+ 			{
+-				keyfilesXml.InnerNodes.push_back (XmlNode (L"keyfile", wxString (FilesystemPath (keyfile))));
++				keyfilesXml.InnerNodes.push_back (XmlNode (L"keyfile", wxString (wstring(FilesystemPath (keyfile)))));
+ 			}
+ 
+ 			XmlWriter keyfileWriter (keyfilesCfgPath);
+diff --git a/Makefile b/Makefile
+index 265bb6f..f478eea 100644
+--- a/Makefile
++++ b/Makefile
+@@ -61,7 +61,7 @@ endif
+ 
+ ifeq "$(origin NOGUI)" "command line"
+ 	export TC_NO_GUI := 1
+-	C_CXX_FLAGS += -DTC_NO_GUI
++	C_CXX_FLAGS += -DTC_NO_GUI -DwxUSE_GUI=0
+ 	WX_CONFIGURE_FLAGS += --disable-gui
+ endif
+ 

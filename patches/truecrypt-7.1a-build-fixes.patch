@@ -97,7 +97,7 @@ index d9e93e6..852109b 100644
  				break;
  
 diff --git a/Makefile b/Makefile
-index 265bb6f..cdfaad8 100644
+index 265bb6f..e0a062d 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -50,6 +50,9 @@ export WXCONFIG_CFLAGS :=
@@ -105,17 +105,8 @@ index 265bb6f..cdfaad8 100644
  WX_ROOT ?= ..
  
 +CFLAGS += -Wno-sequence-point
-+CXXFLAGS += -Wno-narrowing
++CXXFLAGS += -Wno-narrowing -Wno-deprecated-declarations
 +PKCS11_INC ?= $(HOME)/pkcs11
  
  export TC_BUILD_CONFIG := Release
- 
-@@ -278,7 +281,7 @@ all clean:
- 
- ifeq "$(MAKECMDGOALS)" "wxbuild"
- CFLAGS :=
--CXXFLAGS :=
-+CXXFLAGS := -w
- LFLAGS :=
- endif
  
