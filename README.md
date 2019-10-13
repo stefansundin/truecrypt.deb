@@ -40,10 +40,11 @@ sudo apt-get install git build-essential devscripts debhelper pkg-config libgtk2
 If you want to use wxformbuilder:
 
 ```shell
-sudo add-apt-repository ppa:wxformbuilder/release
-sudo apt-get update
-sudo apt-get install wxformbuilder
+sudo apt-get install flatpak gnome-software-plugin-flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 ```
+
+Then reboot and download the flatpak file here: https://github.com/wxFormBuilder/wxFormBuilder/releases
 
 ### Build
 
