@@ -3,15 +3,16 @@ Section: utils
 Priority: extra
 Maintainer: Stefan Sundin <stefan@stefansundin.com>
 Build-Depends: debhelper (>= 9.20120909), pkg-config,
- libfuse-dev, nasm, libappindicator-dev, bash-completion,
- libgtk2.0-dev, libwxgtk3.0-dev
+ libfuse-dev, nasm, libayatana-appindicator3-dev, bash-completion,
+ libgtk2.0-dev, libwxgtk3.0-gtk3-dev
 Standards-Version: 3.9.6
 Homepage: https://launchpad.net/~stefansundin/+archive/ubuntu/truecrypt
 
 Package: truecrypt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, dmsetup, libcanberra-gtk-module
-Suggests: sudo, bash-completion, opensc, xterm, xdg-open, hfsprogs
+Suggests: sudo, bash-completion, opensc, xterm, xdg-open, hfsprogs,
+ libappindicator1, libayatana-appindicator3-1
 Conflicts: truecrypt-cli
 Description: Free open-source disk encryption software
  TrueCrypt is a software system for establishing and maintaining an

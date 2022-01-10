@@ -10,7 +10,7 @@ For installation instructions, go to: https://launchpad.net/~stefansundin/+archi
 
 - https://launchpad.net/~eugenesan/+archive/ubuntu/ppa
 - https://launchpad.net/~alex-p/+archive/ubuntu/notesalexp-xenial
-- http://www.unchartedbackwaters.co.uk/pyblosxom/static/truecrypt_debian_packaging
+- https://www.unchartedbackwaters.co.uk/pyblosxom/static/truecrypt_debian_packaging
 
 
 ## Building
@@ -30,7 +30,9 @@ Follow the instructions printed by the Vagrantfile.
 ### Prerequisites
 
 ```shell
-sudo apt-get install git build-essential devscripts debhelper pkg-config libfuse-dev nasm libappindicator-dev bash-completion libgtk2.0-dev libwxgtk3.0-dev
+sudo apt-get install git build-essential devscripts debhelper pkg-config libfuse-dev nasm libappindicator-dev bash-completion libgtk2.0-dev libwxgtk3.0-dev libcanberra-gtk-module
+
+sudo apt-get install git build-essential devscripts debhelper pkg-config libfuse-dev nasm libayatana-appindicator3-dev bash-completion libgtk2.0-dev libwxgtk3.0-gtk3-dev libcanberra-gtk-module
 ```
 
 If you want to use wxformbuilder:
@@ -86,7 +88,6 @@ curl -o /usr/local/etc/bash_completion.d/truecrypt https://raw.githubusercontent
 ## Misc
 
 - [ppastats](https://stefansundin.github.io/truecrypt.deb/)
-- [apt:truecrypt](http://www.appnr.com/install/truecrypt)
 
 
 # Changelog
