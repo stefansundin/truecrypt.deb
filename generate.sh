@@ -1,2 +1,2 @@
 #!/bin/bash -ex
-docker run -v $PWD:/mnt stefansundin/ppastats ppastats stefansundin truecrypt -o /mnt
+docker run -v $PWD:/mnt stefansundin/ppastats stefansundin truecrypt -o /mnt
