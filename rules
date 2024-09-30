@@ -1,6 +1,9 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
+# NOTEST has been set because of a bug in wxWidgets that is fixed in 3.2.5:
+# https://github.com/wxWidgets/wxWidgets/issues/24081
+
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
@@ -20,13 +23,13 @@ export TC_EXTRA_LIBS=-ldl
 Main/truecrypt-gui:
 	dh_testdir
 	$(MAKE) clean
-	$(MAKE)
+	$(MAKE) NOTEST=1
 	mv Main/truecrypt Main/truecrypt-gui
 
 Main/truecrypt-cli:
 	dh_testdir
 	$(MAKE) clean
-	$(MAKE) NOGUI=1
+	$(MAKE) NOTEST=1 NOGUI=1
 	mv Main/truecrypt Main/truecrypt-cli
 
 build: Main/truecrypt-gui Main/truecrypt-cli
