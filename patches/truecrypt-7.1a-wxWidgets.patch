@@ -1,7 +1,7 @@
-diff --git a/Main/Application.cpp b/Main/Application.cpp
-index f6d692c..1010b6f 100644
---- a/Main/Application.cpp
-+++ b/Main/Application.cpp
+Index: truecrypt-7.1a-source/Main/Application.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Application.cpp
++++ truecrypt-7.1a-source/Main/Application.cpp
 @@ -36,7 +36,7 @@ namespace TrueCrypt
  
  	FilePath Application::GetConfigFilePath (const wxString &configFileName, bool createConfigDir)
@@ -26,10 +26,10 @@ index f6d692c..1010b6f 100644
  	}
  
  	void Application::Initialize (UserInterfaceType::Enum type)
-diff --git a/Main/CommandLineInterface.cpp b/Main/CommandLineInterface.cpp
-index ab5f90b..181e3a8 100644
---- a/Main/CommandLineInterface.cpp
-+++ b/Main/CommandLineInterface.cpp
+Index: truecrypt-7.1a-source/Main/CommandLineInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/CommandLineInterface.cpp
++++ truecrypt-7.1a-source/Main/CommandLineInterface.cpp
 @@ -380,7 +380,7 @@ namespace TrueCrypt
  		ArgQuick = parser.Found (L"quick");
  
@@ -73,11 +73,11 @@ index ab5f90b..181e3a8 100644
  			{
  				filteredVolumes.push_back (volume);
  			}
-diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
-index 5825381..bef59c6 100644
---- a/Main/Forms/Forms.cpp
-+++ b/Main/Forms/Forms.cpp
-@@ -263,8 +263,6 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
+Index: truecrypt-7.1a-source/Main/Forms/Forms.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/Forms.cpp
++++ truecrypt-7.1a-source/Main/Forms/Forms.cpp
+@@ -263,8 +263,6 @@ MainFrameBase::MainFrameBase( wxWindow*
  	VolumeStaticBoxSizer = new wxStaticBoxSizer( new wxStaticBox( MainPanel, wxID_ANY, _("Volume") ), wxVERTICAL );
  	
  	VolumeGridBagSizer = new wxGridBagSizer( 0, 0 );
@@ -86,7 +86,7 @@ index 5825381..bef59c6 100644
  	VolumeGridBagSizer->SetFlexibleDirection( wxBOTH );
  	VolumeGridBagSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
  	
-@@ -307,6 +305,9 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
+@@ -307,6 +305,9 @@ MainFrameBase::MainFrameBase( wxWindow*
  	
  	VolumeGridBagSizer->Add( bSizer21, wxGBPosition( 1, 3 ), wxGBSpan( 1, 1 ), wxEXPAND, 5 );
  	
@@ -96,7 +96,7 @@ index 5825381..bef59c6 100644
  	VolumeStaticBoxSizer->Add( VolumeGridBagSizer, 1, wxEXPAND|wxALL, 4 );
  	
  	LowStaticBoxSizer->Add( VolumeStaticBoxSizer, 1, wxEXPAND, 5 );
-@@ -1442,7 +1443,6 @@ MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id,
+@@ -1442,7 +1443,6 @@ MountOptionsDialogBase::MountOptionsDial
  	bSizer54->Add( bSizer55, 1, wxEXPAND, 5 );
  	
  	FilesystemOptionsSizer = new wxGridBagSizer( 0, 0 );
@@ -104,7 +104,7 @@ index 5825381..bef59c6 100644
  	FilesystemOptionsSizer->SetFlexibleDirection( wxBOTH );
  	FilesystemOptionsSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
  	FilesystemOptionsSizer->SetEmptyCellSize( wxSize( 0,0 ) );
-@@ -1468,6 +1468,8 @@ MountOptionsDialogBase::MountOptionsDialogBase( wxWindow* parent, wxWindowID id,
+@@ -1468,6 +1468,8 @@ MountOptionsDialogBase::MountOptionsDial
  	FilesystemOptionsTextCtrl = new wxTextCtrl( m_panel8, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
  	FilesystemOptionsSizer->Add( FilesystemOptionsTextCtrl, wxGBPosition( 2, 1 ), wxGBSpan( 1, 2 ), wxALIGN_CENTER_VERTICAL|wxEXPAND|wxTOP|wxRIGHT|wxLEFT, 5 );
  	
@@ -113,7 +113,7 @@ index 5825381..bef59c6 100644
  	bSizer54->Add( FilesystemOptionsSizer, 0, wxEXPAND, 5 );
  	
  	sbSizer28->Add( bSizer54, 0, wxEXPAND|wxBOTTOM, 5 );
-@@ -2892,7 +2894,6 @@ VolumePasswordPanelBase::VolumePasswordPanelBase( wxWindow* parent, wxWindowID i
+@@ -2892,7 +2894,6 @@ VolumePasswordPanelBase::VolumePasswordP
  	bSizer7 = new wxBoxSizer( wxVERTICAL );
  	
  	GridBagSizer = new wxGridBagSizer( 0, 0 );
@@ -121,7 +121,7 @@ index 5825381..bef59c6 100644
  	GridBagSizer->SetFlexibleDirection( wxBOTH );
  	GridBagSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
  	GridBagSizer->SetEmptyCellSize( wxSize( 0,0 ) );
-@@ -2950,6 +2951,8 @@ VolumePasswordPanelBase::VolumePasswordPanelBase( wxWindow* parent, wxWindowID i
+@@ -2950,6 +2951,8 @@ VolumePasswordPanelBase::VolumePasswordP
  	
  	GridBagSizer->Add( PasswordPlaceholderSizer, wxGBPosition( 8, 1 ), wxGBSpan( 1, 2 ), wxTOP|wxEXPAND, 5 );
  	
@@ -130,10 +130,10 @@ index 5825381..bef59c6 100644
  	bSizer7->Add( GridBagSizer, 1, wxALL|wxEXPAND, 5 );
  	
  	this->SetSizer( bSizer7 );
-diff --git a/Main/Forms/MainFrame.cpp b/Main/Forms/MainFrame.cpp
-index cf313a8..46c4d9e 100644
---- a/Main/Forms/MainFrame.cpp
-+++ b/Main/Forms/MainFrame.cpp
+Index: truecrypt-7.1a-source/Main/Forms/MainFrame.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/MainFrame.cpp
++++ truecrypt-7.1a-source/Main/Forms/MainFrame.cpp
 @@ -828,7 +828,7 @@ namespace TrueCrypt
  			// File-hosted volumes
  			if (!volume->Path.IsDevice() && !mountPoint.IsEmpty())
@@ -152,10 +152,10 @@ index cf313a8..46c4d9e 100644
  			return;
  		}
  
-diff --git a/Main/Forms/PreferencesDialog.cpp b/Main/Forms/PreferencesDialog.cpp
-index b10a5cd..a0c4954 100644
---- a/Main/Forms/PreferencesDialog.cpp
-+++ b/Main/Forms/PreferencesDialog.cpp
+Index: truecrypt-7.1a-source/Main/Forms/PreferencesDialog.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/PreferencesDialog.cpp
++++ truecrypt-7.1a-source/Main/Forms/PreferencesDialog.cpp
 @@ -23,8 +23,7 @@ namespace TrueCrypt
  	PreferencesDialog::PreferencesDialog (wxWindow* parent)
  		: PreferencesDialogBase (parent),
@@ -184,10 +184,10 @@ index b10a5cd..a0c4954 100644
  	}
  
  	void PreferencesDialog::SelectPage (wxPanel *page)
-diff --git a/Main/Forms/PreferencesDialog.h b/Main/Forms/PreferencesDialog.h
-index 412d7c4..2cb2318 100644
---- a/Main/Forms/PreferencesDialog.h
-+++ b/Main/Forms/PreferencesDialog.h
+Index: truecrypt-7.1a-source/Main/Forms/PreferencesDialog.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/PreferencesDialog.h
++++ truecrypt-7.1a-source/Main/Forms/PreferencesDialog.h
 @@ -52,7 +52,6 @@ namespace TrueCrypt
  		int LastVirtualKeyPressed; 
  		auto_ptr <wxTimer> mTimer;
@@ -196,10 +196,10 @@ index 412d7c4..2cb2318 100644
  		HotkeyList UnregisteredHotkeys;
  	};
  }
-diff --git a/Main/Forms/SelectDirectoryWizardPage.cpp b/Main/Forms/SelectDirectoryWizardPage.cpp
-index a6a3ab0..09456f1 100644
---- a/Main/Forms/SelectDirectoryWizardPage.cpp
-+++ b/Main/Forms/SelectDirectoryWizardPage.cpp
+Index: truecrypt-7.1a-source/Main/Forms/SelectDirectoryWizardPage.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/SelectDirectoryWizardPage.cpp
++++ truecrypt-7.1a-source/Main/Forms/SelectDirectoryWizardPage.cpp
 @@ -16,7 +16,7 @@ namespace TrueCrypt
  	{
  		if (!DirectoryTextCtrl->IsEmpty())
@@ -209,10 +209,10 @@ index a6a3ab0..09456f1 100644
  		}
  
  		return false;
-diff --git a/Main/Forms/SelectDirectoryWizardPage.h b/Main/Forms/SelectDirectoryWizardPage.h
-index 52335fc..2a44240 100644
---- a/Main/Forms/SelectDirectoryWizardPage.h
-+++ b/Main/Forms/SelectDirectoryWizardPage.h
+Index: truecrypt-7.1a-source/Main/Forms/SelectDirectoryWizardPage.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/SelectDirectoryWizardPage.h
++++ truecrypt-7.1a-source/Main/Forms/SelectDirectoryWizardPage.h
 @@ -18,7 +18,7 @@ namespace TrueCrypt
  	public:
  		SelectDirectoryWizardPage (wxPanel* parent) : SelectDirectoryWizardPageBase (parent) { }
@@ -222,11 +222,20 @@ index 52335fc..2a44240 100644
  		bool IsValid ();
  		void SetDirectory (const DirectoryPath &path) { DirectoryTextCtrl->SetValue (wstring (path)); }
  		void SetMaxStaticTextWidth (int width) { InfoStaticText->Wrap (width); }
-diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
-index 04426bd..0148cbd 100644
---- a/Main/GraphicUserInterface.cpp
-+++ b/Main/GraphicUserInterface.cpp
-@@ -1384,7 +1384,7 @@ namespace TrueCrypt
+Index: truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/GraphicUserInterface.cpp
++++ truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+@@ -48,6 +48,8 @@ namespace TrueCrypt
+ #ifdef TC_MACOSX
+ 		wxApp::s_macHelpMenuTitleName = _("&Help");
+ #endif
++
++		wxSizerFlags::DisableConsistencyChecks();
+ 	}
+ 
+ 	GraphicUserInterface::~GraphicUserInterface ()
+@@ -1381,7 +1383,7 @@ namespace TrueCrypt
  #else
  			L"",
  #endif
@@ -235,7 +244,7 @@ index 04426bd..0148cbd 100644
  	}
  
  	FilePathList GraphicUserInterface::SelectFiles (wxWindow *parent, const wxString &caption, bool saveMode, bool allowMultiple, const list < pair <wstring, wstring> > &fileExtensions, const DirectoryPath &directory) const
-@@ -1428,14 +1428,14 @@ namespace TrueCrypt
+@@ -1425,14 +1427,14 @@ namespace TrueCrypt
  		if (dialog.ShowModal() == wxID_OK)
  		{
  			if (!allowMultiple)
@@ -252,10 +261,10 @@ index 04426bd..0148cbd 100644
  			}
  		}
  
-diff --git a/Main/TextUserInterface.cpp b/Main/TextUserInterface.cpp
-index d9e93e6..27ad193 100644
---- a/Main/TextUserInterface.cpp
-+++ b/Main/TextUserInterface.cpp
+Index: truecrypt-7.1a-source/Main/TextUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/TextUserInterface.cpp
++++ truecrypt-7.1a-source/Main/TextUserInterface.cpp
 @@ -116,7 +116,7 @@ namespace TrueCrypt
  			for (size_t i = 0; i < length && i < VolumePassword::MaxSize; ++i)
  			{
@@ -276,10 +285,10 @@ index d9e93e6..27ad193 100644
  			}
  
  			Thread::Sleep (100);
-diff --git a/Main/UserPreferences.cpp b/Main/UserPreferences.cpp
-index e0e8233..6608f79 100644
---- a/Main/UserPreferences.cpp
-+++ b/Main/UserPreferences.cpp
+Index: truecrypt-7.1a-source/Main/UserPreferences.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/UserPreferences.cpp
++++ truecrypt-7.1a-source/Main/UserPreferences.cpp
 @@ -219,7 +219,7 @@ namespace TrueCrypt
  
  			foreach_ref (const Keyfile &keyfile, DefaultKeyfiles)
@@ -289,11 +298,11 @@ index e0e8233..6608f79 100644
  			}
  
  			XmlWriter keyfileWriter (keyfilesCfgPath);
-diff --git a/Makefile b/Makefile
-index 265bb6f..f478eea 100644
---- a/Makefile
-+++ b/Makefile
-@@ -61,7 +61,7 @@ endif
+Index: truecrypt-7.1a-source/Makefile
+===================================================================
+--- truecrypt-7.1a-source.orig/Makefile
++++ truecrypt-7.1a-source/Makefile
+@@ -64,7 +64,7 @@ endif
  
  ifeq "$(origin NOGUI)" "command line"
  	export TC_NO_GUI := 1

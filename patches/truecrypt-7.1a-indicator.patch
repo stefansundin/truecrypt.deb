@@ -1,8 +1,8 @@
-diff --git a/Main/Forms/Forms.cpp b/Main/Forms/Forms.cpp
-index 5825381..5b05125 100644
---- a/Main/Forms/Forms.cpp
-+++ b/Main/Forms/Forms.cpp
-@@ -1738,23 +1738,6 @@ PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, c
+Index: truecrypt-7.1a-source/Main/Forms/Forms.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/Forms.cpp
++++ truecrypt-7.1a-source/Main/Forms/Forms.cpp
+@@ -1740,23 +1740,6 @@ PreferencesDialogBase::PreferencesDialog
  	
  	sbSizer18->Add( CloseBackgroundTaskOnNoVolumesCheckBox, 0, wxALL, 5 );
  	
@@ -26,7 +26,7 @@ index 5825381..5b05125 100644
  	bSizer62->Add( sbSizer18, 0, wxEXPAND|wxALL, 5 );
  	
  	bSizer61->Add( bSizer62, 1, wxEXPAND|wxALL, 5 );
-@@ -1772,6 +1755,9 @@ PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, c
+@@ -1774,6 +1757,9 @@ PreferencesDialogBase::PreferencesDialog
  	
  	LogOnSizer = new wxStaticBoxSizer( new wxStaticBox( SystemIntegrationPage, wxID_ANY, _("Actions to Perform when User Logs On") ), wxVERTICAL );
  	
@@ -36,7 +36,7 @@ index 5825381..5b05125 100644
  	StartOnLogonCheckBox = new wxCheckBox( SystemIntegrationPage, wxID_ANY, _("Start TrueCrypt Background Task"), wxDefaultPosition, wxDefaultSize, 0 );
  	
  	LogOnSizer->Add( StartOnLogonCheckBox, 0, wxALL, 5 );
-@@ -2024,6 +2010,7 @@ PreferencesDialogBase::PreferencesDialogBase( wxWindow* parent, wxWindowID id, c
+@@ -2026,6 +2012,7 @@ PreferencesDialogBase::PreferencesDialog
  	PreserveTimestampsCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnPreserveTimestampsCheckBoxClick ), NULL, this );
  	BackgroundTaskEnabledCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnBackgroundTaskEnabledCheckBoxClick ), NULL, this );
  	NoKernelCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoKernelCryptoCheckBoxClick ), NULL, this );
@@ -44,10 +44,10 @@ index 5825381..5b05125 100644
  	NoHardwareCryptoCheckBox->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnNoHardwareCryptoCheckBoxClick ), NULL, this );
  	SelectPkcs11ModuleButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PreferencesDialogBase::OnSelectPkcs11ModuleButtonClick ), NULL, this );
  	HotkeyListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( PreferencesDialogBase::OnHotkeyListItemDeselected ), NULL, this );
-diff --git a/Main/Forms/Forms.h b/Main/Forms/Forms.h
-index cbc6f6e..6539328 100644
---- a/Main/Forms/Forms.h
-+++ b/Main/Forms/Forms.h
+Index: truecrypt-7.1a-source/Main/Forms/Forms.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/Forms.h
++++ truecrypt-7.1a-source/Main/Forms/Forms.h
 @@ -551,11 +551,10 @@ namespace TrueCrypt
  			wxPanel* BackgroundTaskPanel;
  			wxCheckBox* BackgroundTaskEnabledCheckBox;
@@ -70,10 +70,10 @@ index cbc6f6e..6539328 100644
  			virtual void OnNoKernelCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnNoHardwareCryptoCheckBoxClick( wxCommandEvent& event ){ event.Skip(); }
  			virtual void OnSelectPkcs11ModuleButtonClick( wxCommandEvent& event ){ event.Skip(); }
-diff --git a/Main/Forms/MainFrame.cpp b/Main/Forms/MainFrame.cpp
-index cf313a8..273e35d 100644
---- a/Main/Forms/MainFrame.cpp
-+++ b/Main/Forms/MainFrame.cpp
+Index: truecrypt-7.1a-source/Main/Forms/MainFrame.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/MainFrame.cpp
++++ truecrypt-7.1a-source/Main/Forms/MainFrame.cpp
 @@ -37,6 +37,7 @@
  namespace TrueCrypt
  {
@@ -216,16 +216,16 @@ index cf313a8..273e35d 100644
  		}
  	}
  
-diff --git a/Main/Forms/MainFrame.h b/Main/Forms/MainFrame.h
-index 5b775ab..cd43e4e 100644
---- a/Main/Forms/MainFrame.h
-+++ b/Main/Forms/MainFrame.h
+Index: truecrypt-7.1a-source/Main/Forms/MainFrame.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/MainFrame.h
++++ truecrypt-7.1a-source/Main/Forms/MainFrame.h
 @@ -9,6 +9,10 @@
  #ifndef TC_HEADER_Main_Forms_MainFrame
  #define TC_HEADER_Main_Forms_MainFrame
  
 +#define GSocket GlibGSocket
-+#include <libappindicator/app-indicator.h>
++#include <libayatana-appindicator/app-indicator.h>
 +#undef GSocket
 +
  #include "Forms.h"
@@ -256,10 +256,10 @@ index 5b775ab..cd43e4e 100644
  		void MountVolume ();
  		void OnAboutMenuItemSelected (wxCommandEvent& event);
  		void OnActivate (wxActivateEvent& event);
-diff --git a/Main/Forms/PreferencesDialog.cpp b/Main/Forms/PreferencesDialog.cpp
-index b10a5cd..af7490a 100644
---- a/Main/Forms/PreferencesDialog.cpp
-+++ b/Main/Forms/PreferencesDialog.cpp
+Index: truecrypt-7.1a-source/Main/Forms/PreferencesDialog.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/PreferencesDialog.cpp
++++ truecrypt-7.1a-source/Main/Forms/PreferencesDialog.cpp
 @@ -11,6 +11,7 @@
  #ifdef TC_WINDOWS
  #include <wx/msw/registry.h>
@@ -268,7 +268,7 @@ index b10a5cd..af7490a 100644
  #include "Common/SecurityToken.h"
  #include "Main/Main.h"
  #include "Main/Application.h"
-@@ -59,9 +60,6 @@ namespace TrueCrypt
+@@ -58,9 +59,6 @@ namespace TrueCrypt
  		TC_CHECK_BOX_VALIDATOR (BackgroundTaskEnabled);
  		TC_CHECK_BOX_VALIDATOR (CloseBackgroundTaskOnNoVolumes);
  		CloseBackgroundTaskOnNoVolumesCheckBox->Show (!Core->IsInPortableMode());
@@ -278,7 +278,7 @@ index b10a5cd..af7490a 100644
  
  		// Encryption
  		AesHwCpuSupportedStaticText->SetLabel (
-@@ -103,7 +101,10 @@ namespace TrueCrypt
+@@ -102,7 +100,10 @@ namespace TrueCrypt
  #endif
  
  #ifndef TC_WINDOWS
@@ -290,7 +290,7 @@ index b10a5cd..af7490a 100644
  		MountRemovableCheckBox->Show (false);
  		CloseExplorerWindowsOnDismountCheckBox->Show (false);
  #endif
-@@ -272,6 +273,18 @@ namespace TrueCrypt
+@@ -267,6 +268,18 @@ namespace TrueCrypt
  			BackgroundTaskEnabledCheckBox->SetValue (!Gui->AskYesNo (LangString["CONFIRM_BACKGROUND_TASK_DISABLED"], false, true));
  	}
  
@@ -309,10 +309,10 @@ index b10a5cd..af7490a 100644
  	void PreferencesDialog::OnNoHardwareCryptoCheckBoxClick (wxCommandEvent& event)
  	{
  		if (event.IsChecked())
-diff --git a/Main/Forms/PreferencesDialog.h b/Main/Forms/PreferencesDialog.h
-index 412d7c4..fa67ac4 100644
---- a/Main/Forms/PreferencesDialog.h
-+++ b/Main/Forms/PreferencesDialog.h
+Index: truecrypt-7.1a-source/Main/Forms/PreferencesDialog.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Forms/PreferencesDialog.h
++++ truecrypt-7.1a-source/Main/Forms/PreferencesDialog.h
 @@ -26,6 +26,7 @@ namespace TrueCrypt
  	protected:
  		void OnAssignHotkeyButtonClick (wxCommandEvent& event);
@@ -321,10 +321,10 @@ index 412d7c4..fa67ac4 100644
  		void OnCancelButtonClick (wxCommandEvent& event) { Close(); }
  		void OnClose (wxCloseEvent& event);
  		void OnDismountOnPowerSavingCheckBoxClick (wxCommandEvent& event);
-diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
-index 3a9932d..414e623 100644
---- a/Main/GraphicUserInterface.cpp
-+++ b/Main/GraphicUserInterface.cpp
+Index: truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/GraphicUserInterface.cpp
++++ truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
 @@ -1469,6 +1469,8 @@ namespace TrueCrypt
  		}
  
@@ -334,24 +334,24 @@ index 3a9932d..414e623 100644
  	}
  
  	void GraphicUserInterface::SetListCtrlColumnWidths (wxListCtrl *listCtrl, list <int> columnWidthPermilles, bool hasVerticalScrollbar) const
-diff --git a/Main/Main.make b/Main/Main.make
-index 2a00269..2a5c260 100644
---- a/Main/Main.make
-+++ b/Main/Main.make
+Index: truecrypt-7.1a-source/Main/Main.make
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Main.make
++++ truecrypt-7.1a-source/Main/Main.make
 @@ -72,6 +72,9 @@ endif
  
  CXXFLAGS += -I$(BASE_DIR)/Main
  
 +ifndef TC_NO_GUI
-+LIBS += $(shell pkg-config --libs appindicator-0.1)
++LIBS += $(shell pkg-config --libs ayatana-appindicator3-0.1)
 +endif
  
  #------ wxWidgets configuration ------
  
-diff --git a/Main/UserPreferences.cpp b/Main/UserPreferences.cpp
-index e0e8233..ec7abaa 100644
---- a/Main/UserPreferences.cpp
-+++ b/Main/UserPreferences.cpp
+Index: truecrypt-7.1a-source/Main/UserPreferences.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/UserPreferences.cpp
++++ truecrypt-7.1a-source/Main/UserPreferences.cpp
 @@ -67,9 +67,6 @@ namespace TrueCrypt
  #define TC_CONFIG_SET(NAME) SetValue (configMap[L###NAME], NAME)
  
@@ -372,10 +372,10 @@ index e0e8233..ec7abaa 100644
  		TC_CONFIG_ADD (BeepAfterHotkeyMountDismount);
  		formatter.AddEntry (L"CachePasswords", DefaultMountOptions.CachePassword);
  		TC_CONFIG_ADD (CloseBackgroundTaskOnNoVolumes);
-diff --git a/Main/UserPreferences.h b/Main/UserPreferences.h
-index 0f862ce..36f1fb4 100644
---- a/Main/UserPreferences.h
-+++ b/Main/UserPreferences.h
+Index: truecrypt-7.1a-source/Main/UserPreferences.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/UserPreferences.h
++++ truecrypt-7.1a-source/Main/UserPreferences.h
 @@ -20,11 +20,8 @@ namespace TrueCrypt
  		UserPreferences ()
  			:
@@ -399,16 +399,16 @@ index 0f862ce..36f1fb4 100644
  		bool BeepAfterHotkeyMountDismount;
  		bool CloseBackgroundTaskOnNoVolumes;
  		bool CloseExplorerWindowsOnDismount;
-diff --git a/Makefile b/Makefile
-index cdfaad8..ae4d6c7 100644
---- a/Makefile
-+++ b/Makefile
+Index: truecrypt-7.1a-source/Makefile
+===================================================================
+--- truecrypt-7.1a-source.orig/Makefile
++++ truecrypt-7.1a-source/Makefile
 @@ -66,6 +66,8 @@ ifeq "$(origin NOGUI)" "command line"
  	export TC_NO_GUI := 1
- 	C_CXX_FLAGS += -DTC_NO_GUI
+ 	C_CXX_FLAGS += -DTC_NO_GUI -DwxUSE_GUI=0
  	WX_CONFIGURE_FLAGS += --disable-gui
 +else
-+	C_CXX_FLAGS += $(shell pkg-config --cflags appindicator-0.1)
++	C_CXX_FLAGS += $(shell pkg-config --cflags ayatana-appindicator3-0.1)
  endif
  
  ifdef PKCS11_INC

@@ -30,7 +30,7 @@ Follow the instructions printed by the Vagrantfile.
 ### Prerequisites
 
 ```shell
-sudo apt-get install git build-essential devscripts debhelper pkg-config libfuse-dev nasm libappindicator-dev bash-completion libgtk2.0-dev libwxgtk3.0-dev
+sudo apt-get install git build-essential devscripts debhelper pkg-configlibfuse-dev nasm libgtk-3-dev libwxgtk3.2-dev libayatana-appindicator3-dev bash-completion
 ```
 
 If you want to use wxformbuilder:

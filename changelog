@@ -1,3 +1,11 @@
+truecrypt (7.1a-16) noble; urgency=medium
+
+  * Replace appindicator with ayatana-appindicator.
+  * Upgrade to GTK3 and wxWidgets 3.2.
+  * Expect some GUI bugs!
+
+ -- Stefan Sundin <stefan@stefansundin.com>  Sun, 29 Sep 2024 21:30:37 -0800
+
 truecrypt (7.1a-15) xenial; urgency=medium
 
   * Add arm64 build.

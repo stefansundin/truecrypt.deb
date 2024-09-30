@@ -5,7 +5,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y
 apt-get install -y git gnupg2 vim
-apt-get install -y devscripts debhelper pkg-config libgtk2.0-dev libfuse-dev nasm libappindicator-dev bash-completion
+apt-get install -y devscripts debhelper pkg-config libfuse-dev nasm libgtk-3-dev libwxgtk3.2-dev libayatana-appindicator3-dev bash-completion
 SCRIPT
 
 $user_provision = <<SCRIPT
@@ -22,7 +22,7 @@ SCRIPT
 $version = File.read("#{__dir__}/changelog")[/7.1a-[^)]+/]
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "alvistack/ubuntu-24.04"
   config.vm.hostname = "truecrypt.deb"
   config.vm.provision "shell", inline: $root_provision
   config.vm.provision "shell", inline: $user_provision, privileged: false
