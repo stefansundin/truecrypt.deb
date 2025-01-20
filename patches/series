@@ -8,3 +8,4 @@ truecrypt-7.1a-helpfix.patch
 truecrypt-7.1a-xdg-open.patch
 truecrypt-7.1a-open-doc.patch
 truecrypt-7.1a-update-urls.patch
+truecrypt-7.1a-appimage.patch
