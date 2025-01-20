@@ -5,7 +5,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y
 apt-get install -y git gnupg2 vim
-apt-get install -y devscripts debhelper pkg-config libfuse-dev nasm libgtk-3-dev libwxgtk3.2-dev libayatana-appindicator3-dev bash-completion
+apt-get install -y devscripts debhelper pkgconf libfuse-dev nasm libgtk-3-dev libwxgtk3.2-dev libayatana-appindicator3-dev bash-completion
 SCRIPT
 
 $user_provision = <<SCRIPT
