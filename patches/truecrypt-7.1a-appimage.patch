@@ -1,7 +1,7 @@
-diff --git a/Core/Unix/CoreService.cpp b/Core/Unix/CoreService.cpp
-index 0ec636c..07f7611 100644
---- a/Core/Unix/CoreService.cpp
-+++ b/Core/Unix/CoreService.cpp
+Index: truecrypt-7.1a-source/Core/Unix/CoreService.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Core/Unix/CoreService.cpp
++++ truecrypt-7.1a-source/Core/Unix/CoreService.cpp
 @@ -359,6 +359,11 @@ namespace TrueCrypt
  					if (appPath.empty())
  						appPath = "truecrypt";

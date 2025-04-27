@@ -1,7 +1,7 @@
-diff --git a/Build/Include/Makefile.inc b/Build/Include/Makefile.inc
-index 39395e9..3bd6efb 100644
---- a/Build/Include/Makefile.inc
-+++ b/Build/Include/Makefile.inc
+Index: truecrypt-7.1a-source/Build/Include/Makefile.inc
+===================================================================
+--- truecrypt-7.1a-source.orig/Build/Include/Makefile.inc
++++ truecrypt-7.1a-source/Build/Include/Makefile.inc
 @@ -10,7 +10,7 @@ $(NAME): $(NAME).a
  
  clean:
@@ -11,10 +11,10 @@ index 39395e9..3bd6efb 100644
  
  %.o: %.c
  	@echo Compiling $(<F)
-diff --git a/Common/Tcdefs.h b/Common/Tcdefs.h
-index 9ab14a4..9cada69 100644
---- a/Common/Tcdefs.h
-+++ b/Common/Tcdefs.h
+Index: truecrypt-7.1a-source/Common/Tcdefs.h
+===================================================================
+--- truecrypt-7.1a-source.orig/Common/Tcdefs.h
++++ truecrypt-7.1a-source/Common/Tcdefs.h
 @@ -15,7 +15,9 @@
  #define TC_APP_NAME						"TrueCrypt"
  
@@ -25,7 +25,7 @@ index 9ab14a4..9cada69 100644
  
  // Version number to compare against driver
  #define VERSION_NUM						0x071a
-@@ -247,7 +249,9 @@ void EraseMemory (void *memory, int size);
+@@ -247,7 +249,9 @@ void EraseMemory (void *memory, int size
  #define TC_MAX_PATH		260	/* Includes the null terminator */
  #endif
  
@@ -35,10 +35,10 @@ index 9ab14a4..9cada69 100644
  
  #define MAX_URL_LENGTH	2084 /* Internet Explorer limit. Includes the terminating null character. */
  
-diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
-index 04426bd..3a9932d 100644
---- a/Main/GraphicUserInterface.cpp
-+++ b/Main/GraphicUserInterface.cpp
+Index: truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/GraphicUserInterface.cpp
++++ truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
 @@ -1250,19 +1250,16 @@ namespace TrueCrypt
  			File backupFile;
  			backupFile.Open (*files.front(), File::OpenRead);
@@ -59,11 +59,11 @@ index 04426bd..3a9932d 100644
  				legacyBackup = true;
  				break;
  
-diff --git a/Main/Main.make b/Main/Main.make
-index 565ed40..2a00269 100644
---- a/Main/Main.make
-+++ b/Main/Main.make
-@@ -105,7 +105,7 @@ TC_VERSION = $(shell grep VERSION_STRING ../Common/Tcdefs.h | head -n 1 | cut -d
+Index: truecrypt-7.1a-source/Main/Main.make
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/Main.make
++++ truecrypt-7.1a-source/Main/Main.make
+@@ -105,7 +105,7 @@ TC_VERSION = $(shell grep VERSION_STRING
  
  $(APPNAME): $(LIBS) $(OBJS)
  	@echo Linking $@
@@ -72,10 +72,10 @@ index 565ed40..2a00269 100644
  
  ifeq "$(TC_BUILD_CONFIG)" "Release"
  ifndef NOSTRIP
-diff --git a/Main/TextUserInterface.cpp b/Main/TextUserInterface.cpp
-index d9e93e6..852109b 100644
---- a/Main/TextUserInterface.cpp
-+++ b/Main/TextUserInterface.cpp
+Index: truecrypt-7.1a-source/Main/TextUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/TextUserInterface.cpp
++++ truecrypt-7.1a-source/Main/TextUserInterface.cpp
 @@ -1371,19 +1371,16 @@ namespace TrueCrypt
  			File backupFile;
  			backupFile.Open (filePath, File::OpenRead);
@@ -96,10 +96,10 @@ index d9e93e6..852109b 100644
  				legacyBackup = true;
  				break;
  
-diff --git a/Makefile b/Makefile
-index 265bb6f..cdfaad8 100644
---- a/Makefile
-+++ b/Makefile
+Index: truecrypt-7.1a-source/Makefile
+===================================================================
+--- truecrypt-7.1a-source.orig/Makefile
++++ truecrypt-7.1a-source/Makefile
 @@ -36,7 +36,7 @@ export AS := nasm
  export RANLIB ?= ranlib
  

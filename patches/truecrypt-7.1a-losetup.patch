@@ -1,7 +1,7 @@
-diff --git a/Core/Unix/Linux/CoreLinux.cpp b/Core/Unix/Linux/CoreLinux.cpp
-index 634a3a2..a4837d4 100644
---- a/Core/Unix/Linux/CoreLinux.cpp
-+++ b/Core/Unix/Linux/CoreLinux.cpp
+Index: truecrypt-7.1a-source/Core/Unix/Linux/CoreLinux.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Core/Unix/Linux/CoreLinux.cpp
++++ truecrypt-7.1a-source/Core/Unix/Linux/CoreLinux.cpp
 @@ -39,6 +39,15 @@ namespace TrueCrypt
  		loopPaths.push_back ("/dev/loop/");
  		loopPaths.push_back ("/dev/.static/dev/loop");

@@ -2,6 +2,7 @@
 /truecrypt-cli
 /files
 /.vagrant
+/.pc
 .debhelper
 *.debhelper.log
 debhelper-*-stamp

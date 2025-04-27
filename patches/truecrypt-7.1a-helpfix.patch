@@ -1,7 +1,7 @@
-diff --git a/Main/UserInterface.cpp b/Main/UserInterface.cpp
-index 9e8179f..8f9cc0d 100644
---- a/Main/UserInterface.cpp
-+++ b/Main/UserInterface.cpp
+Index: truecrypt-7.1a-source/Main/UserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/UserInterface.cpp
++++ truecrypt-7.1a-source/Main/UserInterface.cpp
 @@ -1027,11 +1027,11 @@ namespace TrueCrypt
  					"--auto-mount=devices|favorites\n"
  					" Auto mount device-hosted or favorite volumes.\n"

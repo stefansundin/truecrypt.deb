@@ -1,7 +1,7 @@
-diff --git a/Platform/Unix/Process.cpp b/Platform/Unix/Process.cpp
-index d99dff8..07874a0 100644
---- a/Platform/Unix/Process.cpp
-+++ b/Platform/Unix/Process.cpp
+Index: truecrypt-7.1a-source/Platform/Unix/Process.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Platform/Unix/Process.cpp
++++ truecrypt-7.1a-source/Platform/Unix/Process.cpp
 @@ -49,13 +49,33 @@ namespace TrueCrypt
  				try
  				{

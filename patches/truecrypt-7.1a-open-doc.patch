@@ -1,8 +1,8 @@
-diff --git a/Main/GraphicUserInterface.cpp b/Main/GraphicUserInterface.cpp
-index 04426bd..eb5fa03 100644
---- a/Main/GraphicUserInterface.cpp
-+++ b/Main/GraphicUserInterface.cpp
-@@ -991,22 +991,15 @@ namespace TrueCrypt
+Index: truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+===================================================================
+--- truecrypt-7.1a-source.orig/Main/GraphicUserInterface.cpp
++++ truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
+@@ -993,22 +993,15 @@ namespace TrueCrypt
  		return;
  
  #else
@@ -32,7 +32,7 @@ index 04426bd..eb5fa03 100644
  #endif
  	}
  
-@@ -1085,7 +1078,7 @@ namespace TrueCrypt
+@@ -1087,7 +1080,7 @@ namespace TrueCrypt
  #elif defined (TC_MACOSX)
  			docPath += L"/../Resources/TrueCrypt User Guide.pdf";
  #elif defined (TC_UNIX)

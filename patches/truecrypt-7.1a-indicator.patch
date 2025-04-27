@@ -325,7 +325,7 @@ Index: truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
 ===================================================================
 --- truecrypt-7.1a-source.orig/Main/GraphicUserInterface.cpp
 +++ truecrypt-7.1a-source/Main/GraphicUserInterface.cpp
-@@ -1469,6 +1469,8 @@ namespace TrueCrypt
+@@ -1471,6 +1471,8 @@ namespace TrueCrypt
  		}
  
  		BackgroundMode = state;
